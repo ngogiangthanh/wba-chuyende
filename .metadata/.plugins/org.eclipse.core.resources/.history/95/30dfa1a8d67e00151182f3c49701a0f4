@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Map;
+import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.ResultSet;
 
 import com.mysql.jdbc.Statement;
