@@ -1,3 +1,9 @@
 INDEX VERSION 1.126
+/home/sourismorte/wba-thuchanh1/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/120716718.index
+/mylogin/src
+/home/sourismorte/wba-thuchanh1/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/3124063928.index
+/mylogin/src
 /home/sourismorte/wba-thuchanh1/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/3778258334.index
+/mylogin/src
+/home/sourismorte/wba-thuchanh1/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/2299682332.index
 /mylogin/src

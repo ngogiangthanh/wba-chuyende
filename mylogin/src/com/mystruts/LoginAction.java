@@ -5,8 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Map;
 import com.mysql.jdbc.ResultSet;
-
-import com.mysql.jdbc.Statement;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -19,15 +17,12 @@ public class LoginAction extends ActionSupport {
 
 	public String authenticate() {
 		try {
-			Statement stmt = null;
 			this.conn = new Connect();
-			stmt = (Statement) this.conn.getConn().createStatement();
 
-			String sql;
-			sql = "SELECT count(*) as dem FROM users WHERE username = '"
+			String sql = "SELECT count(*) as dem FROM users WHERE username = '"
 					+ this.getUsername() + "' and password ='"
 					+ this.getPassword() + "'";
-			ResultSet rs = (ResultSet) stmt.executeQuery(sql);
+			ResultSet rs = this.conn.excuteQuery(sql);
 
 			Map<String, Object> session = ActionContext.getContext()
 					.getSession();
@@ -49,7 +44,6 @@ public class LoginAction extends ActionSupport {
 					addActionMessage("Đăng nhập thành công!");
 				}
 				rs.close();
-				stmt.close();
 				this.conn.Close();
 				return "success";
 			} else {

@@ -1,0 +1,16 @@
+package com.mystruts;
+
+import java.util.Map;
+
+import com.opensymphony.xwork2.ActionContext;
+
+public class Home {
+	public String getIndex() {
+
+		Map<String, Object> session = ActionContext.getContext().getSession();
+		if (!session.containsKey("logined"))
+			return "login";
+		else
+			return "welcome";
+	}
+}

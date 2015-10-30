@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<constant name="struts.devMode" value="false" />
+	<constant name="struts.action.extension" value="html"/> 
+	<constant name="struts.custom.i18n.resources" value="ApplicationResources" />
+	<package name="mylogin" extends="struts-default" namespace="/">
+	 <!-- Add your actions here -->
+	   <action name="index" method="getIndex" class="com.mystruts.Home"> 
+            <result name="login" type="freemarker">/WEB-INF/freemarker/index.jsp</result>
+            <result name="welcome" type="freemarker">/WEB-INF/freemarker/index.jsp</result>
+        </action>
+		<action name="login" method="authenticate" class="com.mystruts.LoginAction">
+			<result type="freemarker" name="success">/WEB-INF/freemarker/welcome.jsp</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp</result>
+            <result name="switch" type="freemarker">/WEB-INF/freemarker/index.jsp</result>
+		</action>
+		<action name="logout" method="logout" class="com.mystruts.LoginAction">
+            <result name="success" type="freemarker">/WEB-INF/freemarker/login.jsp</result>
+            <result name="switch" type="freemarker">/WEB-INF/freemarker/index.jsp</result>
+        </action>
+        <action name="quanly" method="list" class="com.mystruts.UserAction">
+            <result name="success" type="freemarker">/WEB-INF/freemarker/qlnguoidung.jsp</result>
+            <result name="error" type="freemarker">/WEB-INF/freemarker/welcome.jsp</result>
+        </action>
+        <action name="adduser" method="add" class="com.mystruts.UserAction">
+            <result name="success" type="freemarker">/WEB-INF/freemarker/qlnguoidung.jsp</result>
+            <result name="error" type="freemarker">/WEB-INF/freemarker/qlnguoidung.jsp</result>
+        </action>
+        <action name="edituser" method="edit" class="com.mystruts.UserAction">
+            <result name="success" type="freemarker">/WEB-INF/freemarker/edituser.jsp</result>
+            <result name="error" type="freemarker">/WEB-INF/freemarker/qlnguoidung.jsp</result>
+        </action>
+        <action name="edituserexecute" method="editexecute" class="com.mystruts.UserAction">
+            <result name="success" type="freemarker">/WEB-INF/freemarker/qlnguoidung.jsp</result>
+            <result name="error" type="freemarker">/WEB-INF/freemarker/edituser.jsp</result>
+        </action>
+        <action name="deleteuser" method="delete" class="com.mystruts.UserAction">
+            <result name="success" type="freemarker">/WEB-INF/freemarker/qlnguoidung.jsp</result>
+            <result name="error" type="freemarker">/WEB-INF/freemarker/qlnguoidung.jsp</result>
+        </action>
+	</package>
+</struts>
