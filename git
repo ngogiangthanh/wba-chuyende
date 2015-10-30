@@ -1,0 +1,9 @@
+sudo apt-get update
+sudo apt-get install git
+
+sudo apt-get update
+git clone git@github.com:whatever folder-name
+git add .
+git status -s
+git commit -m "comment"
+git push
