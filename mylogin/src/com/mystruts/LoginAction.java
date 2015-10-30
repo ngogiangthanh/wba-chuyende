@@ -67,6 +67,16 @@ public class LoginAction extends ActionSupport {
 		addActionMessage("Đăng xuất thành công!");
 		return "success";
 	}
+	
+	 public void validate() {
+	        if (getUsername().length() <= 1) {
+				addActionError("Tài khoản không hợp lệ!");
+	        } 
+	        
+	        if (getPassword().length() <= 1) {
+				addActionError("Mật khẩu không hợp lệ!");
+	        }
+	    }
 
 	public String getUsername() {
 		return username;

@@ -16,8 +16,9 @@
 		<action name="login" method="authenticate" class="com.mystruts.LoginAction">
 			<result type="freemarker" name="success">/WEB-INF/freemarker/welcome.jsp</result>
 			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp</result>
+			<result type="freemarker" name="input">/WEB-INF/freemarker/login.jsp</result>
 		</action>
-		<action name="logout" method="logout" class="com.mystruts.LoginAction">
+		<action name="logout" method="logout" class="com.mystruts.LogoutAction">
             <result name="success" type="freemarker">/WEB-INF/freemarker/login.jsp</result>
         </action>
         <action name="quanly" method="list" class="com.mystruts.UserAction">
