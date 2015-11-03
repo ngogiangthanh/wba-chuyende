@@ -10,8 +10,8 @@ public class Connect {
 	private Connection conn = null;
 	private String hostname = "jdbc:mysql://localhost:3306/";
 	private String database = "login_test";
-	private String username = "testuser";
-	private String password = "admin123";
+	private String username = "morte";
+	private String password = "morte";
 	private Statement stmt = null;
 
 	public Connect() {
@@ -58,6 +58,7 @@ public class Connect {
 
 	public void Close() {
 		try {
+			this.stmt.close();
 			this.conn.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

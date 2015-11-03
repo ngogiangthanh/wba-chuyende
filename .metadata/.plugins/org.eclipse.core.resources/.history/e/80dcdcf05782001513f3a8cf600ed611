@@ -1,0 +1,98 @@
+package actions;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Map;
+import com.mysql.jdbc.ResultSet;
+import com.opensymphony.xwork2.ActionContext;
+import com.opensymphony.xwork2.ActionSupport;
+
+import connection.Connect;
+import models.tk;
+import hash.md5;
+
+public class LoginAction extends ActionSupport {
+
+	private static final long serialVersionUID = 1L;
+	private String username;
+	private String password;
+	private Connect conn;
+	private md5 hash;
+	private String[] roles = { "sv", "gv", "qldvn", "pdt" };
+
+	public LoginAction() {
+	}
+
+	public String authenticate() {
+		try {
+			this.conn = new Connect();
+			hash = new md5(this.getPassword());
+			hash.generator();
+		//	System.out.println(hash.getMd5_string_result());
+			String sql = "SELECT * FROM tk WHERE username = '" + this.getUsername() + "' and password ='"
+					+ hash.getMd5_string_result() + "'";
+
+			ResultSet rs = this.conn.excuteQuery(sql);
+			Map<String, Object> session = ActionContext.getContext().getSession();
+
+			if (rs.next()) {
+				// Lay ngay thoi diem hien tai
+				DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+				Calendar cal = Calendar.getInstance();
+				if(rs.getString("ID_CB") != null || rs.getString("ID_CB") != "")
+				{
+					//Lấy thông tin cán bộ đăng nhập
+				}
+				else if(rs.getString("ID_SV") != null || rs.getString("ID_SV") != "")
+				{
+					//Lấy thông tin sinh viên đăng nhập
+				}
+
+				String[] rl = rs.getString("ROLE").split(",");
+				session.put("logined", "true");
+				session.put("roles", rl);
+				session.put("username", this.getUsername());
+				session.put("time", dateFormat.format(cal.getTime()));
+				
+				addActionMessage("Đăng nhập thành công!");
+				rs.close();
+				this.conn.Close();
+				return "success";
+			} else {
+				addActionError("Tài khoản hoặc mật khẩu không chính xác!");
+				return "error";
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			//return "switch";
+			return "error";
+		}
+	}
+
+	public void validate() {
+		if (getUsername().length() <= 0) {
+			addActionError("Tài khoản không chính xác!");
+		}
+
+		if (getPassword().length() <= 0) {
+			addActionError("Mật khẩu không chính xác!");
+		}
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+}

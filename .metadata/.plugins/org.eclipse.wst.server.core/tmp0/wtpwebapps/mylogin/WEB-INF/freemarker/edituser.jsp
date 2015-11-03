@@ -4,7 +4,7 @@
 <title>Chỉnh sửa người dùng</title>
 
 <style>
-body,input {
+body, input {
 	font-family: Calibri, Arial;
 	margin: 0px;
 	padding: 0px;

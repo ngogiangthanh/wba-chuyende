@@ -1,0 +1,11 @@
+package models;
+
+public class tk {
+	private long id;
+	private long id_sv;
+	private long id_cb;
+	private String username;
+	private String password;
+	private boolean status;
+	private String roles;
+}

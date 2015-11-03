@@ -1,2 +1,4 @@
+activeuserprofiles=Team;mickey;souris-morte
 eclipse.preferences.version=1
 org.eclipse.rse.systemtype.local.systemType.defaultUserId=sourismorte
+useridperkey=souris-morte.Local\=sourismorte;
