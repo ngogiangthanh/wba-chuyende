@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<constant name="struts.devMode" value="false" />
+	<constant name="struts.action.extension" value="html" />
+	<constant name="struts.custom.i18n.resources" value="ApplicationResources" />
+	<package name="qldiem" extends="struts-default" namespace="/">
+		<!-- Add your actions here -->
+		<action name="index" method="getIndex" class="actions.Home">
+			<result type="freemarker" name="login">/WEB-INF/freemarker/login.jsp
+			</result>
+			<result type="freemarker" name="welcome">/WEB-INF/freemarker/direct.jsp
+			</result>
+			<result type="freemarker" name="directing_page">${pageDirect}
+			</result>
+		</action>
+		<action name="login" method="authenticate" class="actions.LoginAction">
+			<result type="freemarker" name="welcome">/WEB-INF/freemarker/direct.jsp
+			</result>
+			<result type="freemarker" name="directing_page">${pageDirect}
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+			<result type="freemarker" name="input">/WEB-INF/freemarker/login.jsp
+			</result>
+		</action>
+		<action name="logout" method="logout" class="actions.LogoutAction">
+			<result name="success" type="freemarker">/WEB-INF/freemarker/login.jsp
+			</result>
+		</action>
+	</package>
+</struts>

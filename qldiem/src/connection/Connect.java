@@ -2,6 +2,8 @@ package connection;
 
 import java.sql.DriverManager;
 import java.sql.SQLException;
+
+import com.mysql.jdbc.CallableStatement;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.ResultSet;
 import com.mysql.jdbc.Statement;
@@ -12,7 +14,7 @@ public class Connect {
 	private String database = "qldiem";
 	private String username = "morte";
 	private String password = "morte";
-	//private Statement stmt = null;
+	// private Statement stmt = null;
 
 	public Connect() {
 		this.Create();
@@ -57,9 +59,15 @@ public class Connect {
 		return results;
 	}
 
+	public ResultSet call_procedure(String name_procedure) throws SQLException {
+		CallableStatement cs = (CallableStatement) this.conn.prepareCall(name_procedure);
+		cs.execute();
+		return (ResultSet) cs.getResultSet();
+	}
+
 	public void Close() {
 		try {
-		//	this.stmt.close();
+			// this.stmt.close();
 			this.conn.close();
 			System.out.println("Đóng kết nối thành công Server MySQL!");
 		} catch (SQLException e) {

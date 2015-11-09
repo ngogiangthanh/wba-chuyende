@@ -1,9 +1,0 @@
-<#if !logined??>
-		<#include "login.jsp">
-<#else>
-		<#switch logined>
-				<#case "true">
-						<#include "welcome.ftl">
-			    <#break>
-		</#switch>
-</#if>

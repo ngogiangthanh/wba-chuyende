@@ -1,0 +1,49 @@
+package actions;
+
+import java.util.Map;
+
+import com.opensymphony.xwork2.ActionContext;
+
+import models.role;
+
+public class Home {
+	private String pageDirect = null;
+
+	public String getIndex() {
+		try {
+			if (this.checkLogin()) {
+				Map<String, Object> session = ActionContext.getContext().getSession();
+				Map<String, role> infor_roles = (Map<String, role>) session.get("roles");
+
+				if (infor_roles.size() == 1) {
+					this.getFirstEntryInSession(infor_roles);
+					return "directing_page";
+				} else
+					return "welcome";
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+
+		}
+		return "login";
+	}
+
+	public void getFirstEntryInSession(Map<String, role> infor_roles) {
+		Map.Entry<String, role> entry = infor_roles.entrySet().iterator().next();
+		role value = entry.getValue();
+		setPageDirect(value.getFreemarker_page());
+	}
+
+	public boolean checkLogin() {
+		Map<String, Object> session = ActionContext.getContext().getSession();
+		return session.containsKey("logined");
+	}
+
+	public String getPageDirect() {
+		return pageDirect;
+	}
+
+	public void setPageDirect(String pageDirect) {
+		this.pageDirect = pageDirect;
+	}
+}

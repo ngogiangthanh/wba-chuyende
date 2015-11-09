@@ -1,0 +1,7 @@
+eclipse.preferences.version=1
+encoding//WebContent/WEB-INF/freemarker/direct.jsp=UTF-8
+encoding//WebContent/WEB-INF/freemarker/login.jsp=UTF-8
+encoding//WebContent/WEB-INF/freemarker/sv/index.jsp=UTF-8
+encoding//WebContent/WEB-INF/freemarker/welcome.jsp=UTF-8
+encoding//src/actions/LoginAction.java=UTF-8
+encoding//src/connection/Connect.java=UTF-8

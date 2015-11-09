@@ -11,7 +11,7 @@ public class md5 {
 		this.md5_string_encode = md5_string_encode;
 		this.md5_string_result = null;
 	}
-	
+
 	public md5() {
 		this.md5_string_encode = null;
 		this.md5_string_result = null;
@@ -29,7 +29,7 @@ public class md5 {
 				sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
 			}
 			this.setMd5_string_result(sb.toString());
-			
+
 		} catch (NoSuchAlgorithmException e) {
 			this.setMd5_string_result(null);
 			e.printStackTrace();
