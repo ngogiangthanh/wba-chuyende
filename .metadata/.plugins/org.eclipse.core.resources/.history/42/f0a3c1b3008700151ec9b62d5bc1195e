@@ -1,0 +1,85 @@
+package models;
+
+public class sv_diem_hp {
+	private String maMH;
+	private String tenHP;
+	private String hpDieuKien;
+	private String maHP;
+	private Integer soTC;
+	private String diemChu;
+	private float diem10;
+	private String tichLuy;
+	private String caiThien;
+	
+	public float getDiem10() {
+		return diem10;
+	}
+	
+	public String getDiemChu() {
+		return diemChu;
+	}
+	
+	public String getMaHP() {
+		return maHP;
+	}
+	
+	public String getMaMH() {
+		return maMH;
+	}
+	
+	public Integer getSoTC() {
+		return soTC;
+	}
+	
+	public String getTenHP() {
+		return tenHP;
+	}
+	
+	public boolean isCaiThien() {
+		return caiThien;
+	}
+	
+	public boolean isHpDieuKien() {
+		return hpDieuKien;
+	}
+	
+	public boolean isTichLuy() {
+		return tichLuy;
+	}
+	
+	public void setCaiThien(boolean caiThien) {
+		this.caiThien = caiThien;
+	}
+	
+	public void setDiem10(float diem10) {
+		this.diem10 = diem10;
+	}
+	
+	public void setDiemChu(String diemChu) {
+		this.diemChu = diemChu;
+	}
+	
+	public void setHpDieuKien(boolean hpDieuKien) {
+		this.hpDieuKien = hpDieuKien;
+	}
+	
+	public void setMaHP(String maHP) {
+		this.maHP = maHP;
+	}
+	
+	public void setMaMH(String maMH) {
+		this.maMH = maMH;
+	}
+	
+	public void setSoTC(Integer soTC) {
+		this.soTC = soTC;
+	}
+	
+	public void setTenHP(String tenHP) {
+		this.tenHP = tenHP;
+	}
+	
+	public void setTichLuy(boolean tichLuy) {
+		this.tichLuy = tichLuy;
+	}
+}

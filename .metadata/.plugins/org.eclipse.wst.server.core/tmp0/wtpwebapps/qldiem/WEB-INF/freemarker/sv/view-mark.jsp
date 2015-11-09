@@ -79,15 +79,21 @@
 							<i class="glyphicon glyphicon-th-list"></i>&nbsp;Xem kết quả học tập
 						</div>
 						<div class="panel-body">
-							<form action="" method="get">
-								Năm học:&nbsp;<select name="">
-									<option value="">2015-2016</option>
-								</select> &nbsp;Học kỳ&nbsp; <select name="">
-									<option value="">1</option>
-									<option value="">2</option>
-									<option value="">Hè</option>
-									<option value="">Tất cả</option>
-								</select>&nbsp; <input type="submit" value="Liệt kê" />
+							<form action="view-mark.html" method="post">
+								Năm học:&nbsp;
+								<select name="nk"  id="id_nk">
+								<#list hknk.entrySet() as entry>  
+									<option value="${entry.key}">${entry.key}</option>
+								</#list>
+									<option value="0" >Tất cả</option>
+								</select> 
+								&nbsp;Học kỳ&nbsp; <select name="hk" id="id_hk">
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">Hè</option>
+									<option value="0">Tất cả</option>
+								</select>&nbsp; 
+								<input type="submit" value="Liệt kê" />
 							</form>
 							<br />
 							<table cellspacing="0" cellpadding="0" width="100%" border="0"
@@ -103,17 +109,27 @@
 									<td>Điểm số</td>
 									<td>Tích lũy</td>
 								</tr>
+								<#list dsDiemHP.entrySet() as hocPhan>  
 								<tr>
-									<td>1</td>
-									<td>Mã học phần</td>
-									<td>Tên học phần</td>
-									<td>Điều kiện</td>
-									<td>Nhóm</td>
-									<td>4</td>
-									<td>A</td>
-									<td>10</td>
-									<td>*</td>
+									<td>${hocPhan.key}</td>
+									<td>${hocPhan.value.maMH}</td>
+									<td>${hocPhan.value.tenHP}</td>
+									<td>
+										<#if hocPhan.value.hpDieuKien == "1">
+											x
+										</#if>
+									</td>
+									<td>${hocPhan.value.maHP}</td>
+									<td>${hocPhan.value.soTC}</td>
+									<td><#if hocPhan.value.diemChu??>${hocPhan.value.diemChu}</#if></td>
+									<td><#if hocPhan.value.diem10??>${hocPhan.value.diem10}</#if></td>
+									<td>
+										<#if hocPhan.value.tichLuy == "1">
+											*
+										</#if>
+									</td>
 								</tr>
+								</#list>
 							</table>
 							<ul>
 								<li>Tổng số tín chỉ đăng ký</li>
@@ -135,8 +151,7 @@
 		<!-- Include all compiled plugins (below), or include individual files as needed -->
 		<script type="text/javascript" src="public/js/bootstrap.min.js"></script>
 		<script type="text/javascript">
-			$(document).ready(
-					function() {
+			$(document).ready(function() {
 						$('#sidebar .panel-heading').click(
 								function() {
 									$('#sidebar .list-group').toggleClass(
@@ -145,6 +160,12 @@
 											'glyphicon-plus-sign').toggleClass(
 											'glyphicon-minus-sign');
 								});
+						<#if nk != "">
+							$("select#id_nk").val("${nk}");
+						</#if>
+						<#if hk != "">
+							$("select#id_hk").val("${hk}");
+						</#if>
 					});
 		</script>
 </body>

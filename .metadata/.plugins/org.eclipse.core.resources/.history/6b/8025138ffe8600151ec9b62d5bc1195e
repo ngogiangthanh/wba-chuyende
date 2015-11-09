@@ -1,0 +1,13 @@
+package models;
+
+public class sv_diem_hp {
+	private String maMH;
+	private String tenHP;
+	private boolean hpDieuKien;
+	private String maHP;
+	private Integer soTC;
+	private String diemChu;
+	private String diem10;
+	private boolean tichLuy;
+	private boolean caiThien;
+}

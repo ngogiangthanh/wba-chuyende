@@ -1,0 +1,14 @@
+eclipse.preferences.version=1
+encoding//WebContent/WEB-INF/freemarker/direct.jsp=UTF-8
+encoding//WebContent/WEB-INF/freemarker/login.jsp=UTF-8
+encoding//WebContent/WEB-INF/freemarker/sv/index.jsp=UTF-8
+encoding//WebContent/WEB-INF/freemarker/sv/view-mark.jsp=UTF-8
+encoding//WebContent/WEB-INF/freemarker/sv/view-profile.jsp=UTF-8
+encoding//src/actions/AdminAction.java=UTF-8
+encoding//src/actions/GVAction.java=UTF-8
+encoding//src/actions/Home.java=UTF-8
+encoding//src/actions/LoginAction.java=UTF-8
+encoding//src/actions/PDTAction.java=UTF-8
+encoding//src/actions/QLDVNAction.java=UTF-8
+encoding//src/actions/SVAction.java=UTF-8
+encoding//src/connection/Connect.java=UTF-8
