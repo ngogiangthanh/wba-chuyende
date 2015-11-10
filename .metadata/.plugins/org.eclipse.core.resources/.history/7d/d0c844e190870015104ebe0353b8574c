@@ -1,0 +1,18 @@
+package actions;
+
+import com.opensymphony.xwork2.ActionSupport;
+
+import connection.Connect;
+
+public class ThangDiemAction extends ActionSupport {
+
+	private static final long serialVersionUID = 1L;
+	private Connect conn;
+
+	public ThangDiemAction() {
+	}
+	
+	public void assignHKNKValues(){
+		
+	}
+}

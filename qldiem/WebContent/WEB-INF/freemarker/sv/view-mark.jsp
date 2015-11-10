@@ -100,6 +100,9 @@
 						<#if dsDiemHP?has_content>
 							<#list dsDiemHP.entrySet() as hknk_ds_hocPhan>  
 							<#assign tsTCDK = 0 >
+							<#assign tstchk = 0 >
+							<#assign tdtbHK = 0 >
+							<#assign tstctlhk = 0 >
 							<table class="table table-bordered text-center">
 							<tr><td colspan="10" class="well">Năm học:&nbsp;${hknk_ds_hocPhan.key.nk}&nbsp;-&nbsp;Học kỳ:&nbsp;${hknk_ds_hocPhan.key.hk}</td></tr>
 								<tr>
@@ -128,11 +131,15 @@
 									</td>
 									<td>${hocPhan.maHP}</td>
 									<td>
-										<#assign tsTCDK = tsTCDK + hocPhan.soTC >	
+										<#assign tsTCDK = tsTCDK + hocPhan.soTC >		
 										${hocPhan.soTC}
 									</td>
-									<td><#if hocPhan.diemChu??>${hocPhan.diemChu}</#if></td>
-									<td><#if hocPhan.diem10??>${hocPhan.diem10}</#if></td>
+									<td>
+										<#if hocPhan.diemChu??>
+											${hocPhan.diemChu}
+										</#if>
+									</td>
+									<td><#if hocPhan.diem10?? && hocPhan.diem10 lt 11 >${hocPhan.diem10}</#if></td>
 									<td>
 										<#if hocPhan.caiThien == "1">
 											*
@@ -140,10 +147,15 @@
 									</td>
 									<td>
 										<#if hocPhan.tichLuy == "1">
+											<#assign tstctlhk = tstctlhk + hocPhan.soTC >
 											*
 										</#if>
 									</td>
 								</tr>
+										<#if hocPhan.tichLuyDiem == "1">
+											<#assign tdtbHK = tdtbHK + hocPhan.tichDiem >
+											<#assign tstchk = tstchk + hocPhan.soTC >
+										</#if>
 								</#list>
 								<#else>
 								<tr>
@@ -152,11 +164,14 @@
 									</td>
 								</tr>
 								</#if>
+								<#if tstchk == 0>
+									<#assign tstchk = 1 >
+								</#if>
 							</table>
 							<ul class="col-xs-4 col-sm-4 col-md-4 col-lg-4 list-group">
 								<li class="list-group-item">Tổng số tín chỉ đăng ký:&nbsp;<span class="badge">${tsTCDK}</span></li>
-								<li class="list-group-item">Điểm trung bình học kỳ:&nbsp;<span class="badge">-1</span></li>
-								<li class="list-group-item">Tổng số tín chỉ tích lũy học kỳ:&nbsp;<span class="badge">-1</span></li>
+								<li class="list-group-item">Điểm trung bình học kỳ:&nbsp;<span class="badge">${(tdtbHK/tstchk)?string("0.00")}</span></li>
+								<li class="list-group-item">Tổng số tín chỉ tích lũy học kỳ:&nbsp;<span class="badge">${tstctlhk}</span></li>
 								<li class="list-group-item">Điểm trung bình tích lũy:&nbsp;<span class="badge">-1</span></li>
 								<li class="list-group-item">Tổng số tín chỉ tích lũy:&nbsp;<span class="badge">-1</span></li>
 							</ul>

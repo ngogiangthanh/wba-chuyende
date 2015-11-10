@@ -1,0 +1,13 @@
+package actions;
+
+public class Snippet {
+	SELECT
+	thang_diem.ID,
+	thang_diem.THANG_DIEM,
+	thang_diem.TD_AP_DUNG
+	FROM
+	thang_diem
+	WHERE
+	thang_diem.TD_AP_DUNG = (SELECT max(thang_diem.TD_AP_DUNG) FROM thang_diem)
+}
+

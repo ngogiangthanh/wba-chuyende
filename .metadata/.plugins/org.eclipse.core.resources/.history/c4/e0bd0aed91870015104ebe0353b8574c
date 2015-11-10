@@ -1,0 +1,9 @@
+package models;
+
+
+public class muc_chuyen_doi {
+	private float diem10;
+	private String diemChu;
+	private float diem4;
+	private boolean tichLuy;
+}

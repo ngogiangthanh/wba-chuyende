@@ -1,0 +1,21 @@
+package actions;
+
+import java.util.Map;
+
+import com.opensymphony.xwork2.ActionSupport;
+
+import connection.Connect;
+
+public class ThangDiemAction extends ActionSupport {
+
+	private static final long serialVersionUID = 1L;
+	private Connect conn;
+
+	public ThangDiemAction() {
+	}
+	
+	public void assignTDValues(Map<String, Object> session){
+		this.conn = new Connect();
+		String procedure = "call get_tt_thang_diem();";
+	}
+}

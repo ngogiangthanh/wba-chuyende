@@ -1,0 +1,5 @@
+package models;
+
+public class thang_diem {
+	private Date td_ap_dung;
+}

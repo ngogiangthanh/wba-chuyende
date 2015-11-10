@@ -6,28 +6,23 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.struts2.interceptor.ServletRequestAware;
-
 import com.mysql.jdbc.CallableStatement;
 import com.mysql.jdbc.ResultSet;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
-
 import connection.Connect;
 import models.hk_nk;
 import models.sv_diem_hp;
+import models.thang_diem;
 
-public class SVAction extends ActionSupport implements ServletRequestAware{
+public class SVAction extends ActionSupport{
 
 	private static final long serialVersionUID = 1L;
 	private Connect conn;
 	private String hk;
 	private String nk;
 	private Map<hk_nk, List<sv_diem_hp>> dsDiemHP = new LinkedHashMap<hk_nk, List<sv_diem_hp>>();
-	private HttpServletRequest httpRequest;
+	//private HttpServletRequest httpRequest;  implements ServletRequestAware
 	
 	public SVAction() {
 	}
@@ -47,17 +42,28 @@ public class SVAction extends ActionSupport implements ServletRequestAware{
 		//Lấy thông tin học kỳ niên khóa trong CSDL bỏ vào session tên hknk kiểu map <key=2014-2015,value=List<1,2,3>
 		Map<String, Object> session = ActionContext.getContext().getSession();
 		session.put("title", "Xem kết quả học tập");
+		//Kiểm tra xem nếu session hknk đã có thì khỏi tạo lại và ngược lại
 		if(!session.containsKey("hknk"))
 		{
 			System.out.println("Gán hknk lần đầu");
 			this.assignHKNKValues(session);
 		}
+		
+		//Kiểm tra xem nếu session thang_diem đã có thì khởi tạo lại và ngược lại
+		if(!session.containsKey("thang_diem"))
+		{
+			System.out.println("Gán thang điểm lần đầu");
+			ThangDiemAction thangDiemAction = new ThangDiemAction();
+			thangDiemAction.assignTDValues(session);
+		}
+		
 		//Kiểm tra xem năm chọn có mở chưa, nếu chưa mở thì báo học kỳ chưa mở không thực hiện các bước phía dưới
 		if(!this.isOpenHKNK(session)){
-			System.out.println("hknk k ton tai " + this.getHk() +" - "+ this.getNk());
+			System.out.println("Học kỳ chưa mở " + this.getHk() +" - "+ this.getNk());
 			return "view-mark";
 		}
 		
+		//Gọi procedure lấy thông tin điểm hp dựa trên 3 tham số năm học - học kỳ - id sv
 		this.conn = new Connect();
 		Map<String, String> infor_user = (Map<String, String>) session.get("information");
 		String procedure = "call get_tt_sv_diem_hp(?,?,?);";
@@ -65,33 +71,51 @@ public class SVAction extends ActionSupport implements ServletRequestAware{
 		
 		try {
 			pstmt = (CallableStatement) this.conn.getConn().prepareCall(procedure);
-		    pstmt.setString(3, infor_user.get("9_ID"));
+		    //Gán tham số id sv
+			pstmt.setString(3, infor_user.get("9_ID"));
+		    //Gán tham số năm học (niên khóa)
 		    if(this.getNk() == null){
+		    	//Trường hợp chưa chọn hoặc resend lại thì mặc định chọn niên khóa hiện tại
 				this.setNk(session.get("current_nk").toString());
 		    	pstmt.setString(1, getNk());
 		    }
-		    else if(this.getNk().equals("0"))
+		    else if(this.getNk().equals("0")){
+		    	//Trường hợp chọn xem tất cả
 		    	pstmt.setNull(1, java.sql.Types.CHAR);
-		    else
+		    }
+		    else{
+		    	//Trường hợp xem một niên khóa nào đó
 		    	pstmt.setString(1, getNk());
+		    }
 		    
+		    //Gán tham số cho học kỳ
 		    if(this.getHk() == null){
+		    	//Trường hợp chưa chọn hoặc resend lại thì mặc định chọn học kỳ hiện tại
 				this.setHk(session.get("current_hk").toString());
 		    	pstmt.setInt(2, Integer.parseInt(getHk()));
 		    }
-		    else if(this.getHk().equals("0"))
+		    else if(this.getHk().equals("0")){
+		    	//Trường hợp chọn xem tất cả
 			    pstmt.setNull(2, java.sql.Types.TINYINT);
-		    else
+		    }
+		    else{
+		    	//Trường hợp xem một học kỳ nào đó
 		    	pstmt.setInt(2, Integer.parseInt(getHk()));
+		    }
 		    
+		    //Thực thi procedure
 		    pstmt.execute();
 			ResultSet rs = (ResultSet) pstmt.getResultSet();
 			int stt = 1;
+			
+			//Duyệt kết quả
 			while(rs.next()){
+				//Khi hàng đó không null
 				if(!rs.wasNull()){
 					hk_nk key_hknk = new hk_nk(rs.getString("NK"),rs.getInt("HK"));
 					List<sv_diem_hp> list_ds_diem_hp;
-					System.out.println("Học ki hien tai: "+ key_hknk.getHk() + "- " + key_hknk.getNk());
+					
+					System.out.println("Học kỳ hiện tại: "+ key_hknk.getHk() + "- " + key_hknk.getNk());
 					if(this.dsDiemHP.containsKey(key_hknk)){
 						//Trường hợp thêm cũ
 						System.out.println("Đã tồn tại thêm cũ "+ key_hknk.getHk() + "- " + key_hknk.getNk());
@@ -105,6 +129,7 @@ public class SVAction extends ActionSupport implements ServletRequestAware{
 						stt = 1;
 					}
 					
+					//Tạo đối tượng điểm hp sv và gán giá trị lần lượt vào thuộc tính của đối tượng này
 					sv_diem_hp hp = new sv_diem_hp();
 					hp.setStt(stt++);
 					hp.setMaMH(rs.getString("MA_MH"));
@@ -114,14 +139,20 @@ public class SVAction extends ActionSupport implements ServletRequestAware{
 					hp.setSoTC(rs.getInt("SO_TC"));
 					hp.setDiemChu(rs.getString("DIEM_CHU"));
 					hp.setDiem10(rs.getFloat("DIEM_10"));
+					hp.setDiem4(rs.getFloat("DIEM_4"));
 					hp.setTichLuy(rs.getString("TL"));
 					hp.setCaiThien(rs.getString("CAI_THIEN"));
-					
+					//Tính tích điểm
+					thang_diem thang_diem_qd = (thang_diem)session.get("thang_diem");
+					hp.setThang_diem_qd(thang_diem_qd);
+					hp.tinhTichDiem();
+					//Thêm vào list ds điểm học phần
 					list_ds_diem_hp.add(hp);
+					//Thêm toàn bộ vào ds điểm ho
 					this.dsDiemHP.put(key_hknk, list_ds_diem_hp);
 					}
 			}
-
+			//Đóng kết nối
 			rs.close();
 			this.conn.Close();
 		} catch (Exception ex) {
@@ -132,6 +163,7 @@ public class SVAction extends ActionSupport implements ServletRequestAware{
 	
 	public boolean isOpenHKNK(Map<String, Object> session){
 		Map<String, ArrayList<Integer>> hknk = (Map<String, ArrayList<Integer>>) session.get("hknk");
+		//Kiểm tra xem học kì người dùng chọn có trong session hknk không? nếu có thì kết luật là hk có mở và ngược lại
 		if(this.getNk() != "0" & hknk.containsKey(this.getNk())){
 			if(!this.getHk().equals("0")){
 				ArrayList<Integer> list_hk = hknk.get(this.getNk());
@@ -142,6 +174,7 @@ public class SVAction extends ActionSupport implements ServletRequestAware{
 	}
 	
 	public void assignHKNKValues(Map<String, Object> session){
+		//Ý tưởng tạo ra 1 session chứa thông tin các hk nk. Chỉ tạo một lần duy nhất lúc người dùng gọi lần đầu
 		this.conn = new Connect();
 		String procedure = "call get_tt_hk_nk();";
 		Map<String, ArrayList<Integer>> hknk = new HashMap<String, ArrayList<Integer>>();
@@ -164,7 +197,7 @@ public class SVAction extends ActionSupport implements ServletRequestAware{
 				Integer hk = rs.getInt("HK");
 				list_hk.add(hk);
 				hknk.put(nk,list_hk);
-				
+				//Mặc định học kỳ hiện tại là học kỳ gần nhất, dòng đầu tiên của kết quả truy vấn
 				if(first == 1){
 					session.put("current_hk", hk);
 					session.put("current_nk", nk);
@@ -173,11 +206,13 @@ public class SVAction extends ActionSupport implements ServletRequestAware{
 					first++;
 				}
 			}
+			//Đóng kết nối
 			rs.close();
 			this.conn.Close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		//Thêm vào session
 		session.put("hknk", hknk);
 	}
 	
@@ -205,9 +240,9 @@ public class SVAction extends ActionSupport implements ServletRequestAware{
 		return dsDiemHP;
 	}
 
-	@Override
-	public void setServletRequest(HttpServletRequest request) {
-		this.httpRequest = request;
+	//@Override
+	//public void setServletRequest(HttpServletRequest request) {
+	//	this.httpRequest = request;
 		
-	}
+	//}
 }
