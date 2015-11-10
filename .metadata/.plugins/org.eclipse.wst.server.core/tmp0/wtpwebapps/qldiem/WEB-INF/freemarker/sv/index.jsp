@@ -73,11 +73,9 @@
 				<div class="row">
 					<!-- BEGIN CONTENT -->
 					<div id="menu">
-						<a href="view-mark.html" target="_blank"
-							class="col-6 col-sm-4 col-lg-3"> <i
+						<a href="view-mark.html" class="col-6 col-sm-4 col-lg-3"> <i
 							class="glyphicon glyphicon-book"></i>&nbsp;Xem điểm học phần
-						</a> <a href="print-mark.html" target="_blank"
-							class="col-6 col-sm-4 col-lg-3"> <i
+						</a> <a href="print-mark.html" class="col-6 col-sm-4 col-lg-3"> <i
 							class="glyphicon glyphicon-print"></i>&nbsp;In bảng điểm cá nhân
 						</a>
 					</div>

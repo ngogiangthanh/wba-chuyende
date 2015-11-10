@@ -43,6 +43,10 @@
 			<result type="freemarker" name="view-mark">/WEB-INF/freemarker/sv/view-mark.jsp
 			</result>
 		</action>
+		<action name="print-mark" method="getPrintMark" class="actions.SVAction">
+			<result type="freemarker" name="print-mark">/WEB-INF/freemarker/sv/print-mark.jsp
+			</result>
+		</action>
 		<action name="gv-index" method="getIndex" class="actions.GVAction">
 			<result type="freemarker" name="index">/WEB-INF/freemarker/gv/index.jsp
 			</result>
