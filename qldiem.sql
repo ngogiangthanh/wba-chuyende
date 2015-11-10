@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 09, 2015 at 03:08 PM
+-- Generation Time: Nov 10, 2015 at 06:56 AM
 -- Server version: 5.6.24
 -- PHP Version: 5.6.8
 
@@ -48,11 +48,13 @@ BEGIN
 	FROM
 		hk_nh
 	ORDER BY
-		hk_nh.NK ASC,
-		hk_nh.HK ASC;
+		hk_nh.BD desc,
+		hk_nh.KT desc,
+		hk_nh.NK desc,
+		hk_nh.HK desc;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `get_tt_sv_diem_hp`(IN `id_hk_nk` int,IN `id_sv` int)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_tt_sv_diem_hp`(IN `nk` char(9),IN `hk` tinyint(4),IN `id_sv` int)
 BEGIN
 	SELECT
 		mh.MA_MH,
@@ -63,14 +65,21 @@ BEGIN
 		ct_hp.DIEM_CHU,
 		ct_hp.DIEM_10,
 		ct_hp.TL,
-		ct_hp.CAI_THIEN
+		ct_hp.CAI_THIEN,
+		hk_nh.NK,
+		hk_nh.HK
 	FROM
 		hp
 		INNER JOIN mh ON mh.ID = hp.ID_MH
 		INNER JOIN ct_hp ON hp.ID = ct_hp.ID_HP
+		INNER JOIN hk_nh ON hk_nh.ID = hp.ID_HK_NH
 	WHERE
-		hp.ID_HK_NH = `id_hk_nk` AND
-		ct_hp.ID_SV = `id_sv` ;
+		(hk_nh.NK = `nk` OR `nk` IS NULL) AND
+		(hk_nh.HK = `hk` OR `hk` IS NULL) AND
+		 ct_hp.ID_SV = `id_sv`
+	ORDER BY
+		hk_nh.NK asc,
+		hk_nh.HK asc;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_tt_sv_login`(IN `id_sv` int)
