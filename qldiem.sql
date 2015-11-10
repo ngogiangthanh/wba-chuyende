@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 10, 2015 at 01:19 PM
+-- Generation Time: Nov 10, 2015 at 05:32 PM
 -- Server version: 5.6.24
 -- PHP Version: 5.6.8
 
@@ -83,57 +83,6 @@ BEGIN
 		hk_nh.HK asc;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `get_tt_sv_diem_hp_tl`(IN `nk` char(9),IN `hk` tinyint(4),IN `id_sv` int)
-BEGIN
-(SELECT
-		mh.MA_MH,
-		mh.TEN_MH,
-		mh.DIEU_KIEN,
-		hp.MA_HP,
-		mh.SO_TC,
-		ct_hp.DIEM_CHU,
-		ct_hp.DIEM_10,
-		ct_hp.DIEM_4,
-		ct_hp.TL,
-		ct_hp.CAI_THIEN,
-		hk_nh.NK,
-		hk_nh.HK
-	FROM
-		hp
-		INNER JOIN mh ON mh.ID = hp.ID_MH
-		INNER JOIN ct_hp ON hp.ID = ct_hp.ID_HP
-		INNER JOIN hk_nh ON hk_nh.ID = hp.ID_HK_NH
-	WHERE
-		 ct_hp.ID_SV = `id_sv` AND
-		 ct_hp.TL = 1 AND
-		 STRCMP(hk_nh.NK, `nk`) = -1
-) UNION (
-SELECT
-		mh.MA_MH,
-		mh.TEN_MH,
-		mh.DIEU_KIEN,
-		hp.MA_HP,
-		mh.SO_TC,
-		ct_hp.DIEM_CHU,
-		ct_hp.DIEM_10,
-		ct_hp.DIEM_4,
-		ct_hp.TL,
-		ct_hp.CAI_THIEN,
-		hk_nh.NK,
-		hk_nh.HK
-	FROM
-		hp
-		INNER JOIN mh ON mh.ID = hp.ID_MH
-		INNER JOIN ct_hp ON hp.ID = ct_hp.ID_HP
-		INNER JOIN hk_nh ON hk_nh.ID = hp.ID_HK_NH
-	WHERE
-		 ct_hp.ID_SV = `id_sv` AND
-		 ct_hp.TL = 1 AND
-		 hk_nh.NK = `nk` AND
-		 hk_nh.HK <= `hk`  
-);
-END$$
-
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_tt_sv_login`(IN `id_sv` int)
 BEGIN
 	SELECT sv.MSSV AS 1_MSSV, sv.HO_TEN as 2_HO_TEN, 
@@ -158,6 +107,75 @@ BEGIN
 		thang_diem
 	WHERE
 		thang_diem.TD_AP_DUNG = (SELECT max(thang_diem.TD_AP_DUNG) FROM thang_diem);
+END$$
+
+--
+-- Functions
+--
+CREATE DEFINER=`root`@`localhost` FUNCTION `get_tt_sv_diem_hp_tc_tl`(`nk` char(9),`hk` tinyint(4),`id_sv` int) RETURNS int(11)
+BEGIN
+	DECLARE tstctl int;
+		SELECT SUM(SO_TC) INTO tstctl FROM ((SELECT
+				SUM(SO_TC) AS SO_TC
+			FROM
+				hp
+				INNER JOIN mh ON mh.ID = hp.ID_MH
+				INNER JOIN ct_hp ON hp.ID = ct_hp.ID_HP
+				INNER JOIN hk_nh ON hk_nh.ID = hp.ID_HK_NH
+			WHERE
+				 ct_hp.ID_SV = `id_sv` AND
+				 ct_hp.TL = 1 AND
+				 STRCMP(hk_nh.NK, `nk`) = -1
+		) UNION (
+		SELECT
+				SUM(SO_TC) AS SO_TC
+			FROM
+				hp
+				INNER JOIN mh ON mh.ID = hp.ID_MH
+				INNER JOIN ct_hp ON hp.ID = ct_hp.ID_HP
+				INNER JOIN hk_nh ON hk_nh.ID = hp.ID_HK_NH
+			WHERE
+				 ct_hp.ID_SV = `id_sv` AND
+				 ct_hp.TL = 1 AND
+				 hk_nh.NK = `nk` AND
+				 hk_nh.HK <= `hk`  
+		)) x;
+	return tstctl;
+END$$
+
+CREATE DEFINER=`root`@`localhost` FUNCTION `get_tt_sv_diem_hp_tl`(`nk` char(9),`hk` tinyint(4),`id_sv` int) RETURNS float
+BEGIN
+		DECLARE tbtl float;
+		SELECT SUM(TICH_DIEM)/SUM(SO_TC) INTO tbtl FROM ((SELECT
+				SO_TC,
+				mh.SO_TC * ct_hp.DIEM_4 AS TICH_DIEM
+			FROM
+				hp
+				INNER JOIN mh ON mh.ID = hp.ID_MH
+				INNER JOIN ct_hp ON hp.ID = ct_hp.ID_HP
+				INNER JOIN hk_nh ON hk_nh.ID = hp.ID_HK_NH
+			WHERE
+				 ct_hp.ID_SV = `id_sv` AND
+				 ct_hp.TL = 1 AND
+				 ct_hp.DIEM_10 <= 10 AND
+				 STRCMP(hk_nh.NK, `nk`) = -1
+		) UNION (
+		SELECT
+				SO_TC,
+				mh.SO_TC * ct_hp.DIEM_4 AS TICH_DIEM
+			FROM
+				hp
+				INNER JOIN mh ON mh.ID = hp.ID_MH
+				INNER JOIN ct_hp ON hp.ID = ct_hp.ID_HP
+				INNER JOIN hk_nh ON hk_nh.ID = hp.ID_HK_NH
+			WHERE
+				 ct_hp.ID_SV = `id_sv` AND
+				 ct_hp.TL = 1 AND
+				 ct_hp.DIEM_10 <= 10 AND
+				 hk_nh.NK = `nk` AND
+				 hk_nh.HK <= `hk`  
+		)) x;
+	return tbtl;
 END$$
 
 DELIMITER ;
