@@ -33,4 +33,5 @@
 <fullyQualifiedTypeName name="models.muc_chuyen_doi"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="models.thang_diem"/>
+<fullyQualifiedTypeName name="java.sql.Types"/>
 </qualifiedTypeNameHistroy>

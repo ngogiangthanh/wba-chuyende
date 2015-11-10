@@ -76,10 +76,28 @@
 					<!-- BEGIN CONTENT -->
 					<div class="panel panel-default">
 						<div class="panel-heading">
-							<i class="glyphicon glyphicon-th-list"></i>&nbsp;In kết quả học tập
+							<i class="glyphicon glyphicon-th-list"></i>&nbsp;In kết quả học tập theo học kỳ - năm học
 						</div>
 						<div class="panel-body">
-						
+							<div class="alert alert-success text-center" role="alert">
+								Chọn học kỳ - năm học cần in<br/>
+								<form id="target" action="printed-mark.html" method="post" target="_blank">
+									Năm học:&nbsp;
+									<select name="nk"  id="id_nk" >
+									<#list hknk.entrySet() as entry>  
+										<option value="${entry.key}">${entry.key}</option>
+									</#list>
+										<option value="0" >Tất cả</option>
+									</select> 
+									&nbsp;Học kỳ&nbsp; <select name="hk" id="id_hk">
+										<option value="1">1</option>
+										<option value="2">2</option>
+										<option value="3">Hè</option>
+										<option value="0">Tất cả</option>
+									</select>&nbsp; 
+									<a href="#" id="other" class="btn btn-primary">Liệt kê</a>
+								</form>
+							</div>
 						</div>
 					</div>
 					<!-- END CONTENT -->
@@ -102,6 +120,15 @@
 											'glyphicon-plus-sign').toggleClass(
 											'glyphicon-minus-sign');
 								});
+						$( "#other" ).click(function() {
+							  $( "#target" ).submit();
+							});
+					<#if nk?has_content>
+						$("select#id_nk").val("${nk}");
+					</#if>
+					<#if hk?has_content>
+						$("select#id_hk").val("${hk}");
+					</#if>
 					});
 		</script>
 </body>

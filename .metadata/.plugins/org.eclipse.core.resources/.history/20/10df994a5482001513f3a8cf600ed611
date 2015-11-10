@@ -1,7 +1,0 @@
-package hash;
-import java.security.MessageDigest;
-
-public class md5 {
-	private String md5_string_encode;
-	private String md5_string_result;
-}
