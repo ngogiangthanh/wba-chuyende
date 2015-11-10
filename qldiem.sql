@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 10, 2015 at 06:56 AM
+-- Generation Time: Nov 10, 2015 at 01:19 PM
 -- Server version: 5.6.24
 -- PHP Version: 5.6.8
 
@@ -64,6 +64,7 @@ BEGIN
 		mh.SO_TC,
 		ct_hp.DIEM_CHU,
 		ct_hp.DIEM_10,
+		ct_hp.DIEM_4,
 		ct_hp.TL,
 		ct_hp.CAI_THIEN,
 		hk_nh.NK,
@@ -82,6 +83,57 @@ BEGIN
 		hk_nh.HK asc;
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_tt_sv_diem_hp_tl`(IN `nk` char(9),IN `hk` tinyint(4),IN `id_sv` int)
+BEGIN
+(SELECT
+		mh.MA_MH,
+		mh.TEN_MH,
+		mh.DIEU_KIEN,
+		hp.MA_HP,
+		mh.SO_TC,
+		ct_hp.DIEM_CHU,
+		ct_hp.DIEM_10,
+		ct_hp.DIEM_4,
+		ct_hp.TL,
+		ct_hp.CAI_THIEN,
+		hk_nh.NK,
+		hk_nh.HK
+	FROM
+		hp
+		INNER JOIN mh ON mh.ID = hp.ID_MH
+		INNER JOIN ct_hp ON hp.ID = ct_hp.ID_HP
+		INNER JOIN hk_nh ON hk_nh.ID = hp.ID_HK_NH
+	WHERE
+		 ct_hp.ID_SV = `id_sv` AND
+		 ct_hp.TL = 1 AND
+		 STRCMP(hk_nh.NK, `nk`) = -1
+) UNION (
+SELECT
+		mh.MA_MH,
+		mh.TEN_MH,
+		mh.DIEU_KIEN,
+		hp.MA_HP,
+		mh.SO_TC,
+		ct_hp.DIEM_CHU,
+		ct_hp.DIEM_10,
+		ct_hp.DIEM_4,
+		ct_hp.TL,
+		ct_hp.CAI_THIEN,
+		hk_nh.NK,
+		hk_nh.HK
+	FROM
+		hp
+		INNER JOIN mh ON mh.ID = hp.ID_MH
+		INNER JOIN ct_hp ON hp.ID = ct_hp.ID_HP
+		INNER JOIN hk_nh ON hk_nh.ID = hp.ID_HK_NH
+	WHERE
+		 ct_hp.ID_SV = `id_sv` AND
+		 ct_hp.TL = 1 AND
+		 hk_nh.NK = `nk` AND
+		 hk_nh.HK <= `hk`  
+);
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_tt_sv_login`(IN `id_sv` int)
 BEGIN
 	SELECT sv.MSSV AS 1_MSSV, sv.HO_TEN as 2_HO_TEN, 
@@ -94,6 +146,18 @@ BEGIN
 		INNER JOIN khoa ON khoa.ID = sv.ID_KHOA 
 		INNER JOIN cn ON cn.ID = sv.ID_CN 
 	WHERE sv.ID = `id_sv`;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_tt_thang_diem`()
+BEGIN
+	SELECT
+		thang_diem.ID,
+		thang_diem.THANG_DIEM,
+		DATE_FORMAT(thang_diem.TD_AP_DUNG,'%d/%m/%Y') as NGAY_AP_DUNG
+	FROM
+		thang_diem
+	WHERE
+		thang_diem.TD_AP_DUNG = (SELECT max(thang_diem.TD_AP_DUNG) FROM thang_diem);
 END$$
 
 DELIMITER ;
@@ -178,28 +242,28 @@ CREATE TABLE IF NOT EXISTS `ct_hp` (
 --
 
 INSERT INTO `ct_hp` (`ID_SV`, `ID_HP`, `DIEM_CHU`, `DIEM_10`, `DIEM_4`, `CAI_THIEN`, `TL`) VALUES
-(1, 1, 'A', 9.8, 4, 1, 1),
-(1, 3, NULL, NULL, NULL, 0, 0),
-(1, 6, NULL, NULL, NULL, 0, 0),
-(3, 1, 'B', 7.8, 3.5, 0, 1),
-(3, 6, NULL, NULL, NULL, 0, 0),
-(3, 7, 'A', 9, 4, 0, 1),
-(3, 8, 'F', 3.5, 0, 0, 0),
-(3, 9, NULL, NULL, NULL, 0, 0),
+(1, 1, 'B+', 8, 3.5, 1, 1),
+(1, 3, 'F', 3, 0, 0, 0),
+(1, 4, 'B', 7.8, 3, 0, 1),
+(1, 5, 'B', 7.6, 3, 0, 1),
+(1, 6, 'D', 4, 1, 0, 1),
+(1, 7, 'A', 9, 4, 0, 1),
+(1, 8, 'F', 3.5, 0, 0, 0),
+(1, 9, 'M', 11, 5, 0, 1),
+(1, 10, 'B+', 8.7, 3.5, 1, 1),
+(3, 2, 'F', 3, 0, 0, 0),
 (8, 1, 'D', 4.1, 1, 0, 1),
-(8, 5, 'B', 7.6, 3, 0, 1),
 (8, 6, 'C', 5, 2, 1, 1),
-(8, 7, NULL, NULL, NULL, 0, 0),
-(8, 9, NULL, NULL, NULL, 0, 0),
+(8, 7, NULL, NULL, NULL, 0, 1),
+(8, 9, NULL, NULL, NULL, 0, 1),
 (8, 10, 'D+', 4.7, 1.5, 0, 1),
 (9, 4, 'B+', 8.6, 3.5, 0, 1),
-(11, 6, NULL, NULL, NULL, 0, 0),
+(11, 6, NULL, NULL, NULL, 0, 1),
 (16, 1, 'C', 5.4, 2, 0, 1),
 (16, 3, 'A', 9.6, 4, 0, 1),
 (17, 4, 'B', 7.2, 3, 0, 1),
-(17, 5, 'F', 3.4, 0, 0, 0),
-(17, 6, 'C+', 5.6, 2.5, 0, 1),
-(17, 10, 'B+', 8.7, 3.5, 1, 1);
+(17, 5, 'F', 3.4, 0, 0, 1),
+(17, 6, 'C+', 5.6, 2.5, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -237,7 +301,7 @@ CREATE TABLE IF NOT EXISTS `hp` (
   `ID_MH` int(10) unsigned NOT NULL,
   `ID_HK_NH` int(10) unsigned NOT NULL,
   `ID_GV` int(10) unsigned NOT NULL,
-  `MA_HP` varchar(4) COLLATE utf8_bin NOT NULL,
+  `MA_HP` varchar(8) COLLATE utf8_bin NOT NULL,
   `LT` tinyint(4) NOT NULL,
   `TH` tinyint(4) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
@@ -414,18 +478,17 @@ INSERT INTO `sv` (`ID`, `ID_LOP`, `ID_KHOA`, `ID_CN`, `MSSV`, `HO_TEN`, `GIOI_TI
 
 CREATE TABLE IF NOT EXISTS `thang_diem` (
   `ID` int(10) unsigned NOT NULL,
-  `THANG_DIEM` varchar(60) COLLATE utf8_bin NOT NULL,
-  `TD_AP_DUNG` date NOT NULL,
-  `BAC` tinyint(1) NOT NULL
+  `THANG_DIEM` varchar(150) COLLATE utf8_bin NOT NULL,
+  `TD_AP_DUNG` date NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Dumping data for table `thang_diem`
 --
 
-INSERT INTO `thang_diem` (`ID`, `THANG_DIEM`, `TD_AP_DUNG`, `BAC`) VALUES
-(1, '[A=9-Y,B+=8-Y,B=7-Y,C+=6.5-Y,C=6-Y,D+=5-Y,D=4.0-Y,F=0-N]', '2010-08-01', 0),
-(2, '[A=9-Y,B+=8-Y,B=7-Y,C+=6.5-Y,C=6-Y,D+=5-N,D=4.0-N,F=0-N]', '2010-08-01', 1);
+INSERT INTO `thang_diem` (`ID`, `THANG_DIEM`, `TD_AP_DUNG`) VALUES
+(1, 'A-9-Y-Y-4.0,B-7-Y-Y-3.0,C-6-Y-Y-2.0,D-4.0-Y-Y-1.0,F-0-N-N-0,M-11-Y-N-5,I-11-N-N-5,W-11-N-N-5', '2010-08-01'),
+(2, 'A-9-Y-Y-4.0,B+-8-Y-Y-3.5,B-7-Y-Y-3.0,C+-6.5-Y-Y-2.5,C-6-Y-Y-2.0,D+-5-Y-Y-1.5,D-4.0-Y-Y-1.0,F-0-N-N-0,M-11-Y-N-5,I-11-N-N-5,W-11-N-N-5', '2012-08-01');
 
 -- --------------------------------------------------------
 
