@@ -1,0 +1,13 @@
+package models;
+
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+
+public class SortByKeyAscending implements Comparator<Map.Entry<hk_nk, List<sv_diem_hp>>>{
+ 
+    @Override
+    public int compare(Map.Entry<hk_nk, List<sv_diem_hp>> entry1, Map.Entry<hk_nk, List<sv_diem_hp>> entry2){
+        return (entry1.getKey()).compareTo( entry2.getKey());
+    }
+}

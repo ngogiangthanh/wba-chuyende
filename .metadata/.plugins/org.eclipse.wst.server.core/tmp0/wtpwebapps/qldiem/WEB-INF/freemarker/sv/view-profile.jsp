@@ -75,20 +75,20 @@
 					<!-- BEGIN CONTENT -->
 					<div class="panel panel-default">
 						<div class="panel-heading">
-							<i class="glyphicon glyphicon-th-list"></i>&nbsp;Thông tin sinh viên
+							<i class="glyphicon glyphicon-pencil"></i>&nbsp;Thông tin sinh viên
 						</div>
 						<div class="panel-body">
-						<ul>
+						<ul class="list-group">
 							<#list information.entrySet() as entry>  
 							<#switch entry.key>
 							 <#case "1_MSSV">
-						     	<li>Mã số sinh viên:&nbsp;${entry.value}</li>
+						     	<li class="list-group-item">Mã số sinh viên:&nbsp;${entry.value}</li>
 							    <#break>
 							  <#case "2_HO_TEN">
-						     	<li>Họ tên sinh viên:&nbsp;${entry.value}</li>
+						     	<li class="list-group-item">Họ tên sinh viên:&nbsp;${entry.value}</li>
 							    <#break>
 							  <#case "3_GIOI_TINH">
-						     	<li>Giới tính:&nbsp;
+						     	<li class="list-group-item">Giới tính:&nbsp;
 						     		<#if entry.value == '0'>
 						     			Nam
 						     		<#elseif entry.value == '1'>
@@ -97,19 +97,19 @@
 						     	</li>
 							    <#break>
 							  <#case "4_NGAY_SINH">
-						     	<li>Ngày sinh:&nbsp;${entry.value}</li>
+						     	<li class="list-group-item">Ngày sinh:&nbsp;${entry.value}</li>
 							    <#break>
 							  <#case "5_LOP">
-						     	<li>Lớp:&nbsp;${entry.value}</li>
+						     	<li class="list-group-item">Lớp:&nbsp;${entry.value}</li>
 							    <#break>	
 							  <#case "6_TEN_LOP">
-						     	<li>Tên lớp:&nbsp;${entry.value}</li>
+						     	<li class="list-group-item">Tên lớp:&nbsp;${entry.value}</li>
 							    <#break>	
 							  <#case "7_CHUYEN_NGANH">
-						     	<li>Chuyên ngành:&nbsp;${entry.value}</li>
+						     	<li class="list-group-item">Chuyên ngành:&nbsp;${entry.value}</li>
 							    <#break>	
 							  <#case "8_KHOA">
-						     	<li>Khoa:&nbsp;${entry.value}</li>
+						     	<li class="list-group-item">Khoa:&nbsp;${entry.value}</li>
 							    <#break>								    						    						    						    
 							</#switch>
 						     </#list>

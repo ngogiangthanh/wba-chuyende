@@ -79,9 +79,10 @@
 							<i class="glyphicon glyphicon-th-list"></i>&nbsp;Xem kết quả học tập
 						</div>
 						<div class="panel-body">
+						<div class="alert alert-success text-center" role="alert">
 							<form action="view-mark.html" method="post">
 								Năm học:&nbsp;
-								<select name="nk"  id="id_nk">
+								<select name="nk"  id="id_nk" >
 								<#list hknk.entrySet() as entry>  
 									<option value="${entry.key}">${entry.key}</option>
 								</#list>
@@ -93,11 +94,14 @@
 									<option value="3">Hè</option>
 									<option value="0">Tất cả</option>
 								</select>&nbsp; 
-								<input type="submit" value="Liệt kê" />
+								<input type="submit" value="Liệt kê" class="btn btn-primary"/>
 							</form>
-							<br />
-							<table cellspacing="0" cellpadding="0" width="100%" border="0"
-								style="border: 1px solid #ccc">
+							</div>
+						<#if dsDiemHP?has_content>
+							<#list dsDiemHP.entrySet() as hknk_ds_hocPhan>  
+							<#assign tsTCDK = 0 >
+							<table class="table table-bordered text-center">
+							<tr><td colspan="10" class="well">Năm học:&nbsp;${hknk_ds_hocPhan.key.nk}&nbsp;-&nbsp;Học kỳ:&nbsp;${hknk_ds_hocPhan.key.hk}</td></tr>
 								<tr>
 									<td>STT</td>
 									<td>Mã học phần</td>
@@ -107,37 +111,59 @@
 									<td>Tín chỉ</td>
 									<td>Điểm chữ</td>
 									<td>Điểm số</td>
+									<td>Cải thiện</td>
 									<td>Tích lũy</td>
 								</tr>
-								<#list dsDiemHP.entrySet() as hocPhan>  
-								<tr>
-									<td>${hocPhan.key}</td>
-									<td>${hocPhan.value.maMH}</td>
-									<td>${hocPhan.value.tenHP}</td>
+								<#assign listHocPhan = hknk_ds_hocPhan.value>
+								<#if listHocPhan?has_content>
+								<#list listHocPhan as hocPhan>  
+								<tr style="border: 1px solid #ccc">
+									<td>${hocPhan.stt}</td>
+									<td>${hocPhan.maMH}</td>
+									<td>${hocPhan.tenHP}</td>
 									<td>
-										<#if hocPhan.value.hpDieuKien == "1">
+										<#if hocPhan.hpDieuKien == "1">
 											x
 										</#if>
 									</td>
-									<td>${hocPhan.value.maHP}</td>
-									<td>${hocPhan.value.soTC}</td>
-									<td><#if hocPhan.value.diemChu??>${hocPhan.value.diemChu}</#if></td>
-									<td><#if hocPhan.value.diem10??>${hocPhan.value.diem10}</#if></td>
+									<td>${hocPhan.maHP}</td>
 									<td>
-										<#if hocPhan.value.tichLuy == "1">
+										<#assign tsTCDK = tsTCDK + hocPhan.soTC >	
+										${hocPhan.soTC}
+									</td>
+									<td><#if hocPhan.diemChu??>${hocPhan.diemChu}</#if></td>
+									<td><#if hocPhan.diem10??>${hocPhan.diem10}</#if></td>
+									<td>
+										<#if hocPhan.caiThien == "1">
+											*
+										</#if>
+									</td>
+									<td>
+										<#if hocPhan.tichLuy == "1">
 											*
 										</#if>
 									</td>
 								</tr>
 								</#list>
+								<#else>
+								<tr>
+									<td colspan="10">
+										Không có học phần nào.
+									</td>
+								</tr>
+								</#if>
 							</table>
-							<ul>
-								<li>Tổng số tín chỉ đăng ký</li>
-								<li>Điểm trung bình học kỳ</li>
-								<li>Tổng số tín chỉ tích lũy học kỳ</li>
-								<li>Điểm trung bình tích lũy</li>
-								<li>Tổng số tín chỉ tích lũy</li>
+							<ul class="col-xs-4 col-sm-4 col-md-4 col-lg-4 list-group">
+								<li class="list-group-item">Tổng số tín chỉ đăng ký:&nbsp;<span class="badge">${tsTCDK}</span></li>
+								<li class="list-group-item">Điểm trung bình học kỳ:&nbsp;<span class="badge">-1</span></li>
+								<li class="list-group-item">Tổng số tín chỉ tích lũy học kỳ:&nbsp;<span class="badge">-1</span></li>
+								<li class="list-group-item">Điểm trung bình tích lũy:&nbsp;<span class="badge">-1</span></li>
+								<li class="list-group-item">Tổng số tín chỉ tích lũy:&nbsp;<span class="badge">-1</span></li>
 							</ul>
+							</#list>
+							<#else>
+								<div class="alert alert-warning" role="alert">Học kỳ chưa mở. Vui lòng chọn lại học kỳ - năm học khác.</div>
+							</#if>
 						</div>
 					</div>
 					<!-- END CONTENT -->
@@ -160,10 +186,10 @@
 											'glyphicon-plus-sign').toggleClass(
 											'glyphicon-minus-sign');
 								});
-						<#if nk != "">
+						<#if nk?has_content>
 							$("select#id_nk").val("${nk}");
 						</#if>
-						<#if hk != "">
+						<#if hk?has_content>
 							$("select#id_hk").val("${hk}");
 						</#if>
 					});

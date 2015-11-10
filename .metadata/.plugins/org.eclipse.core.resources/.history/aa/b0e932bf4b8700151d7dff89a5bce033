@@ -1,0 +1,22 @@
+package models;
+
+public class hk_nk {
+	private String nk;
+	private String hk;
+	
+	public void setHk(String hk) {
+		this.hk = hk;
+	}
+	
+	public void setNk(String nk) {
+		this.nk = nk;
+	}
+	
+	public String getHk() {
+		return hk;
+	}
+	
+	public String getNk() {
+		return nk;
+	}
+}
