@@ -1223,3 +1223,4 @@
 0:0:0:0:0:0:0:1 - - [10/Nov/2015:19:01:51 +0700] "POST /qldiem/view-mark.html HTTP/1.1" 200 6595
 0:0:0:0:0:0:0:1 - - [10/Nov/2015:19:10:46 +0700] "POST /qldiem/view-mark.html HTTP/1.1" 200 8195
 0:0:0:0:0:0:0:1 - - [10/Nov/2015:19:10:55 +0700] "POST /qldiem/view-mark.html HTTP/1.1" 200 14033
+0:0:0:0:0:0:0:1 - - [10/Nov/2015:19:23:38 +0700] "GET /qldiem/view-mark.html HTTP/1.1" 200 6238

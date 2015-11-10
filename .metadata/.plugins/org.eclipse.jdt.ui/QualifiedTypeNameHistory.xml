@@ -20,7 +20,6 @@
 <fullyQualifiedTypeName name="com.mysql.jdbc.PreparedStatement"/>
 <fullyQualifiedTypeName name="com.mysql.jdbc.CallableStatement"/>
 <fullyQualifiedTypeName name="java.lang.Integer"/>
-<fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="models.hk_nk"/>
 <fullyQualifiedTypeName name="java.util.Map"/>
 <fullyQualifiedTypeName name="java.util.Comparator"/>
@@ -28,4 +27,10 @@
 <fullyQualifiedTypeName name="java.util.Collections"/>
 <fullyQualifiedTypeName name="java.util.LinkedHashMap"/>
 <fullyQualifiedTypeName name="org.apache.struts2.interceptor.ServletRequestAware"/>
+<fullyQualifiedTypeName name="java.text.SimpleDateFormat"/>
+<fullyQualifiedTypeName name="java.util.Date"/>
+<fullyQualifiedTypeName name="actions.ThangDiemAction"/>
+<fullyQualifiedTypeName name="models.muc_chuyen_doi"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="models.thang_diem"/>
 </qualifiedTypeNameHistroy>

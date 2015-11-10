@@ -1,6 +1,0 @@
-package models;
-
-public class sv_diem_hp {
-	private String maHP;
-	private String tenHP;
-}

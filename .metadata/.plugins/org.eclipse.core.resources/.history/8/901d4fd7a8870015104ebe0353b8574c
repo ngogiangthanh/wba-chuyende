@@ -112,7 +112,6 @@ public class SVAction extends ActionSupport{
 			while(rs.next()){
 				//Khi hàng đó không null
 				if(!rs.wasNull()){
-					//Cập nhật dữ liệu ban đầu
 					hk_nk key_hknk = new hk_nk(rs.getString("NK"),rs.getInt("HK"));
 					List<sv_diem_hp> list_ds_diem_hp;
 					
@@ -151,9 +150,6 @@ public class SVAction extends ActionSupport{
 					list_ds_diem_hp.add(hp);
 					//Thêm toàn bộ vào ds điểm ho
 					this.dsDiemHP.put(key_hknk, list_ds_diem_hp);
-					
-					//Cập nhật dữ liệu tbtlc, tstctl
-					
 					}
 			}
 			//Đóng kết nối

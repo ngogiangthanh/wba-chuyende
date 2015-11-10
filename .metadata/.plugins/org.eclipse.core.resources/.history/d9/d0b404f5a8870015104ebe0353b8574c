@@ -5,7 +5,6 @@ import java.util.Objects;
 public class hk_nk implements Comparable<hk_nk> {
 	private String nk;
 	private int hk;
-	private float tbctl;
 
 	public hk_nk(String nk, int hk) {
 		this.nk = nk;
