@@ -56,7 +56,7 @@
 </style>
 	<div class="container">
 		<div class="row">
-			<div class="col-sm-12 col-xs-12 pull-right">
+			<div class="col-sm-12 col-xs-12 col-md-12 col-lg-12 pull-right">
 				<div class="row">
 					<!-- BEGIN CONTENT -->
 					<div id="login">

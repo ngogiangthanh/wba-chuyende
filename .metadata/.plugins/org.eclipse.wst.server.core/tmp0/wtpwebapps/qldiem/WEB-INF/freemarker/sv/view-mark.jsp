@@ -71,7 +71,7 @@
 </style>
 	<div class="container">
 		<div class="row">
-			<div class="col-sm-12 col-xs-12 pull-right">
+			<div class="col-sm-12 col-xs-12 col-md-12 col-lg-12 pull-right">
 				<div class="row">
 					<!-- BEGIN CONTENT -->
 					<div class="panel panel-default">
@@ -99,18 +99,19 @@
 							</div>
 						<#if dsDiemHP?has_content>
 							<#list dsDiemHP.entrySet() as hknk_ds_hocPhan>  
-							<#assign tsTCDK = 0 >
+							<#assign tstcdkhk = 0 >
 							<#assign tstchk = 0 >
 							<#assign tdtbHK = 0 >
 							<#assign tstctlhk = 0 >
+							 <div class="table-responsive"> 
 							<table class="table table-bordered text-center">
 							<tr><td colspan="10" class="well">Năm học:&nbsp;${hknk_ds_hocPhan.key.nk}&nbsp;-&nbsp;Học kỳ:&nbsp;${hknk_ds_hocPhan.key.hk}</td></tr>
 								<tr>
 									<th class="text-center info">STT</th>
-									<th class="text-center info">Mã học phần</th>
-									<th class="text-center info">Tên học phần</th>
+									<th class="text-center info">Mã môn học</th>
+									<th class="text-center info">Tên môn học</th>
 									<th class="text-center info">Điều kiện</th>
-									<th class="text-center info">Nhóm</th>
+									<th class="text-center info">Nhóm học phần</th>
 									<th class="text-center info">Tín chỉ</th>
 									<th class="text-center info">Điểm chữ</th>
 									<th class="text-center info">Điểm số</th>
@@ -130,11 +131,13 @@
 										</#if>
 									</td>
 									<td>${hocPhan.maHP}</td>
-									<td>
-										<#assign tsTCDK = tsTCDK + hocPhan.soTC >		
+									<td>	
 										${hocPhan.soTC}
 									</td>
 									<td>
+										<#if hocPhan.diemChu != "W">
+											<#assign tstcdkhk = tstcdkhk + hocPhan.soTC >	
+										</#if>
 										<#if hocPhan.diemChu??>
 											${hocPhan.diemChu}
 										</#if>
@@ -168,8 +171,9 @@
 									<#assign tstchk = 1 >
 								</#if>
 							</table>
-							<ul class="col-xs-4 col-sm-4 col-md-4 col-lg-4 list-group">
-								<li class="list-group-item list-group-item-success">Tổng số tín chỉ đăng ký:&nbsp;<span class="badge">${tsTCDK}</span></li>
+							</div>
+							<ul class="list-group pull-left">
+								<li class="list-group-item list-group-item-success">Tổng số tín chỉ đăng ký:&nbsp;<span class="badge">${tstcdkhk}</span></li>
 								<li class="list-group-item list-group-item-info">Điểm trung bình học kỳ:&nbsp;<span class="badge">${(tdtbHK/tstchk)?string("0.00")}</span></li>
 								<li class="list-group-item list-group-item-success">Tổng số tín chỉ tích lũy học kỳ:&nbsp;<span class="badge">${tstctlhk}</span></li>
 								<li class="list-group-item list-group-item-info">Điểm trung bình tích lũy:&nbsp;<span class="badge">${hknk_ds_hocPhan.key.tbctl?string("0.00")}</span></li>

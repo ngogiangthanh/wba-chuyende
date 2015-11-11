@@ -11,7 +11,7 @@ import com.mysql.jdbc.Statement;
 public class Connect {
 	private Connection conn = null;
 	private String hostname = "jdbc:mysql://localhost:3306/";
-	private String database = "qldiem";
+	private String database = "qldiem_v2";
 	private String username = "morte";
 	private String password = "morte";
 
