@@ -9,11 +9,12 @@
 <link href="public/css/bootstrap.min.css" rel="stylesheet" />
 <!-- Custom styles for this template -->
 <link href="public/css/admin.css" rel="stylesheet" />
+<link href="public/css/toastr.css" rel="stylesheet" type="text/css"/>
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
-        <script src="public/js/html5shiv.js"></script>
-        <script src="public/js/respond.min.js"></script>
-        <![endif]-->
+<script src="public/js/html5shiv.js"></script>
+<script src="public/js/respond.min.js"></script>
+<![endif]-->
 </head>
 <body>
 	<nav class="navbar navbar-inverse" role="navigation">
@@ -32,28 +33,6 @@
 		</div>
 		<!-- /.container-fluid -->
 	</nav>
-	<style type="text/css">
-.errors {
-	background-color: #FFCCCC;
-	border: 1px solid #CC0000;
-	width: 400px;
-	margin-bottom: 8px;
-}
-
-.errors li {
-	list-style: none;
-}
-
-.success {
-	background-color: #DDFFDD;
-	border: 1px solid #009900;
-	width: 200px;
-}
-
-.success li {
-	list-style: none;
-}
-</style>
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-12 col-xs-12 col-md-12 col-lg-12 pull-right">
@@ -64,7 +43,7 @@
 							<div class="panel panel-default">
 								<div class="panel-heading ">
 									<h4>
-										<i class="glyphicon glyphicon-cog"></i>&nbsp;Login
+										<i class="glyphicon glyphicon-cog"></i>&nbsp;Đăng nhập hệ thống
 									</h4>
 								</div>
 								<div class="panel-body">
@@ -73,11 +52,11 @@
 										<div class="form-group">
 											<input name="username" type="text"
 												class="form-control input-lg"
-												placeholder="Nhập MSCB hoặc MSSV" required="" autofocus>
+												placeholder="MSCB hoặc MSSV" required="" autofocus>
 										</div>
 										<div class="form-group">
 											<input name="password" type="password"
-												class="form-control input-lg" placeholder="Nhập mật khẩu"
+												class="form-control input-lg" placeholder="Mật khẩu"
 												required="">
 										</div>
 										<button class="btn btn-lg btn-primary btn-block" type="submit">Đăng
@@ -87,11 +66,6 @@
 							</div>
 							<!-- /container -->
 						</div>
-						<#if (actionErrors?? & actionErrors?size>0)>
-						<div class="errors"><@s.actionerror /></div>
-						</#if> <#if (actionMessages?? & actionMessages?size>0)>
-						<div class="welcome"><@s.actionmessage /></div>
-						</#if>
 						<!-- END CONTENT -->
 					</div>
 				</div>
@@ -103,9 +77,27 @@
 		<script type="text/javascript" src="public/js/jquery-1.10.0.min.js"></script>
 		<!-- Include all compiled plugins (below), or include individual files as needed -->
 		<script type="text/javascript" src="public/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="public/js/toastr.js"></script>
 		<script type="text/javascript">
 			$(document).ready(
 					function() {
+						toastr.options = {
+						  "closeButton": true,
+						  "debug": true,
+						  "newestOnTop": false,
+						  "progressBar": true,
+						  "positionClass": "toast-top-right",
+						  "preventDuplicates": false,
+						  "onclick": null,
+						  "showDuration": "300",
+						  "hideDuration": "1000",
+						  "timeOut": "3000",
+						  "extendedTimeOut": "1000",
+						  "showEasing": "swing",
+						  "hideEasing": "linear",
+						  "showMethod": "fadeIn",
+						  "hideMethod": "fadeOut"
+						}
 						$('#sidebar .panel-heading').click(
 								function() {
 									$('#sidebar .list-group').toggleClass(
@@ -120,18 +112,25 @@
 							var password = document
 									.getElementsByName("password")[0].value;
 							if (username == "") {
-								alert("Tài khoản không hợp lệ!");
+								toastr["error"]("Tài khoản không hợp lệ!")
 								document.getElementsByName("username")[0]
 										.focus();
 								return false;
 							} else if (password == "") {
-								alert("Mật khẩu không hợp lệ!");
+								toastr["error"]("Mật khẩu không hợp lệ!")
 								document.getElementsByName("password")[0]
 										.focus();
 								return false;
 							} else
 								return true;
 						}
+						
+						<#if (actionErrors?? & actionErrors?size>0)>
+							toastr["error"]("${actionErrors}");
+						</#if> <#if (actionMessages?? & actionMessages?size>0)>
+							toastr["error"]("${actionMessages}");
+						</#if>
+						
 					});
 		</script>
 </body>
