@@ -117,6 +117,7 @@
 						</ul>
 						</div>
 					</div>
+					</div>
 					<!-- END CONTENT -->
 				</div>
 				<!--/span-->

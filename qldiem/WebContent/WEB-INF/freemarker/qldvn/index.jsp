@@ -77,8 +77,17 @@
 				<div class="row">
 					<!-- BEGIN CONTENT -->
 					 <div id="menu">
-                            <a href="." target="_blank" class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
-                                <i class="glyphicon glyphicon-pencil"></i>&nbsp;Báo cáo  - thống kê
+                            <a href="qldvn-nohp.html" class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
+                                <i class="glyphicon glyphicon-bell"></i>&nbsp;Thống kê sinh viên còn nợ học phần
+                            </a>
+                            <a href="qldvn-khenthuongsv.html" class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
+                                <i class="glyphicon glyphicon-gift"></i>&nbsp;Thống kê sinh viên được khen thưởng
+                            </a>
+                            <a href="qldvn-kyluat.html" class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
+                                <i class="glyphicon glyphicon-warning-sign"></i>&nbsp;Thống kê sinh viên bị kỷ luật
+                            </a>
+                            <a href="qldvn-nhapdiem.html" class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
+                                <i class="glyphicon glyphicon-pencil"></i>&nbsp;Nhập điểm cho sinh viên
                             </a>
                         </div>
 					<!-- END CONTENT -->
@@ -86,6 +95,7 @@
 				<!--/span-->
 			</div>
 			<!--/row-->
+		</div>
 		</div>
 		<!--/.container-->
 		<script type="text/javascript" src="public/js/jquery-1.10.0.min.js"></script>

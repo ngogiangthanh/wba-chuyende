@@ -242,6 +242,7 @@
 	                        <em>(Ký và ghi rõ họ tên)</em>
 	                        </p>
                         </div>
+                        </div>
                         <!-- END CONTENT -->
                     </div>
                     <!--/span-->

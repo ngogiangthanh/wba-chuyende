@@ -184,6 +184,7 @@
 								<div class="alert alert-warning" role="alert">Học kỳ chưa mở. Vui lòng chọn lại học kỳ - năm học khác.</div>
 							</#if>
 						</div>
+						</div>
 					</div>
 					<!-- END CONTENT -->
 				</div>

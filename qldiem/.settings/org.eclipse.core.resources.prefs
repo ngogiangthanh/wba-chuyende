@@ -2,6 +2,7 @@ eclipse.preferences.version=1
 encoding//WebContent/WEB-INF/freemarker/admin/index.jsp=UTF-8
 encoding//WebContent/WEB-INF/freemarker/direct.jsp=UTF-8
 encoding//WebContent/WEB-INF/freemarker/gv/index.jsp=UTF-8
+encoding//WebContent/WEB-INF/freemarker/gv/view-lophp.jsp=UTF-8
 encoding//WebContent/WEB-INF/freemarker/login.jsp=UTF-8
 encoding//WebContent/WEB-INF/freemarker/pdt/index.jsp=UTF-8
 encoding//WebContent/WEB-INF/freemarker/qldvn/index.jsp=UTF-8

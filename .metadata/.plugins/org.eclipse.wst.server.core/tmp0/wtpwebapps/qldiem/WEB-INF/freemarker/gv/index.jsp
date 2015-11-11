@@ -77,10 +77,10 @@
 				<div class="row">
 					<!-- BEGIN CONTENT -->
 					    <div id="menu">
-                            <a href="gv-lopcv.html" target="_blank" class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
+                            <a href="gv-lopcv.html" class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
                                 <i class="glyphicon glyphicon-home"></i>&nbsp;Các lớp cố vấn
                             </a>
-                            <a href="gv-lophp.html" target="_blank" class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
+                            <a href="gv-lophp.html" class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
                                 <i class="glyphicon glyphicon-time"></i>&nbsp;Các lớp học phần giảng dạy
                             </a>
                         </div>
@@ -89,6 +89,7 @@
 				<!--/span-->
 			</div>
 			<!--/row-->
+		</div>
 		</div>
 		<!--/.container-->
 		<script type="text/javascript" src="public/js/jquery-1.10.0.min.js"></script>

@@ -77,8 +77,8 @@
 				<div class="row">
 					<!-- BEGIN CONTENT -->
 					  <div id="menu">
-                            <a href="." target="_blank" class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
-                                <i class="glyphicon glyphicon-pencil"></i>&nbsp;Thống kê - báo cáo
+                            <a href="pdt-indiem.html" class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
+                                <i class="glyphicon glyphicon-print"></i>&nbsp;In bảng điểm
                             </a>
                         </div>
 					<!-- END CONTENT -->
@@ -86,6 +86,7 @@
 				<!--/span-->
 			</div>
 			<!--/row-->
+		</div>
 		</div>
 		<!--/.container-->
 		<script type="text/javascript" src="public/js/jquery-1.10.0.min.js"></script>

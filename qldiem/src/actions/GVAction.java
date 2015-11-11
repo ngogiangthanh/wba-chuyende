@@ -26,4 +26,18 @@ public class GVAction extends ActionSupport {
 		session.put("title", "Trang chủ giảng viên");
 		return "index";
 	}
+	
+	public String getViewLopHP(){
+		this.session = ActionContext.getContext().getSession();
+		if(!Home.isRole(session,1)){
+			if(!session.isEmpty()){
+				session.clear();
+				addActionError("Truy xuất sai nhóm quyền!");
+				addActionMessage("Tự động đăng xuất để đăng nhập nhóm quyền phù hợp!");
+				}
+			return "error";
+		}
+		session.put("title", "Trang chủ giảng viên");
+		return "view-lophp";
+	}
 }

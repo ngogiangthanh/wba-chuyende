@@ -66,6 +66,7 @@
 							</div>
 							<!-- /container -->
 						</div>
+						</div>
 						<!-- END CONTENT -->
 					</div>
 				</div>

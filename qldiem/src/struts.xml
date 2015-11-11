@@ -69,12 +69,39 @@
 			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
 			</result>
 		</action>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		<action name="gv-index" method="getIndex" class="actions.GVAction">
 			<result type="freemarker" name="index">/WEB-INF/freemarker/gv/index.jsp
 			</result>
 			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
 			</result>
 		</action>
+		<action name="gv-lophp" method="getViewLopHP" class="actions.GVAction">
+			<result type="freemarker" name="view-lophp">/WEB-INF/freemarker/gv/view-lophp.jsp
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+		</action>
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		<action name="qldvn-index" method="getIndex" class="actions.QLDVNAction">
 			<result type="freemarker" name="index">/WEB-INF/freemarker/qldvn/index.jsp
 			</result>
