@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<constant name="struts.devMode" value="false" />
+	<constant name="struts.action.extension" value="html" />
+	<constant name="struts.custom.i18n.resources" value="ApplicationResources" />
+	<package name="qldiem" extends="struts-default" namespace="/">
+		<!-- Add your actions here -->
+		<action name="index" method="getIndex" class="actions.Home">
+			<result type="freemarker" name="login">/WEB-INF/freemarker/login.jsp
+			</result>
+			<result type="freemarker" name="welcome">/WEB-INF/freemarker/direct.jsp
+			</result>
+			<result type="freemarker" name="directing_page">${pageDirect}
+			</result>
+		</action>
+		<action name="login" method="login" class="actions.LoginAction">
+			<result type="freemarker" name="welcome">/WEB-INF/freemarker/direct.jsp
+			</result>
+			<result type="freemarker" name="directing_page">${pageDirect}
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+			<result type="freemarker" name="input">/WEB-INF/freemarker/login.jsp
+			</result>
+		</action>
+		<action name="logout" method="logout" class="actions.LogoutAction">
+			<result type="freemarker" name="success">/WEB-INF/freemarker/login.jsp
+			</result>
+		</action>
+		<action name="sv-index" method="getIndex" class="actions.SVAction">
+			<result type="freemarker" name="index">/WEB-INF/freemarker/sv/index.jsp
+			<result type="freemarker" name="error">/WEB-INF/freemarker/sv/index.jsp
+			</result>
+		</action>
+		<action name="view-profile" method="getViewProfile" class="actions.SVAction">
+			<result type="freemarker" name="view-profile">/WEB-INF/freemarker/sv/view-profile.jsp
+			</result>
+		</action>
+		<action name="view-mark" method="getViewMark" class="actions.SVAction">
+			<result type="freemarker" name="view-mark">/WEB-INF/freemarker/sv/view-mark.jsp
+			</result>
+		</action>
+		<action name="print-mark" method="getPrintMark" class="actions.SVAction">
+			<result type="freemarker" name="print-mark">/WEB-INF/freemarker/sv/print-mark.jsp
+			</result>
+		</action>
+		<action name="printed-mark" method="getPrintedMark" class="actions.SVAction">
+			<result type="freemarker" name="printed-mark">/WEB-INF/freemarker/sv/printed-mark.jsp
+			</result>
+			<result type="freemarker" name="print-mark">/WEB-INF/freemarker/sv/print-mark.jsp
+			</result>
+		</action>
+		<action name="gv-index" method="getIndex" class="actions.GVAction">
+			<result type="freemarker" name="index">/WEB-INF/freemarker/gv/index.jsp
+			</result>
+		</action>
+	</package>
+</struts>

@@ -4,7 +4,7 @@
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Trang chủ sinh viên</title>
+        <title>${title}</title>
         <link rel="shortcut icon" href="public/img/logo_dhct.ico" />
         <!-- Bootstrap -->
         <link href="public/css/bootstrap.min.css" rel="stylesheet" />
@@ -73,10 +73,10 @@
                     <div class="row">
                         <!-- BEGIN CONTENT -->
                         <div id="menu">
-                            <a href="view-mark.html" class="col-6 col-sm-4 col-lg-3"> <i
+                            <a href="view-mark.html" class="col-sm-6 col-xs-6 col-md-6 col-lg-6"> <i
                                     class="glyphicon glyphicon-book"></i>&nbsp;Xem điểm học phần
                             </a>
-                            <a href="print-mark.html" class="col-6 col-sm-4 col-lg-3"> <i
+                            <a href="print-mark.html" class="col-sm-6 col-xs-6 col-md-6 col-lg-6"> <i
                                     class="glyphicon glyphicon-print"></i>&nbsp;In bảng điểm cá nhân
                             </a>
                         </div>

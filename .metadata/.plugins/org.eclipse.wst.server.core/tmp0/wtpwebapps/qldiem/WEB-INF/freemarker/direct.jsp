@@ -11,9 +11,9 @@
 <link href="public/css/admin.css" rel="stylesheet" />
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
-        <script src="public/js/html5shiv.js"></script>
-        <script src="public/js/respond.min.js"></script>
-        <![endif]-->
+<script src="public/js/html5shiv.js"></script>
+<script src="public/js/respond.min.js"></script>
+<![endif]-->
 </head>
 <body>
 	<nav class="navbar navbar-inverse" role="navigation">
@@ -26,14 +26,48 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href=""><i
-					class="glyphicon glyphicon-th-large"></i>&nbsp;Đăng nhập hệ thống</a>
+				<a class="navbar-brand" href="index.html"><i
+					class="glyphicon glyphicon-th-large"></i>&nbsp;Trang chủ</a>
 			</div>
+			<div class="collapse navbar-collapse"
+                     id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown" style="font-size: 15px"><a href="#"
+                                                                        class="dropdown-toggle" data-toggle="dropdown">Xin chào, ${username}&nbsp;<b
+                                    class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                            	<#if roles?size gt 1>
+                            	 <li><a href="index.html"><i
+                                            class="glyphicon glyphicon-list-alt"></i>&nbsp;Bảng điều khiển</a></li>
+                            	</#if>
+                                <li><a href="view-profile-cb.html"><i
+                                            class="glyphicon glyphicon-user"></i>&nbsp;Thông tin cán bộ</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#"
+                                       onclick="if (confirm('Xác nhận đăng xuất hệ thống?')) {
+                                                                            location.href = 'logout.html';
+                                                                            return true;
+                                                                        } else {
+                                                                            return false;
+                                                                        }"><i
+                                            class="glyphicon glyphicon-off"></i>&nbsp;Đăng xuất</a></li>
+                            </ul></li>
+                    </ul>
+                </div>
 		</div>
 		<!-- /.container-fluid -->
 	</nav>
-	<style type="text/css">
-</style>
+    <style type="text/css">
+            .dropdown-menu>li>a:hover {
+                color: #000;
+                font-weight: normal;
+                font-size: 14px;
+            }
+
+            .dropdown-menu>li>a {
+                color: #000;
+            }
+        </style>
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-12 col-xs-12 col-md-12 col-lg-12 pull-right">
@@ -43,18 +77,12 @@
 						<div class="container">
 							<div class="panel panel-default">
 								<div class="panel-heading ">
-									<h4>
-										<i class="glyphicon glyphicon-cog"></i>&nbsp; Lựa chọn nhóm
-										quyền sử dụng
-									</h4>
+										<i class="glyphicon glyphicon-cog"></i>&nbsp; Lựa chọn nhóm quyền sử dụng
 								</div>
-								<div class="panel-body">
+								<div class="panel-body list-group">
 									<#list roles.entrySet() as entry>
-										<a href="${entry.key}.html">${entry.value.name}</a><br /> 
+										<a class="list-group-item" href="${entry.key}.html"><i class="glyphicon glyphicon-hand-right"></i>&nbsp;${entry.value.name}</a>
 									</#list>
-									<h3>
-										<a href="logout.html">Đăng xuất</a>
-									</h3>
 								</div>
 							</div>
 							<!-- /container -->

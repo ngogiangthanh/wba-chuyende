@@ -13,6 +13,7 @@ public class LogoutAction extends ActionSupport {
 		Map<String, Object> session = ActionContext.getContext().getSession();
 		if(!session.isEmpty())
 			session.clear();
+		addActionMessage("Đăng xuất hoàn tất!");
 		return "success";
 	}
 }

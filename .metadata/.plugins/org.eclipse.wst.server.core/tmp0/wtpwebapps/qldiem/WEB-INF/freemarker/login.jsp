@@ -91,7 +91,7 @@
 						  "onclick": null,
 						  "showDuration": "300",
 						  "hideDuration": "1000",
-						  "timeOut": "3000",
+						  "timeOut": "5000",
 						  "extendedTimeOut": "1000",
 						  "showEasing": "swing",
 						  "hideEasing": "linear",
@@ -128,7 +128,7 @@
 						<#if (actionErrors?? & actionErrors?size>0)>
 							toastr["error"]("${actionErrors}");
 						</#if> <#if (actionMessages?? & actionMessages?size>0)>
-							toastr["error"]("${actionMessages}");
+							toastr["info"]("${actionMessages}");
 						</#if>
 						
 					});

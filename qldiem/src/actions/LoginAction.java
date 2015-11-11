@@ -76,23 +76,17 @@ public class LoginAction extends ActionSupport {
 
 				String[] rl = rs.getString("ROLE").split(",");
 
-				String[] names = { "Nhóm quyền sinh viên", "Nhóm quyền giảng viên", "Nhóm quyền đv quản lý ngành",
-						"Nhóm quyền phòng đào tạo", "Nhóm quyền administrator" };
-				String[] roles = { "sv-index", "gv-index", "qldvn-index", "pdt-index", "admin-index" };
-				String[] indexes = { "/WEB-INF/freemarker/sv/index.jsp", "/WEB-INF/freemarker/gv/index.jsp",
-						"/WEB-INF/freemarker/qldvn/index.jsp", "/WEB-INF/freemarker/pdt/index.jsp",
-						"/WEB-INF/freemarker/admin/index.jsp" };
-
 				Map<String, role> infor_roles = new HashMap<String, role>();
 
 				for (int i = 0; i < rl.length; i++)
-					infor_roles.put(roles[Integer.parseInt(rl[i])],
-							new role(names[Integer.parseInt(rl[i])], indexes[Integer.parseInt(rl[i])]));
+					infor_roles.put(Home.roles[Integer.parseInt(rl[i])],
+							new role(Home.names[Integer.parseInt(rl[i])], Home.indexes[Integer.parseInt(rl[i])]));
 
 				session.put("logined", "true");
 				session.put("roles", infor_roles);
 				session.put("username", this.getUsername());
 				session.put("time", dateFormat.format(cal.getTime()));
+				session.put("title", "");
 
 				addActionMessage("Đăng nhập thành công!");
 				rs.close();
@@ -100,7 +94,7 @@ public class LoginAction extends ActionSupport {
 				System.out.println("Phải login lại!");
 
 				if (rl.length == 1) {
-					setPageDirect(indexes[Integer.parseInt(rl[0])]);
+					setPageDirect(Home.indexes[Integer.parseInt(rl[0])]);
 					return "directing_page";
 				} else
 					return "welcome";

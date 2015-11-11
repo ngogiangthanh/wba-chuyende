@@ -23,31 +23,57 @@ public class SVAction extends ActionSupport {
 	private String hk;
 	private String nk;
 	private Map<hk_nk, List<sv_diem_hp>> dsDiemHP = new LinkedHashMap<hk_nk, List<sv_diem_hp>>();
+	private Map<String, Object> session = null;
 	// private HttpServletRequest httpRequest; implements ServletRequestAware
-
 	public SVAction() {
 	}
 
 	public String getIndex() {
+		this.session = ActionContext.getContext().getSession();
+		if(!Home.isRole(session,0)){
+			if(!session.isEmpty()){
+				session.clear();
+				addActionError("Truy xuất sai nhóm quyền!");
+				addActionMessage("Tự động đăng xuất để đăng nhập nhóm quyền phù hợp!");
+				}
+			return "error";
+		}
+		session.put("title", "Trang chủ sinh viên");
 		return "index";
 	}
 
 	public String getViewProfile() {
+		this.session = ActionContext.getContext().getSession();
 		// Sử dụng lại session thông tin về người dùng đã đăng nhập
-		Map<String, Object> session = ActionContext.getContext().getSession();
+		if(!Home.isRole(session,0)){
+			if(!session.isEmpty()){
+				session.clear();
+				addActionError("Truy xuất sai nhóm quyền!");
+				addActionMessage("Tự động đăng xuất để đăng nhập nhóm quyền phù hợp!");
+				}
+			return "error";
+		}
 		session.put("title", "Xem thông tin sinh viên");
 		return "view-profile";
 	}
 
 	public String getViewMark() {
+		this.session = ActionContext.getContext().getSession();
+		if(!Home.isRole(session,0)){
+			if(!session.isEmpty()){
+				session.clear();
+				addActionError("Truy xuất sai nhóm quyền!");
+				addActionMessage("Tự động đăng xuất để đăng nhập nhóm quyền phù hợp!");
+				}
+			return "error";
+		}
 		// Lấy thông tin học kỳ niên khóa trong CSDL bỏ vào session tên hknk
 		// kiểu map <key=2014-2015,value=List<1,2,3>
-		Map<String, Object> session = ActionContext.getContext().getSession();
 		session.put("title", "Xem kết quả học tập");
 		// Kiểm tra xem nếu session hknk đã có thì khỏi tạo lại và ngược lại
 		if (!session.containsKey("hknk")) {
 			System.out.println("Gán hknk lần đầu");
-			this.assignHKNKValues(session);
+			this.assignHKNKValues();
 		}
 
 		// Kiểm tra xem nếu session thang_diem đã có thì khởi tạo lại và ngược
@@ -60,7 +86,7 @@ public class SVAction extends ActionSupport {
 
 		// Kiểm tra xem năm chọn có mở chưa, nếu chưa mở thì báo học kỳ chưa mở
 		// không thực hiện các bước phía dưới
-		if (!this.isOpenHKNK(session)) {
+		if (!this.isOpenHKNK()) {
 			System.out.println("Học kỳ chưa mở " + this.getHk() + " - " + this.getNk());
 			return "view-mark";
 		}
@@ -189,7 +215,8 @@ public class SVAction extends ActionSupport {
 		return "view-mark";
 	}
 
-	public boolean isOpenHKNK(Map<String, Object> session) {
+	public boolean isOpenHKNK() {
+		this.session = ActionContext.getContext().getSession();
 		Map<String, ArrayList<Integer>> hknk = (Map<String, ArrayList<Integer>>) session.get("hknk");
 		// Kiểm tra xem học kì người dùng chọn có trong session hknk không? nếu
 		// có thì kết luật là hk có mở và ngược lại
@@ -202,7 +229,8 @@ public class SVAction extends ActionSupport {
 		return true;
 	}
 
-	public void assignHKNKValues(Map<String, Object> session) {
+	public void assignHKNKValues() {
+		this.session = ActionContext.getContext().getSession();
 		// Ý tưởng tạo ra 1 session chứa thông tin các hk nk. Chỉ tạo một lần
 		// duy nhất lúc người dùng gọi lần đầu
 		this.conn = new Connect();
@@ -247,13 +275,21 @@ public class SVAction extends ActionSupport {
 	}
 
 	public String getPrintMark() {
+		this.session = ActionContext.getContext().getSession();
+		if(!Home.isRole(session,0)){
+			if(!session.isEmpty()){
+				session.clear();
+				addActionError("Truy xuất sai nhóm quyền!");
+				addActionMessage("Tự động đăng xuất để đăng nhập nhóm quyền phù hợp!");
+				}
+			return "error";
+		}
 		// Sử dụng lại session thông tin về người dùng đã đăng nhập
-		Map<String, Object> session = ActionContext.getContext().getSession();
 		session.put("title", "In bảng điểm theo học kỳ năm học");
 		// Kiểm tra xem nếu session hknk đã có thì khỏi tạo lại và ngược lại
 		if (!session.containsKey("hknk")) {
 			System.out.println("Gán hknk lần đầu");
-			this.assignHKNKValues(session);
+			this.assignHKNKValues();
 		}
 		this.setNk(session.get("current_nk").toString());
 		this.setHk(session.get("current_hk").toString());
@@ -262,7 +298,15 @@ public class SVAction extends ActionSupport {
 	}
 
 	public String getPrintedMark(){
-		Map<String, Object> session = ActionContext.getContext().getSession();
+		this.session = ActionContext.getContext().getSession();
+		if(!Home.isRole(session,0)){
+			if(!session.isEmpty()){
+				session.clear();
+				addActionError("Truy xuất sai nhóm quyền!");
+				addActionMessage("Tự động đăng xuất để đăng nhập nhóm quyền phù hợp!");
+				}
+			return "error";
+		}
 		session.put("title", "In bảng điểm theo học kỳ năm học");
 
 		// Kiểm tra xem nếu session thang_diem đã có thì khởi tạo lại và ngược
@@ -275,7 +319,7 @@ public class SVAction extends ActionSupport {
 
 		// Kiểm tra xem năm chọn có mở chưa, nếu chưa mở thì báo học kỳ chưa mở
 		// không thực hiện các bước phía dưới
-		if (!this.isOpenHKNK(session)) {
+		if (!this.isOpenHKNK()) {
 			System.out.println("Học kỳ chưa mở " + this.getHk() + " - " + this.getNk());
 			return "print-mark";
 		}
