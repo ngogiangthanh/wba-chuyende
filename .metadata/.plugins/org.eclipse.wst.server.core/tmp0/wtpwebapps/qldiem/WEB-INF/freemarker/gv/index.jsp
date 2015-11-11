@@ -26,9 +26,7 @@
 		<h3>
 			<a href="logout.html">Đăng xuất</a>
 		</h3>
-<#list information.entrySet() as entry>  
-  ${entry.key}-${entry.value}<br/>
-</#list>
+
 
 	</center>
 	<#if (actionMessages?? & actionMessages?size>0)>

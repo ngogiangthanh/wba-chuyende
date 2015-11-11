@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 11, 2015 at 12:28 PM
+-- Generation Time: Nov 11, 2015 at 12:38 PM
 -- Server version: 5.6.24
 -- PHP Version: 5.6.8
 
@@ -297,7 +297,7 @@ INSERT INTO `ct_hp` (`ID_SV`, `ID_HP`, `DIEM_CHU`, `DIEM_10`, `DIEM_4`, `CAI_THI
 (2, 55, 'B+', 8.3, 3.5, 1, 1),
 (2, 73, '\r\n', NULL, NULL, 1, 0),
 (2, 75, '\r\n', NULL, NULL, 0, 0),
-(2, 78, '\r\n', NULL, NULL, 0, 0),
+(2, 78, '\r\n', NULL, NULL, 1, 0),
 (3, 2, 'B', 7.6, 3, 0, 1),
 (3, 3, 'B', 7.6, 3, 0, 1),
 (3, 7, 'B+', 8.4, 3.5, 0, 1),
