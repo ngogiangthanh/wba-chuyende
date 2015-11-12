@@ -78,6 +78,67 @@
 			<div class="col-sm-12 col-xs-12 col-md-12 col-lg-12 pull-right">
 				<div class="row">
 				<!-- BEGIN CONTENT -->
+				<div class="panel panel-default">
+						<div class="panel-heading">
+							<i class="glyphicon glyphicon-th-list"></i>&nbsp;Xem các lớp học phần giảng dạy
+						</div>
+						<div class="panel-body">
+						<div class="alert alert-success text-center" role="alert">
+							<form action="gv-lophp.html" method="post">
+								Năm học:&nbsp;
+								<select name="nk"  id="id_nk" >
+								<#list hknk.entrySet() as entry>  
+									<option value="${entry.key}">${entry.key}</option>
+								</#list>
+								</select> 
+								&nbsp;Học kỳ&nbsp; <select name="hk" id="id_hk">
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">Hè</option>
+								</select>&nbsp; 
+								<input type="submit" value="Liệt kê" class="btn btn-primary"/>
+							</form>
+							</div>
+						<#if dsHPDay?? >
+								<div class="table-responsive"> 
+								<table class="table table-bordered text-center">
+								<tr><td colspan="10" class="well">Năm học:&nbsp;${nk}&nbsp;-&nbsp;Học kỳ:&nbsp;${hk}</td></tr>
+									<tr>
+										<th class="text-center info">STT</th>
+										<th class="text-center info">Mã môn học</th>
+										<th class="text-center info">Tên môn học</th>
+										<th class="text-center info">Nhóm học phần</th>
+										<th class="text-center info">Tín chỉ</th>
+										<th class="text-center info">Lý thuyết</th>
+										<th class="text-center info">Thực hành</th>
+										<th class="text-center info">Thao tác</th>
+									</tr>
+								<#list dsHPDay as hoc_phan>
+									<tr>
+										<td>${hoc_phan.stt}</td>
+										<td>${hoc_phan.ma_mh}</td>
+										<td>${hoc_phan.ten_mh}</td>
+										<td>${hoc_phan.ma_hp}</td>
+										<td>${hoc_phan.so_tc}</td>
+										<td>${hoc_phan.lt}</td>
+										<td>${hoc_phan.th}</td>
+										<td>Xem</td>
+									</tr>
+								</#list>
+								<#if dsHPDay?size == 0>
+									<tr>
+										<td colspan="8">
+											Không có học phần nào.
+										</td>
+									</tr>
+								</#if>
+								</table>
+								</div>
+						<#else>
+								<div class="alert alert-warning" role="alert">Học kỳ chưa mở. Vui lòng chọn lại học kỳ - năm học khác.</div>
+						</#if>
+						</div>
+				</div>
 				<!-- END CONTENT -->
 			</div>
 			<!--/span-->
@@ -100,6 +161,12 @@
 											'glyphicon-plus-sign').toggleClass(
 											'glyphicon-minus-sign');
 								});
+						<#if nk?has_content>
+							$("select#id_nk").val("${nk}");
+						</#if>
+						<#if hk?has_content>
+							$("select#id_hk").val("${hk}");
+						</#if>
 					});
 		</script>
 </body>

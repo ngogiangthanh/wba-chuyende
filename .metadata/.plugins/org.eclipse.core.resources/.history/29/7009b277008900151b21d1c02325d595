@@ -1,0 +1,6 @@
+package models;
+
+public class hp_giang_day {
+	private int stt;
+	
+}

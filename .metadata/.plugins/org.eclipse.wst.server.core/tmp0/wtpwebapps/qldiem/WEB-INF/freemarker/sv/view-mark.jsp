@@ -155,9 +155,11 @@
 										</#if>
 									</td>
 								</tr>
+									<#if hocPhan.diemChu != "W" & hocPhan.diemChu != "I" & hocPhan.diemChu != "">
+                            		<#assign tdtbHK = tdtbHK + hocPhan.tichDiem >
+                            		<#assign tstchk = tstchk + hocPhan.soTC >
+                            		</#if>
 										<#if hocPhan.tichLuyDiem == "1">
-											<#assign tdtbHK = tdtbHK + hocPhan.tichDiem >
-											<#assign tstchk = tstchk + hocPhan.soTC >
 										</#if>
 								</#list>
 								<#else>

@@ -1,0 +1,13 @@
+package models;
+
+public class hp_giang_day {
+	private int stt;
+	private int id_mh;
+	private int id_hp;
+	private String ma_mh;
+	private String ma_hp;
+	private String ten_mh;
+	private int so_tc;
+	private int lt;
+	private int th;
+}
