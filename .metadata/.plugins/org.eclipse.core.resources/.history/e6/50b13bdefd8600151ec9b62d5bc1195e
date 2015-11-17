@@ -1,7 +1,0 @@
-package models;
-
-public class Snippet {
-	
-	ResultSet rs = this.conn.call_procedure(procedure);
-}
-

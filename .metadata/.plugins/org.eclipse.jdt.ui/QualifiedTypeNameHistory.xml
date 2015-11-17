@@ -10,7 +10,6 @@
 <fullyQualifiedTypeName name="java.lang.System"/>
 <fullyQualifiedTypeName name="models.role"/>
 <fullyQualifiedTypeName name="actions.Home"/>
-<fullyQualifiedTypeName name="java.lang.Exception"/>
 <fullyQualifiedTypeName name="com.mysql.jdbc.ResultSet"/>
 <fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="javax.servlet.http.HttpServletRequest"/>
@@ -19,7 +18,6 @@
 <fullyQualifiedTypeName name="models.sv_diem_hp"/>
 <fullyQualifiedTypeName name="com.mysql.jdbc.PreparedStatement"/>
 <fullyQualifiedTypeName name="com.mysql.jdbc.CallableStatement"/>
-<fullyQualifiedTypeName name="java.lang.Integer"/>
 <fullyQualifiedTypeName name="models.hk_nk"/>
 <fullyQualifiedTypeName name="java.util.Map"/>
 <fullyQualifiedTypeName name="java.util.Comparator"/>
@@ -28,11 +26,22 @@
 <fullyQualifiedTypeName name="java.util.LinkedHashMap"/>
 <fullyQualifiedTypeName name="org.apache.struts2.interceptor.ServletRequestAware"/>
 <fullyQualifiedTypeName name="java.text.SimpleDateFormat"/>
-<fullyQualifiedTypeName name="java.util.Date"/>
 <fullyQualifiedTypeName name="actions.ThangDiemAction"/>
 <fullyQualifiedTypeName name="models.muc_chuyen_doi"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="models.thang_diem"/>
 <fullyQualifiedTypeName name="java.sql.Types"/>
+<fullyQualifiedTypeName name="actions.GVAction"/>
+<fullyQualifiedTypeName name="models.sv_hp"/>
+<fullyQualifiedTypeName name="java.util.Base64"/>
+<fullyQualifiedTypeName name="org.apache.tomcat.util.codec.binary.Base64"/>
+<fullyQualifiedTypeName name="java.lang.Exception"/>
 <fullyQualifiedTypeName name="models.hp_giang_day"/>
+<fullyQualifiedTypeName name="hash.base_64"/>
+<fullyQualifiedTypeName name="models.ke_hoach"/>
+<fullyQualifiedTypeName name="actions.GVViewDSSVAction"/>
+<fullyQualifiedTypeName name="java.lang.Integer"/>
+<fullyQualifiedTypeName name="java.util.Date"/>
+<fullyQualifiedTypeName name="java.security.GeneralSecurityException"/>
+<fullyQualifiedTypeName name="java.lang.Float"/>
 </qualifiedTypeNameHistroy>

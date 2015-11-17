@@ -107,32 +107,34 @@
 											'glyphicon-plus-sign').toggleClass(
 											'glyphicon-minus-sign');
 								});
-						function checkLogin(frmLogin) {
-							var username = document
-									.getElementsByName("username")[0].value;
-							var password = document
-									.getElementsByName("password")[0].value;
-							if (username == "") {
-								toastr["error"]("Tài khoản không hợp lệ!")
-								document.getElementsByName("username")[0]
-										.focus();
-								return false;
-							} else if (password == "") {
-								toastr["error"]("Mật khẩu không hợp lệ!")
-								document.getElementsByName("password")[0]
-										.focus();
-								return false;
-							} else
-								return true;
-						}
 						
 						<#if (actionErrors?? & actionErrors?size>0)>
 							toastr["error"]("${actionErrors}");
-						</#if> <#if (actionMessages?? & actionMessages?size>0)>
+						</#if> 
+						<#if (actionMessages?? & actionMessages?size>0)>
 							toastr["info"]("${actionMessages}");
 						</#if>
 						
 					});
+			
+					function checkLogin(frmLogin) {
+						var username = document
+								.getElementsByName("username")[0].value;
+						var password = document
+								.getElementsByName("password")[0].value;
+						if (username == "") {
+							toastr["error"]("Tài khoản không hợp lệ!")
+							document.getElementsByName("username")[0]
+									.focus();
+							return false;
+						} else if (password == "") {
+							toastr["error"]("Mật khẩu không hợp lệ!")
+							document.getElementsByName("password")[0]
+									.focus();
+							return false;
+						} else
+							return true;
+					}
 		</script>
 </body>
 </html>

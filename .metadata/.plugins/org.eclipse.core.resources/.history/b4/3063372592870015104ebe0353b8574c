@@ -1,8 +1,0 @@
-package models;
-
-import java.util.Date;
-
-public class thang_diem {
-	private Date td_ap_dung;
-	private 
-}

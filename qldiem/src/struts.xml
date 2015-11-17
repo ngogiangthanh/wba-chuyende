@@ -103,6 +103,18 @@
 			<result type="freemarker" name="input">/WEB-INF/freemarker/gv/index.jsp
 			</result>
 		</action>
+		<action name="gv-nhapdiem" method="postIndex" class="actions.GVNhapDiemGUIAction">
+			<result type="freemarker" name="view-nhapdiem">/WEB-INF/freemarker/gv/view-nhapdiem.jsp
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+		</action>
+		<action name="gv-luudiem" method="postProcessSave" class="actions.GVNhapDiemGUIAction">
+			<result type="freemarker" name="view-nhapdiem">/WEB-INF/freemarker/gv/view-nhapdiem.jsp
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+		</action>
 		
 		
 		

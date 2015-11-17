@@ -1,0 +1,18 @@
+package actions;
+
+import java.util.Map;
+
+import com.opensymphony.xwork2.ActionSupport;
+
+import connection.Connect;
+
+public class GVNhapDiemGUIAction extends ActionSupport {
+
+	private static final long serialVersionUID = 1L;
+	private Map<String, Object> session = null;
+
+	public GVNhapDiemGUIAction() {
+	}
+	
+	
+}

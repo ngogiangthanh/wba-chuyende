@@ -1,6 +1,0 @@
-package models;
-
-public class role {
-	private String name;
-	private String freemarker_page;
-}
