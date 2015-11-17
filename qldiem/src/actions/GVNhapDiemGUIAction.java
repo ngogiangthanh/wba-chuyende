@@ -1,15 +1,21 @@
 package actions;
 
-import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.struts2.interceptor.ServletRequestAware;
 
 import com.mysql.jdbc.CallableStatement;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 import connection.Connect;
+import models.muc_chuyen_doi;
+import models.thang_diem;
 
-public class GVNhapDiemGUIAction extends ActionSupport {
+public class GVNhapDiemGUIAction extends ActionSupport implements ServletRequestAware{
 
 	private static final long serialVersionUID = 1L;
 	private Connect conn;
@@ -27,6 +33,7 @@ public class GVNhapDiemGUIAction extends ActionSupport {
 	private String diem_chu;
 	private String diem_4;
 	private String cai_thien;
+	private HttpServletRequest httpRequest; 
 	
 	public GVNhapDiemGUIAction() {
 	}
@@ -36,7 +43,10 @@ public class GVNhapDiemGUIAction extends ActionSupport {
 		this.session = ActionContext.getContext().getSession();
 		if(!gvAction.Prefix_Check("Nhập điểm cho sinh viên "+getMssv(), this.session))
 			return "error";
-		System.out.println(getMssv());
+		System.out.println(getTen_mh()+"-ten mh");
+		if(httpRequest.getMethod().toLowerCase().equals("get") | httpRequest.getMethod().equals(""))
+			return "back";
+		
 		return "view-nhapdiem";
 	}
 	
@@ -44,7 +54,26 @@ public class GVNhapDiemGUIAction extends ActionSupport {
 		this.gvAction = new GVAction();
 		this.session = ActionContext.getContext().getSession();
 		if(!gvAction.Prefix_Check("", this.session))
-			return "error";
+			return "ERROR";
+		// Kiểm tra xem nếu session thang_diem đã có thì khởi tạo lại và ngược
+		// lại
+		if (!session.containsKey("thang_diem")) {
+			System.out.println("Gán thang điểm lần đầu");
+			ThangDiemAction thangDiemAction = new ThangDiemAction();
+			thangDiemAction.assignTDValues(this.session);
+		}
+
+		thang_diem thang_diem_qd = (thang_diem) session.get("thang_diem");
+		ArrayList<muc_chuyen_doi> ds_mcd = thang_diem_qd.getDs_muc_chuyen_doi();
+		int size_ds = ds_mcd.size();
+		
+		for(int i = 0; i < size_ds; i++){
+			if(Float.parseFloat(getDiem_10()) >= ds_mcd.get(i).getDiem10()){
+				setDiem_4(ds_mcd.get(i).getDiem4()+"");
+				setDiem_chu(ds_mcd.get(i).getDiemChu()+"");
+				break;
+			}
+		}
 
 		this.conn = new Connect();
 		String procedure = "call update_gv_diem_hp(?,?,?,?,?,?);";
@@ -73,7 +102,7 @@ public class GVNhapDiemGUIAction extends ActionSupport {
 			}
 
 		addActionMessage("Cập nhật điểm hoàn tất!");
-		return "view-nhapdiem";
+		return "SUCCESS";
 	}
 	
 	public String getMa_hp() {
@@ -170,5 +199,11 @@ public class GVNhapDiemGUIAction extends ActionSupport {
 	
 	public void setCai_thien(String cai_thien) {
 		this.cai_thien = cai_thien;
+	}
+	
+
+	 @Override
+	 public void setServletRequest(HttpServletRequest request) {
+		 this.httpRequest = request;
 	}
 }

@@ -1,0 +1,67 @@
+package actions;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import com.opensymphony.xwork2.ActionSupport;
+
+public class TestAction extends ActionSupport {
+
+/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+private String countryName;
+private Map<String, String> stateMap = new LinkedHashMap<String, String>();
+private String dummyMsg;
+
+
+public TestAction() {
+	// TODO Auto-generated constructor stub
+}
+
+	public String postTestAjax(){
+		if (countryName.equals("India")) {
+            stateMap.put("1", "Kerala");
+            stateMap.put("2", "Tamil Nadu");
+            stateMap.put("3", "Jammu Kashmir");
+            stateMap.put("4", "Assam");
+    } else if (countryName.equals("US")) {
+            stateMap.put("1", "Georgia");
+            stateMap.put("2", "Utah");
+            stateMap.put("3", "Texas");
+            stateMap.put("4", "New Jersey");
+    } else if (countryName.equals("Select Country")) {
+            stateMap.put("1", "Select State");
+    }
+    dummyMsg = "Ajax action Triggered";
+
+	System.out.println(dummyMsg);
+    return SUCCESS;
+}
+
+public String getCountryName() {
+	return countryName;
+}
+
+public String getDummyMsg() {
+	return dummyMsg;
+}
+
+public Map<String, String> getStateMap() {
+	return stateMap;
+}
+
+public void setCountryName(String countryName) {
+	this.countryName = countryName;
+}
+
+public void setDummyMsg(String dummyMsg) {
+	this.dummyMsg = dummyMsg;
+}
+
+public void setStateMap(Map<String, String> stateMap) {
+	this.stateMap = stateMap;
+}
+
+}

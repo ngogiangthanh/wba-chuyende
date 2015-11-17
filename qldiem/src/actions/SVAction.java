@@ -24,7 +24,6 @@ public class SVAction extends ActionSupport {
 	private String nk;
 	private Map<hk_nk, List<sv_diem_hp>> dsDiemHP = new LinkedHashMap<hk_nk, List<sv_diem_hp>>();
 	private Map<String, Object> session = null;
-	// private HttpServletRequest httpRequest; implements ServletRequestAware
 	public SVAction() {
 	}
 
@@ -445,9 +444,4 @@ public class SVAction extends ActionSupport {
 		return dsDiemHP;
 	}
 
-	// @Override
-	// public void setServletRequest(HttpServletRequest request) {
-	// this.httpRequest = request;
-
-	// }
 }

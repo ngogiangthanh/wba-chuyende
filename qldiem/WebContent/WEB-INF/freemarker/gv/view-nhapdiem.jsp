@@ -87,8 +87,6 @@
 						     <form id="" class="form-horizontal" method="post" action="gv-luudiem.html" role="form">
 					            <input name="id_hp" type="hidden" value="${id_hp}"/>
 					            <input name="id_sv" type="hidden" value="${id_sv}"/>
-					            <input name="diem_chu" type="hidden" value="${diem_chu}"/>
-					            <input name="diem_4" type="hidden" value="${diem_4}"/>
 					            <input name="cai_thien" type="hidden" value="${cai_thien}"/>
 					            <div class="form-group">
 					                <label for="title" class="col-sm-3 col-xs-3 col-md-3 col-lg-3 control-label">
@@ -113,8 +111,7 @@
 					            </div>
 					            <div class="form-group">
 					                <div class="col-sm-offset-3 col-xs-offset-3 col-md-offset-3 col-lg-offset-3 col-sm-9 col-xs-9 col-md-9 col-lg-9">
-					                    <button type="submit" class="btn btn-success">Lưu</button>&nbsp;
-					                    <button type="reset" class="btn btn-primary">Làm lại</button>
+					                    <button type="button" class="btn btn-success" id="btn_luu">Lưu</button>&nbsp;
 					                </div>
 					            </div>
 					        </form>
@@ -133,26 +130,25 @@
 	<script type="text/javascript" src="public/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="public/js/toastr.js"></script>
 	<script type="text/javascript">
+	toastr.options = {
+			  "closeButton": true,
+			  "debug": true,
+			  "newestOnTop": false,
+			  "progressBar": true,
+			  "positionClass": "toast-top-right",
+			  "preventDuplicates": false,
+			  "onclick": null,
+			  "showDuration": "300",
+			  "hideDuration": "1000",
+			  "timeOut": "5000",
+			  "extendedTimeOut": "1000",
+			  "showEasing": "swing",
+			  "hideEasing": "linear",
+			  "showMethod": "fadeIn",
+			  "hideMethod": "fadeOut"
+			}
 			$(document).ready(
 					function() {
-						toastr.options = {
-								  "closeButton": true,
-								  "debug": true,
-								  "newestOnTop": false,
-								  "progressBar": true,
-								  "positionClass": "toast-top-right",
-								  "preventDuplicates": false,
-								  "onclick": null,
-								  "showDuration": "300",
-								  "hideDuration": "1000",
-								  "timeOut": "5000",
-								  "extendedTimeOut": "1000",
-								  "showEasing": "swing",
-								  "hideEasing": "linear",
-								  "showMethod": "fadeIn",
-								  "hideMethod": "fadeOut"
-								}
-						
 						$('#sidebar .panel-heading').click(
 								function() {
 									$('#sidebar .list-group').toggleClass(
@@ -161,12 +157,23 @@
 											'glyphicon-plus-sign').toggleClass(
 											'glyphicon-minus-sign');
 								});
-						<#if (actionErrors?? & actionErrors?size>0)>
-							toastr["error"]("${actionErrors}");
-						</#if> 
-						<#if (actionMessages?? & actionMessages?size>0)>
-							toastr["info"]("${actionMessages}");
-						</#if>
+						$("#btn_luu").click(function(){
+							var diem_10 = $("#diem_10").val();
+							$.getJSON('gv-luudiem.html', {
+								id_hp : '${id_hp}',
+								id_sv : '${id_sv}',
+								diem_10 : diem_10,
+								cai_thien : '${cai_thien}'
+								
+						      }, function(jsonResponse) {
+						    	  if (jsonResponse.actionErrors.length > 0) {
+						  			toastr["error"](jsonResponse.actionErrors);
+						    	    }
+						    	  if(jsonResponse.actionMessages.length > 0){
+							  			toastr["info"](jsonResponse.actionMessages);
+						    	  }
+						      });
+						});
 					});
 		</script>
 </body>

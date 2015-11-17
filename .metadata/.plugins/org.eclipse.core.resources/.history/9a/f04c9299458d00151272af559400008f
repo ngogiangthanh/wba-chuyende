@@ -1,0 +1,23 @@
+package actions;
+
+public class TestAction {
+	public String postTestAjax(){
+		if (countryName.equals("India")) {
+            stateMap.put("1", "Kerala");
+            stateMap.put("2", "Tamil Nadu");
+            stateMap.put("3", "Jammu Kashmir");
+            stateMap.put("4", "Assam");
+    } else if (countryName.equals("US")) {
+            stateMap.put("1", "Georgia");
+            stateMap.put("2", "Utah");
+            stateMap.put("3", "Texas");
+            stateMap.put("4", "New Jersey");
+    } else if (countryName.equals("Select Country")) {
+            stateMap.put("1", "Select State");
+    }
+    dummyMsg = "Ajax action Triggered";
+
+	System.out.println(dummyMsg);
+    return SUCCESS;
+}
+}

@@ -7,7 +7,7 @@
 	<constant name="struts.devMode" value="false" />
 	<constant name="struts.action.extension" value="html" />
 	<constant name="struts.custom.i18n.resources" value="ApplicationResources" />
-	<package name="qldiem" extends="struts-default" namespace="/">
+	<package name="qldiem"  namespace="/" extends="struts-default, json-default">
 		<!-- Add your actions here -->
 		<action name="index" method="getIndex" class="actions.Home">
 			<result type="freemarker" name="login">/WEB-INF/freemarker/login.jsp
@@ -106,16 +106,25 @@
 		<action name="gv-nhapdiem" method="postIndex" class="actions.GVNhapDiemGUIAction">
 			<result type="freemarker" name="view-nhapdiem">/WEB-INF/freemarker/gv/view-nhapdiem.jsp
 			</result>
+			<result type="redirectAction" name="back">
+				    <param name="actionName">gv-dssvlophp.html</param>
+			</result>
 			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
 			</result>
 		</action>
 		<action name="gv-luudiem" method="postProcessSave" class="actions.GVNhapDiemGUIAction">
-			<result type="freemarker" name="view-nhapdiem">/WEB-INF/freemarker/gv/view-nhapdiem.jsp
-			</result>
-			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
-			</result>
+			   <result type="json" name="SUCCESS">
+	        		<param name="ignoreHierarchy">false</param>
+			        <param name="excludeNullProperties">true</param>
+			        <param name="noCache">true</param>
+			         <param name="includeProperties">
+				        actionErrors.*,
+				        actionMessages.*
+				    </param>
+		   		</result>
+				<result type="freemarker" name="ERROR">/WEB-INF/freemarker/login.jsp
+				</result>
 		</action>
-		
 		
 		
 		

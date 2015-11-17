@@ -108,7 +108,7 @@
 										<td>${sv.diem_10}</td>
 										<td>${sv.diem_4}</td>
 										<td><#if nhapDiem>
-												<a href="#" onclick="setInfor2Form('${sv.ho_ten}','${sv.mssv}', '${sv.id_sv}','${sv.diem_10}', '${sv.diem_chu}', '${sv.diem_4}', '${sv.cai_thien}');"><i class="glyphicon glyphicon-plus"></i>&nbsp;Nhập điểm</a>
+												<a href="#" onclick="setInfor2Form('${sv.ho_ten}','${sv.mssv}', '${sv.id_sv}','${sv.diem_10}', '${sv.cai_thien}');"><i class="glyphicon glyphicon-plus"></i>&nbsp;Nhập điểm</a>
 											<#else>
 											<i class="glyphicon glyphicon-time"></i>&nbsp;
 											</#if>
@@ -137,8 +137,6 @@
 		<input type="hidden" value="${id_hp}" name="id_hp"/> 
 		<input type="hidden" value="" name="id_sv"/> 
 		<input type="hidden" value="" name="diem_10"/> 
-		<input type="hidden" value="" name="diem_chu"/> 
-		<input type="hidden" value="" name="diem_4"/> 
 		<input type="hidden" value="" name="cai_thien"/> 
 	</form>
 	<!--/.container-->
@@ -159,13 +157,11 @@
 								});
 					});
 
-			function setInfor2Form(ho_ten, mssv, id_sv, diem_10, diem_chu, diem_4, cai_thien){
+			function setInfor2Form(ho_ten, mssv, id_sv, diem_10, cai_thien){
 	       		$("input[name=ho_ten]").val(ho_ten);
 		        $("input[name=mssv]").val(mssv);
 		        $("input[name=id_sv]").val(id_sv);
 		        $("input[name=diem_10]").val(diem_10);
-		        $("input[name=diem_chu]").val(diem_chu);
-		        $("input[name=diem_4]").val(diem_4);
 		        $("input[name=cai_thien]").val(cai_thien);
 		       	$("#frm_Id").submit();
 			}
