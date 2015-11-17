@@ -3,19 +3,15 @@ package actions;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
-
 import com.mysql.jdbc.CallableStatement;
 import com.mysql.jdbc.ResultSet;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 import connection.Connect;
-import models.hk_nk;
+import hash.base_64;
 import models.hp_giang_day;
-import models.sv_diem_hp;
 
 public class GVAction extends ActionSupport {
 
@@ -31,33 +27,19 @@ public class GVAction extends ActionSupport {
 	
 	public String getIndex(){
 		this.session = ActionContext.getContext().getSession();
-		if(!Home.isRole(session,1)){
-			if(!session.isEmpty()){
-				session.clear();
-				addActionError("Truy xuất sai nhóm quyền!");
-				addActionMessage("Tự động đăng xuất để đăng nhập nhóm quyền phù hợp!");
-				}
+		if(!Prefix_Check("Trang chủ giảng viên",this.session))
 			return "error";
-		}
-		session.put("title", "Trang chủ giảng viên");
 		return "index";
 	}
 	
 	public String getViewLopHP(){
 		this.session = ActionContext.getContext().getSession();
-		if(!Home.isRole(session,1)){
-			if(!session.isEmpty()){
-				session.clear();
-				addActionError("Truy xuất sai nhóm quyền!");
-				addActionMessage("Tự động đăng xuất để đăng nhập nhóm quyền phù hợp!");
-				}
+		if(!Prefix_Check("Trang chủ xem danh sách học phần giảng dạy theo học kỳ niên khóa", this.session))
 			return "error";
-		}
-		session.put("title", "Trang chủ giảng viên");
 		// Kiểm tra xem nếu session hknk đã có thì khỏi tạo lại và ngược lại
 		if (!session.containsKey("hknk")) {
 			System.out.println("Gán hknk lần đầu");
-			this.assignHKNKValues();
+			this.assignHKNKValues(this.session);
 		}
 		
 		// Kiểm tra xem năm chọn có mở chưa, nếu chưa mở thì báo học kỳ chưa mở
@@ -102,6 +84,7 @@ public class GVAction extends ActionSupport {
 			// Thực thi procedure
 			pstmt.execute();
 			ResultSet rs = (ResultSet) pstmt.getResultSet();
+			base_64 hash_base_64 = new base_64();
 			int stt = 1;
 
 			// Duyệt kết quả
@@ -117,8 +100,12 @@ public class GVAction extends ActionSupport {
 					hp_gd.setMa_hp(rs.getString("MA_HP"));
 					hp_gd.setTen_mh(rs.getString("TEN_MH"));
 					hp_gd.setSo_tc(rs.getInt("SO_TC"));
-					hp_gd.setLt(rs.getInt("LT"));
+					hp_gd.setLthuyet(rs.getInt("LT"));
 					hp_gd.setTh(rs.getInt("TH"));
+					
+					hash_base_64.setBase_64_string_input(rs.getString("TEN_MH"));
+					hash_base_64.encode();
+					hp_gd.setTen_mh_base_64(hash_base_64.getBase_64_string_encode());
 					
 					this.dsHPDay.add(hp_gd);
 				}
@@ -133,8 +120,21 @@ public class GVAction extends ActionSupport {
 		return "view-lophp";
 	}
 	
-	public void assignHKNKValues() {
-		this.session = ActionContext.getContext().getSession();
+	public boolean Prefix_Check(String title, Map<String, Object> session)
+	{
+		if(!Home.isRole(session,1)){
+			if(!session.isEmpty()){
+				session.clear();
+				addActionError("Truy xuất sai nhóm quyền!");
+				addActionMessage("Tự động đăng xuất để đăng nhập nhóm quyền phù hợp!");
+				}
+			return false;
+		}
+		session.put("title", title);
+		return true;
+	}
+	
+	public void assignHKNKValues(Map<String, Object> session) {
 		// Ý tưởng tạo ra 1 session chứa thông tin các hk nk. Chỉ tạo một lần
 		// duy nhất lúc người dùng gọi lần đầu
 		this.conn = new Connect();

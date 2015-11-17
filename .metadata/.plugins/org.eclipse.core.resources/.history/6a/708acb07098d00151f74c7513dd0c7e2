@@ -1,0 +1,11 @@
+package models;
+
+public class sv_hp {
+	private int stt;
+	private String mssv;
+	
+	
+	public sv_hp() {
+		// TODO Auto-generated constructor stub
+	}
+}

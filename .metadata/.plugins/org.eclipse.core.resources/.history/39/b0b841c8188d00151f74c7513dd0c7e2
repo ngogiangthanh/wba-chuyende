@@ -1,0 +1,11 @@
+package models;
+
+
+public class ke_hoach{
+	private String hk;
+	private int nk;
+	private int loai;
+	
+	
+	
+}

@@ -93,6 +93,16 @@
 			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
 			</result>
 		</action>
+		<action name="gv-dssvlophp" method="getViewDSSVLopHP" class="actions.GVViewDSSVAction">
+			<result type="freemarker" name="view-dssvlophp">/WEB-INF/freemarker/gv/view-dssvlophp.jsp
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+			<result type="freemarker" name="null-ds">/WEB-INF/freemarker/gv/index.jsp
+			</result>
+			<result type="freemarker" name="input">/WEB-INF/freemarker/gv/index.jsp
+			</result>
+		</action>
 		
 		
 		

@@ -102,7 +102,7 @@
 						<#if dsHPDay?? >
 								<div class="table-responsive"> 
 								<table class="table table-bordered text-center">
-								<tr><td colspan="10" class="well">Năm học:&nbsp;${nk}&nbsp;-&nbsp;Học kỳ:&nbsp;${hk}</td></tr>
+								<tr><td colspan="8" class="well">Năm học:&nbsp;${nk}&nbsp;-&nbsp;Học kỳ:&nbsp;${hk}</td></tr>
 									<tr>
 										<th class="text-center info">STT</th>
 										<th class="text-center info">Mã môn học</th>
@@ -120,9 +120,9 @@
 										<td>${hoc_phan.ten_mh}</td>
 										<td>${hoc_phan.ma_hp}</td>
 										<td>${hoc_phan.so_tc}</td>
-										<td>${hoc_phan.lt}</td>
+										<td>${hoc_phan.lthuyet}</td>
 										<td>${hoc_phan.th}</td>
-										<td>Xem</td>
+										<td><a href="gv-dssvlophp.html?id_hp=${hoc_phan.id_hp}&ten_mh=${hoc_phan.ten_mh_base_64}&hk=${hk}&nk=${nk}" ><i class="glyphicon glyphicon-search"></i>&nbsp;Xem</a></td>
 									</tr>
 								</#list>
 								<#if dsHPDay?size == 0>

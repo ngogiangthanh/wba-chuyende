@@ -10,6 +10,7 @@
 <link href="public/css/bootstrap.min.css" rel="stylesheet" />
 <!-- Custom styles for this template -->
 <link href="public/css/admin.css" rel="stylesheet" />
+<link href="public/css/toastr.css" rel="stylesheet" type="text/css"/>
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
         <script src="public/js/html5shiv.js"></script>
@@ -95,9 +96,27 @@
 		<script type="text/javascript" src="public/js/jquery-1.10.0.min.js"></script>
 		<!-- Include all compiled plugins (below), or include individual files as needed -->
 		<script type="text/javascript" src="public/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="public/js/toastr.js"></script>
 		<script type="text/javascript">
 			$(document).ready(
-					function() {
+					function() {						
+						toastr.options = {
+							  "closeButton": true,
+							  "debug": true,
+							  "newestOnTop": false,
+							  "progressBar": true,
+							  "positionClass": "toast-top-right",
+							  "preventDuplicates": false,
+							  "onclick": null,
+							  "showDuration": "300",
+							  "hideDuration": "1000",
+							  "timeOut": "5000",
+							  "extendedTimeOut": "1000",
+							  "showEasing": "swing",
+							  "hideEasing": "linear",
+							  "showMethod": "fadeIn",
+							  "hideMethod": "fadeOut"
+							}
 						$('#sidebar .panel-heading').click(
 								function() {
 									$('#sidebar .list-group').toggleClass(
@@ -106,6 +125,13 @@
 											'glyphicon-plus-sign').toggleClass(
 											'glyphicon-minus-sign');
 								});
+
+						<#if (actionErrors?? & actionErrors?size>0)>
+							toastr["error"]("${actionErrors}");
+						</#if> 
+						<#if (actionMessages?? & actionMessages?size>0)>
+							toastr["info"]("${actionMessages}");
+						</#if>
 					});
 		</script>
 </body>

@@ -1,0 +1,39 @@
+package actions;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import com.mysql.jdbc.CallableStatement;
+import com.mysql.jdbc.ResultSet;
+import com.opensymphony.xwork2.ActionContext;
+import com.opensymphony.xwork2.ActionSupport;
+
+import connection.Connect;
+import models.hp_giang_day;
+
+public class GVViewDSSVAction extends ActionSupport {
+
+	private static final long serialVersionUID = 1L;
+	private Connect conn;
+	private String id_hp;
+	private Map<String, Object> session = null;
+
+	public GVViewDSSVAction() {
+	}
+	
+	public String getViewDSSVLopHP(){
+		if(!Prefix_Check("Trang chủ xem danh sách sinh viên trong lớp học phần"))
+			return "error";
+		// Kiểm tra xem nếu session hknk đã có thì khỏi tạo lại và ngược lại
+		if (!session.containsKey("hknk")) {
+			System.out.println("Gán hknk lần đầu");
+			this.assignHKNKValues();
+		}
+		
+		
+		return "view-dssvlophp";
+	}
+	
+	
+}

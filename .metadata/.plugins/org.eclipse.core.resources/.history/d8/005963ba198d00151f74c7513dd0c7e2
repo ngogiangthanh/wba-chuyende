@@ -1,0 +1,55 @@
+package models;
+
+import java.util.Date;
+
+public class ke_hoach{
+	private int hk;
+	private String nk;
+	private int loai;
+	private Date ngay_bd;
+	private Date ngay_kt;
+	
+	public ke_hoach() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public int getHk() {
+		return hk;
+	}
+	
+	public int getLoai() {
+		return loai;
+	}
+	
+	public Date getNgay_bd() {
+		return ngay_bd;
+	}
+	
+	public Date getNgay_kt() {
+		return ngay_kt;
+	}
+	
+	public String getNk() {
+		return nk;
+	}
+	
+	public void setHk(int hk) {
+		this.hk = hk;
+	}
+	
+	public void setLoai(int loai) {
+		this.loai = loai;
+	}
+	
+	public void setNgay_bd(Date ngay_bd) {
+		this.ngay_bd = ngay_bd;
+	}
+	
+	public void setNgay_kt(Date ngay_kt) {
+		this.ngay_kt = ngay_kt;
+	}
+	
+	public void setNk(int nk) {
+		this.nk = nk;
+	}
+}

@@ -7,8 +7,9 @@ public class hp_giang_day {
 	private String ma_mh;
 	private String ma_hp;
 	private String ten_mh;
+	private String ten_mh_base_64;
 	private int so_tc;
-	private int lt;
+	private int lthuyet;
 	private int th;
 	
 	public hp_giang_day() {
@@ -23,8 +24,8 @@ public class hp_giang_day {
 		return id_mh;
 	}
 	
-	public int getLt() {
-		return lt;
+	public int getLthuyet() {
+		return lthuyet;
 	}
 	
 	public String getMa_hp() {
@@ -43,6 +44,10 @@ public class hp_giang_day {
 		return stt;
 	}
 	
+	public String getTen_mh_base_64() {
+		return ten_mh_base_64;
+	}
+	
 	public String getTen_mh() {
 		return ten_mh;
 	}
@@ -59,8 +64,8 @@ public class hp_giang_day {
 		this.id_mh = id_mh;
 	}
 	
-	public void setLt(int lt) {
-		this.lt = lt;
+	public void setLthuyet(int lthuyet) {
+		this.lthuyet = lthuyet;
 	}
 	
 	public void setMa_hp(String ma_hp) {
@@ -85,5 +90,9 @@ public class hp_giang_day {
 	
 	public void setTh(int th) {
 		this.th = th;
+	}
+	
+	public void setTen_mh_base_64(String ten_mh_base_64) {
+		this.ten_mh_base_64 = ten_mh_base_64;
 	}
 }
