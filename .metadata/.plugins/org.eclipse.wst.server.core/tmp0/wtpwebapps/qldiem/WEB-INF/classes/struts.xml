@@ -7,8 +7,54 @@
 	<constant name="struts.devMode" value="false" />
 	<constant name="struts.action.extension" value="html" />
 	<constant name="struts.custom.i18n.resources" value="ApplicationResources" />
-	<package name="qldiem"  namespace="/" extends="struts-default, json-default">
+	<constant name="struts.multipart.saveDir" value="/" />
+	<package name="qldiem" namespace="/" extends="struts-default, json-default">
 		<!-- Add your actions here -->
+		<interceptors>
+			<interceptor-stack name="fileUploadStack">
+				<interceptor-ref name="exception" />
+				<interceptor-ref name="alias" />
+				<interceptor-ref name="servletConfig" />
+				<interceptor-ref name="prepare" />
+				<interceptor-ref name="i18n" />
+				<interceptor-ref name="chain" />
+				<interceptor-ref name="debugging" />
+				<interceptor-ref name="profiling" />
+				<interceptor-ref name="scopedModelDriven" />
+				<interceptor-ref name="modelDriven" />
+				<interceptor-ref name="fileUpload">
+					<param name="maximumSize">102400</param>
+					<param name="allowedTypes">
+						application/vnd.ms-excel,
+						application/msexcel,
+						application/x-msexcel,
+						application/x-ms-excel,
+						application/x-excel,
+						application/x-dos_ms_excel,
+						application/xls,
+						application/x-xls
+					</param>
+					<param name="allowedExtensions">xls,xlsx</param>
+				</interceptor-ref>
+				<interceptor-ref name="checkbox" />
+				<interceptor-ref name="staticParams" />
+				<interceptor-ref name="actionMappingParams" />
+				<interceptor-ref name="params">
+					<param name="excludeParams">dojo\..*,^struts\..*</param>
+				</interceptor-ref>
+				<interceptor-ref name="conversionError" />
+				<interceptor-ref name="validation">
+					<param name="excludeMethods">input,back,cancel,browse</param>
+				</interceptor-ref>
+				<interceptor-ref name="workflow">
+					<param name="excludeMethods">input,back,cancel,browse</param>
+				</interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+
+
+
+
 		<action name="index" method="getIndex" class="actions.Home">
 			<result type="freemarker" name="login">/WEB-INF/freemarker/login.jsp
 			</result>
@@ -69,18 +115,8 @@
 			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
 			</result>
 		</action>
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+
+
 		<action name="gv-index" method="getIndex" class="actions.GVAction">
 			<result type="freemarker" name="index">/WEB-INF/freemarker/gv/index.jsp
 			</result>
@@ -104,29 +140,52 @@
 			</result>
 		</action>
 		<action name="gv-luudiem" method="postProcessSave" class="actions.GVNhapDiemAction">
-			   <result type="json" name="success">
-	        		<param name="ignoreHierarchy">false</param>
-			        <param name="excludeNullProperties">true</param>
-			        <param name="noCache">true</param>
-			         <param name="includeProperties">
-			         	diem_4.*,
-			         	diem_10.*,
-			         	diem_chu.*,
-				        actionErrors.*,
-				        actionMessages.*
-				    </param>
-		   		</result>
-				<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
-				</result>
+			<result type="json" name="success">
+				<param name="ignoreHierarchy">false</param>
+				<param name="excludeNullProperties">true</param>
+				<param name="noCache">true</param>
+				<param name="includeProperties">
+					diem_4.*,
+					diem_10.*,
+					diem_chu.*,
+					actionErrors.*,
+					actionMessages.*
+				</param>
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
 		</action>
-		
-		
-		
-		
-		
-		
-		
-		
+		<action name="gv-excelUpload" class="actions.ExcelUploadAction">
+			<interceptor-ref name="fileUploadStack" />
+			<result type="json" name="success">
+				<param name="ignoreHierarchy">false</param>
+				<param name="excludeNullProperties">true</param>
+				<param name="noCache">true</param>
+				<param name="includeProperties">
+					dsSVHP.*,
+					actionErrors.*,
+					actionMessages.*
+				</param>
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+		</action>
+		<action name="gv-excelInsert" method="execute" class="actions.GVNhapDiemExcelAction">
+			<result type="json" name="success">
+				<param name="ignoreHierarchy">false</param>
+				<param name="excludeNullProperties">true</param>
+				<param name="noCache">true</param>
+				<param name="includeProperties">
+					dsSVHP.*,
+					actionErrors.*,
+					actionMessages.*
+				</param>
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+		</action>
+
+
 		<action name="qldvn-index" method="getIndex" class="actions.QLDVNAction">
 			<result type="freemarker" name="index">/WEB-INF/freemarker/qldvn/index.jsp
 			</result>

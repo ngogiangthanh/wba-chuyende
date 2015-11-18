@@ -84,13 +84,14 @@
 							<i class="glyphicon glyphicon-th-list"></i>&nbsp;Xem các lớp học phần giảng dạy
 						</div>
 						<div class="panel-body">
-						<a href="#" class="btn btn-primary"/>Tệp điểm excel</a>
+						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#upFileModal"/>Tệp điểm excel</a>
 						<a href="gv-lophp.html" class="btn btn-default"/>Quay lại</a>&nbsp;
                         <div class="clearfix">&nbsp;</div>
 						<#if dsSVHP?? >
 								<div class="table-responsive"> 
 								<table class="table table-bordered text-center" id="dssv_hp">
 								<tr><td colspan="7" class="well">Danh sách sinh viên học phần: ${ma_hp} - ${ten_mh} - Năm học:&nbsp;${nk}&nbsp;-&nbsp;Học kỳ:&nbsp;${hk}</td></tr>
+									<thead>
 									<tr>
 										<th class="text-center info">STT</th>
 										<th class="text-center info">MSSV</th>
@@ -100,6 +101,7 @@
 										<th class="text-center info">Điểm 4</th>
 										<th class="text-center info">Thao tác</th>
 									</tr>
+									</thead>
 									<tbody>
 								<#list dsSVHP as sv>
 									<tr>
@@ -112,7 +114,7 @@
 										<td><#if nhapDiem>
 												<input type="hidden" value="${sv.id_sv}" name="id_sv_td" id="${sv.mssv}_id_sv"/>
 												<input type="hidden" value="${sv.cai_thien}" name="cai_thien_td" id="${sv.mssv}_cai_thien"/>
-												<a href="#" data-toggle="modal" data-target="#myModal" onclick="setInfor2Form('${sv.ho_ten}','${sv.mssv}', '${sv.id_sv}',$('#${sv.mssv}_diem_10').text(), '${sv.cai_thien}');"><i class="glyphicon glyphicon-plus"></i>&nbsp;Nhập điểm</a>
+												<a href="#" data-toggle="modal" data-target="#nhapDiemModal" onclick="setInfor2Form('${sv.ho_ten}','${sv.mssv}', '${sv.id_sv}',$('#${sv.mssv}_diem_10').text(), '${sv.cai_thien}');"><i class="glyphicon glyphicon-plus"></i>&nbsp;Nhập điểm</a>
 											<#else>
 											<i class="glyphicon glyphicon-time"></i>&nbsp;
 											</#if>
@@ -124,9 +126,9 @@
 								</div>
 						</#if>
 						</div>
-						
+						<!-- Bắt đầu nội dung modal nhập điểm -->
 					<#if nhapDiem>	
-					<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+					<div class="modal fade" id="nhapDiemModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 					  <div class="modal-dialog" role="document">
 					    <div class="modal-content">
 					      <div class="modal-header">
@@ -151,6 +153,7 @@
                                         <input type="text" value="" id="ho_ten" name="ho_ten" class="form-control" readonly="readonly"/>
 					                </div>
 					            </div>
+					         
 					            <div class="form-group">
 					                <label for="title" class="col-sm-3 col-xs-3 col-md-3 col-lg-3 control-label">
                                         <span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;Điểm 10:</label>
@@ -168,7 +171,52 @@
 						  </div>
 						</div>
 						</#if>
+						<!-- Kết thúc nội dung modal nhập điểm -->
 						
+						<!-- Bắt đầu nội dung modal úp file -->
+						<div class="modal fade" id="upFileModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+					  <div class="modal-dialog" role="document">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					        <h4 class="modal-title" id="myModalLabel">Khung úp tệp excel</h4>
+					      </div>
+					      <div class="modal-body form-horizontal" role="form">
+					            <div class="form-group" id="content_file">
+					                <label for="title" class="col-sm-3 col-xs-3 col-md-3 col-lg-3 control-label">
+                                        <span class="glyphicon glyphicon-floppy-open"></span>&nbsp;Chọn tệp:</label>
+					                <div class="col-sm-9 col-xs-9 col-md-9 col-lg-9">
+                                        <input type="file" id="file_excel" name="file_excel" class="form-control" accept="application/vnd.ms-excel"/>
+					                </div>
+					            </div>
+					            
+					            <div class="form-group" id="dssv_div">
+									<div class="table-responsive">
+										<table class="table table-bordered text-center" id="dssv_ul">
+										<thead>
+											<tr>
+												<th class="text-center info">STT</th>
+												<th class="text-center info">MSSV</th>
+												<th class="text-center info">Họ tên</th>
+												<th class="text-center info">Điểm 10</th>
+												<th class="text-center info">Xóa</th>
+											</tr>
+											</thead>
+											<tbody>
+											</tbody>
+										</table>
+									</div>
+					            </div>
+						</div>
+						      <div class="modal-footer">
+					            <button type="button" class="btn btn-info" id="btn_insert">Lưu vào CSDL</button>
+					            <button type="button" class="btn btn-success" id="btn_upload">Tải lên</button>
+						        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+						      </div>
+						    </div>
+						  </div>
+						</div>
+						<!-- Kết thúc nội dung modal úp file-->
 				</div>
 				<!-- END CONTENT -->
 			</div>
@@ -211,6 +259,7 @@
 											'glyphicon-plus-sign').toggleClass(
 											'glyphicon-minus-sign');
 								});
+						//Xử lý nhập điểm
 						$("#btn_luu").click(function(){
 							var diem_10 = $("#diem_10").val();
 							if($.isNumeric(diem_10) & (diem_10 >=0 && diem_10 <= 10)){
@@ -264,6 +313,109 @@
 								}
 							});
 						});
+						//Kết thúc xử lý nhập điểm
+						
+						//Xử lý úp file
+						$("#content_file").show("slow");
+						$("#btn_upload").show("slow");
+						$("#dssv_div").hide("slow");
+						$("#btn_insert").hide("slow");
+						
+						$("#btn_upload").click(function(){
+							var file = $('input[name=file_excel]').get(0).files[0];
+							if($("input[name=file_excel]").val() === ''){
+					  			toastr["error"]("Vui lòng chọn tệp excel cần tải lên!");
+						        $("input[name=file_excel]").focus();
+						        return false;
+						     }
+							
+							var formData = new FormData();
+							formData.append('excelFile', file);
+							formData.append('hk', ${hk});
+							formData.append('nk', '${nk}');
+							formData.append('id_hp', ${id_hp});
+							formData.append('id_gv', ${id_gv});
+							JSON.stringify(formData);
+							 $.ajax({
+					                url: "gv-excelUpload.html",
+					                type: "POST",
+					                dataType: "json",
+					                processData: false,
+					                contentType: false,
+					                cache: false,
+					                data: formData
+					            }).done(function(data) {
+					            	if (data.actionErrors.length > 0) {
+							  			toastr["error"](data.actionErrors);
+							    	    }
+							    	  if(data.actionMessages.length > 0){
+								  			toastr["info"](data.actionMessages);
+											$("#content_file").hide("slow");
+											$("#btn_upload").hide("slow");
+											$("#dssv_div").show("slow");
+											$("#btn_insert").show("slow");
+											var stt = 0;
+								  			$.each(data.dsSVHP, function(key, value) {
+								  	        	stt++;
+								  	        	$('#dssv_ul > tbody:last-child')
+								  	        		.append("<tr id="+value["mssv"]+"><td>"+stt+"</td><td class='mssv'>"+value["mssv"]+
+								  	        				"</td><td>"+value["ho_ten"]+
+								  	        				"</td><td class='diem_10'>"+value["diem_10"]+
+								  	        				"</td><td><a href='#' onclick='delete_tr("+"\""+value["mssv"]+"\""+")'>Xóa</a>"+
+								  	        				"<input type='hidden' value='"+value["id_sv"]+"' class='class_sv_ul'/>"+
+								  	        				"<input type='hidden' value='"+value["cai_thien"]+"' class='class_cai_thien_ul'/></td></tr>").fadeIn("slow");
+								  	        });
+							    	  }
+					            });
+						});
+						//Kết thúc xử lý úp file
+						
+						//Bắt đầu xử lý nhập điểm theo file
+						$("#btn_insert").click(function(){
+							var formData = new FormData();
+							var key = 0;
+							$('#dssv_ul > tbody  > tr').each(function() {
+								formData.append('dsSVHP['+key+'].id_hp', parseInt(${id_hp}));
+								formData.append('dsSVHP['+key+'].mssv', $(this).find("td.mssv").text());
+								formData.append('dsSVHP['+key+'].id_sv', parseInt($(this).find(".class_sv_ul").val()));
+								formData.append('dsSVHP['+key+'].diem_10', parseFloat($(this).find("td.diem_10").text()));
+								formData.append('dsSVHP['+key+'].cai_thien', $(this).find(".class_cai_thien_ul").val());
+								key++;
+							});
+								//Gửi đến server insert vào csdl
+								 $.ajax({
+						                url: "gv-excelInsert.html",
+						                type: "POST",
+						                dataType: "json",
+						                processData: false,
+						                traditional: true,
+						                contentType: false,
+						                cache: false,
+						                data: formData
+						            }).done(function(data) {
+						            	if (data.actionErrors.length > 0) {
+								  			toastr["error"](data.actionErrors);
+								    	    }
+								    	  if(data.actionMessages.length > 0){
+									  			toastr["info"](data.actionMessages);
+												$("#content_file").show("slow");
+												$("#btn_upload").show("slow");
+												$("#dssv_div").hide("slow");
+												$("#btn_insert").hide("slow");
+												$('input[name=file_excel]').val("");
+												$('#dssv_ul > tbody > tr').remove();
+												$('#upFileModal').modal('hide');
+
+									  			$.each(data.dsSVHP, function(key, value) {
+									  				var mssv = value['mssv'];
+										  			$("#"+mssv+"_diem_chu").text(value['diem_chu']);
+										  			$("#"+mssv+"_diem_10").text(value['diem_10'].toFixed(2));
+										  			$("#"+mssv+"_diem_4").text(value['diem_4'].toFixed(2));
+								    	  });
+								    	  }
+						            });
+						});
+						//Kết thúc xử lý nhập điểm theo file
 					});
 	
 			function isEndTable(mssv){
@@ -290,6 +442,10 @@
 					$("#btn_next").hide("slow");
 				else
 					$("#btn_next").show("slow");
+			}
+			
+			function delete_tr(mssv){
+				$("#"+mssv).remove().fadeOut("slow");
 			}
 		</script>
 </body>

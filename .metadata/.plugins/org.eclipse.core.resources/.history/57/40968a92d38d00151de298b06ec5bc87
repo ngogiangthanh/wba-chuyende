@@ -1,0 +1,158 @@
+package actions;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.poifs.filesystem.POIFSFileSystem;
+import org.apache.poi.ss.usermodel.Cell;
+
+import com.opensymphony.xwork2.ActionContext;
+import com.opensymphony.xwork2.ActionSupport;
+
+import freemarker.core.ParseException;
+import models.sv_hp;
+
+public class ExcelUploadAction extends ActionSupport {
+
+	private static final long serialVersionUID = 1L;
+	private Map<String, Object> session = null;
+	private GVAction gvAction = null;
+	private File excelFile;
+	private String excelFileContentType;
+	private String excelFileFileName;
+	private Map<String, sv_hp> dataOfFile = null;
+	private ArrayList<String> msvv_name = null;
+	private ArrayList<String> ho_ten_name = null;
+	private ArrayList<String> diem_name = null;
+
+	public ExcelUploadAction() {
+	}
+
+	public void init() {
+		this.msvv_name = new ArrayList<>();
+		this.msvv_name.add("mssv");
+		this.msvv_name.add("mã số sinh viên");
+
+		this.ho_ten_name = new ArrayList<>();
+		this.ho_ten_name.add("họ tên");
+		this.ho_ten_name.add("họ và tên");
+		this.ho_ten_name.add("tên");
+
+		this.diem_name = new ArrayList<>();
+		this.diem_name.add("điểm");
+		this.diem_name.add("điểm 10");
+		this.diem_name.add("điểm số");
+	}
+
+	public String execute() {
+		this.gvAction = new GVAction();
+		this.session = ActionContext.getContext().getSession();
+		if (!gvAction.Prefix_Check("", this.session))
+			return ERROR;
+		// Đọc thông tin từ file
+		this.dataOfFile = new HashMap<String, sv_hp>();
+		try {
+			this.init();
+			POIFSFileSystem fs = new POIFSFileSystem(new FileInputStream(excelFile));
+			HSSFWorkbook wb = new HSSFWorkbook(fs);
+			HSSFSheet sheet = wb.getSheetAt(0);
+			HSSFRow row;
+			HSSFCell cell;
+			cell.setCellType(Cell.CELL_TYPE_STRING);
+			int rows; // No of rows
+			rows = sheet.getPhysicalNumberOfRows();
+
+			int cols = 0; // No of columns
+			int tmp = 0;
+
+			// This trick ensures that we get the data properly even if it
+			// doesn't start from first few rows
+			for (int i = 0; i < 10 || i < rows; i++) {
+				row = sheet.getRow(i);
+				if (row != null) {
+					tmp = sheet.getRow(i).getPhysicalNumberOfCells();
+					if (tmp > cols)
+						cols = tmp;
+				}
+			}
+
+			HSSFRow header = sheet.getRow(0);
+			for (int r = 1; r < rows; r++) {
+				sv_hp sv = null;
+				String ho_ten = null;
+				sv = new sv_hp();
+				for (int c = 0; c < cols; c++) {
+					row = sheet.getRow(r);
+
+					String nameOfThisColumn = (header.getCell((int) c)).toString().toLowerCase().trim();
+					// Thực hiện thêm cột này
+					if (row != null) {
+						cell = row.getCell((int) c);
+						if (cell != null) {
+							if (msvv_name.contains(nameOfThisColumn)){
+								sv.setMssv(cell.toString());
+							}
+							else if (ho_ten_name.contains(nameOfThisColumn)) {
+								ho_ten = cell.toString();
+								sv.setHo_ten(ho_ten);
+							} else if (diem_name.contains(nameOfThisColumn)) {
+								try {
+									sv.setDiem_10(Float.parseFloat(cell.toString()));
+								} catch (Exception ex) {
+									sv.setDiem_10(0);
+								}
+							} else {
+								continue;
+							}
+						}
+					}
+				}
+				this.dataOfFile.put(ho_ten, sv);
+			}
+			addActionMessage("Upload tệp excel hoàn tất!");
+		} catch (Exception ioe) {
+			ioe.printStackTrace();
+			addActionError("Lỗi upload tệp excel!");
+			return SUCCESS;
+		}
+		return SUCCESS;
+	}
+
+	public File getExcelFile() {
+		return excelFile;
+	}
+
+	public String getExcelFileContentType() {
+		return excelFileContentType;
+	}
+
+	public String getExcelFileFileName() {
+		return excelFileFileName;
+	}
+
+	public Map<String, sv_hp> getDataOfFile() {
+		return dataOfFile;
+	}
+
+	public void setExcelFile(File excelFile) {
+		this.excelFile = excelFile;
+	}
+
+	public void setExcelFileContentType(String excelFileContentType) {
+		this.excelFileContentType = excelFileContentType;
+	}
+
+	public void setExcelFileFileName(String excelFileFileName) {
+		this.excelFileFileName = excelFileFileName;
+	}
+
+	public void setDataOfFile(Map<String, sv_hp> dataOfFile) {
+		this.dataOfFile = dataOfFile;
+	}
+}

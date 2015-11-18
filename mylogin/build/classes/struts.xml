@@ -7,44 +7,55 @@
 	<constant name="struts.devMode" value="false" />
 	<constant name="struts.action.extension" value="html"/> 
 	<constant name="struts.custom.i18n.resources" value="ApplicationResources" />
+	<constant name="struts.multipart.saveDir" value="D:/Struts2/apache-tomcat-7.0.65/work/" />
 	<package name="mylogin" extends="struts-default" namespace="/">
 	 <!-- Add your actions here -->
-	   <action name="index" method="getIndex" class="com.mystruts.Home"> 
-            <result name="login" type="freemarker">/WEB-INF/freemarker/login.jsp</result>
-            <result name="welcome" type="freemarker">/WEB-INF/freemarker/welcome.jsp</result>
-        </action>
-		<action name="login" method="authenticate" class="com.mystruts.LoginAction">
-			<result type="freemarker" name="success">/WEB-INF/freemarker/welcome.jsp</result>
-			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp</result>
-			<result type="freemarker" name="input">/WEB-INF/freemarker/login.jsp</result>
+	  		<interceptors>
+			<interceptor-stack name="fileUploadStack">
+				<interceptor-ref name="exception" />
+				<interceptor-ref name="alias" />
+				<interceptor-ref name="servletConfig" />
+				<interceptor-ref name="prepare" />
+				<interceptor-ref name="i18n" />
+				<interceptor-ref name="chain" />
+				<interceptor-ref name="debugging" />
+				<interceptor-ref name="profiling" />
+				<interceptor-ref name="scopedModelDriven" />
+				<interceptor-ref name="modelDriven" />
+				<interceptor-ref name="fileUpload">
+					<param name="maximumSize">1024000</param>
+					<param name="allowedTypes">
+						application/vnd.ms-excel,
+			            application/msexcel,
+			            application/x-msexcel,
+			            application/x-ms-excel,
+			            application/x-excel,
+			            application/x-dos_ms_excel,
+			            application/xls,
+			            application/x-xls
+					</param>
+        			<param name="allowedExtensions">xls,xlsx</param>
+				</interceptor-ref>
+				<interceptor-ref name="checkbox" />
+				<interceptor-ref name="staticParams" />
+				<interceptor-ref name="actionMappingParams" />
+				<interceptor-ref name="params">
+					<param name="excludeParams">dojo\..*,^struts\..*</param>
+				</interceptor-ref>
+				<interceptor-ref name="conversionError" />
+				<interceptor-ref name="validation">
+					<param name="excludeMethods">input,back,cancel,browse</param>
+				</interceptor-ref>
+				<interceptor-ref name="workflow">
+					<param name="excludeMethods">input,back,cancel,browse</param>
+				</interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+
+		<action name="fileUpload" class="com.mystruts.FileUploadAction">
+			<interceptor-ref name="fileUploadStack" />
+			<result name="input">/index.jsp</result>
+			<result name="success" type="freemarker">/success.jsp</result>
 		</action>
-		<action name="logout" method="logout" class="com.mystruts.LogoutAction">
-            <result name="success" type="freemarker">/WEB-INF/freemarker/login.jsp</result>
-        </action>
-        <action name="quanly" method="list" class="com.mystruts.UserAction">
-            <result name="success" type="freemarker">/WEB-INF/freemarker/qlnguoidung.jsp</result>
-            <result name="error" type="freemarker">/WEB-INF/freemarker/welcome.jsp</result>
-            <result name="login" type="freemarker">/WEB-INF/freemarker/login.jsp</result>
-        </action>
-        <action name="adduser" method="add" class="com.mystruts.UserAction">
-            <result name="success" type="freemarker">/WEB-INF/freemarker/qlnguoidung.jsp</result>
-            <result name="error" type="freemarker">/WEB-INF/freemarker/qlnguoidung.jsp</result>
-            <result name="login" type="freemarker">/WEB-INF/freemarker/login.jsp</result>
-        </action>
-        <action name="edituser" method="edit" class="com.mystruts.UserAction">
-            <result name="success" type="freemarker">/WEB-INF/freemarker/edituser.jsp</result>
-            <result name="error" type="freemarker">/WEB-INF/freemarker/qlnguoidung.jsp</result>
-            <result name="login" type="freemarker">/WEB-INF/freemarker/login.jsp</result>
-        </action>
-        <action name="edituserexecute" method="editexecute" class="com.mystruts.UserAction">
-            <result name="success" type="freemarker">/WEB-INF/freemarker/qlnguoidung.jsp</result>
-            <result name="error" type="freemarker">/WEB-INF/freemarker/edituser.jsp</result>
-            <result name="login" type="freemarker">/WEB-INF/freemarker/login.jsp</result>
-        </action>
-        <action name="deleteuser" method="delete" class="com.mystruts.UserAction">
-            <result name="success" type="freemarker">/WEB-INF/freemarker/qlnguoidung.jsp</result>
-            <result name="error" type="freemarker">/WEB-INF/freemarker/qlnguoidung.jsp</result>
-            <result name="login" type="freemarker">/WEB-INF/freemarker/login.jsp</result>
-        </action>
 	</package>
 </struts>
