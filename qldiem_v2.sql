@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 12, 2015 at 07:25 AM
+-- Generation Time: Nov 18, 2015 at 05:43 AM
 -- Server version: 5.6.24
 -- PHP Version: 5.6.8
 
@@ -99,22 +99,28 @@ BEGIN
 		hp.MA_HP ASC;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `get_tt_gv_day_hp_ds_sv`(IN `id_hp` int)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_tt_gv_day_hp_ds_sv`(IN `id_hp` int,IN `id_gv` int, IN `nk` char(9),IN `hk` tinyint(4))
 BEGIN
 	SELECT
-		sv.MSSV,
-		sv.HO_TEN,
-		ct_hp.ID_SV,
-		ct_hp.DIEM_CHU,
-		ct_hp.DIEM_10,
-		ct_hp.DIEM_4,
-		ct_hp.CAI_THIEN
+	sv.MSSV,
+	sv.HO_TEN,
+	ct_hp.ID_SV,
+	ct_hp.DIEM_CHU,
+	FORMAT(ct_hp.DIEM_10,2) AS DIEM_10,
+	FORMAT(ct_hp.DIEM_4,2) AS DIEM_4,
+	ct_hp.CAI_THIEN,
+	hp.MA_HP
 	FROM
 		sv
 		INNER JOIN ct_hp ON sv.ID = ct_hp.ID_SV
+		INNER JOIN hp ON hp.ID = ct_hp.ID_HP
+		INNER JOIN hk_nh ON hk_nh.ID = hp.ID_HK_NH
 	WHERE
 		ct_hp.ID_HP = `id_hp` AND
-		(ct_hp.DIEM_CHU <> "M" AND ct_hp.DIEM_CHU <> "I" AND ct_hp.DIEM_CHU <> "W")
+		(ct_hp.DIEM_CHU <> "M" AND ct_hp.DIEM_CHU <> "I" AND ct_hp.DIEM_CHU <> "W") AND
+		hp.ID_GV = `id_gv` AND
+		hk_nh.NK = `nk` AND
+		hk_nh.HK = `hk`
 	ORDER BY
 		sv.MSSV ASC,
 		sv.HO_TEN ASC;
@@ -126,8 +132,8 @@ BEGIN
 		hk_nh.ID,
 		hk_nh.NK,
 		hk_nh.HK,
-		hk_nh.BD,
-		hk_nh.KT
+		DATE_FORMAT(hk_nh.BD,'%d/%m/%Y') AS BD,
+		DATE_FORMAT(hk_nh.KT,'%d/%m/%Y') AS KT
 	FROM
 		hk_nh
 	ORDER BY
@@ -143,8 +149,8 @@ BEGIN
 		hk_nh.HK,
 		hk_nh.NK,
 		kh.LOAI,
-		kh.BD,
-		kh.KT
+		DATE_FORMAT(kh.BD,'%d/%m/%Y') as BD,
+		DATE_FORMAT(kh.KT,'%d/%m/%Y') as KT
 	FROM kh
 			INNER JOIN hk_nh ON hk_nh.ID = kh.ID_HK_NH
 	WHERE
@@ -243,7 +249,10 @@ BEGIN
 																	INNER JOIN ct_hp ON hp.ID = ct_hp.ID_HP
 																WHERE hp.ID_MH = idmh 
 																		AND ct_hp.ID_SV = `id_sv`  
-																		AND ct_hp.CAI_THIEN <> 0);
+																		AND ct_hp.CAI_THIEN <> 0)
+		ORDER BY
+				ID DESC
+		LIMIT 0,1;
 		UPDATE ct_hp SET ct_hp.TL = 1 WHERE ct_hp.ID_HP = `id_hp_tl_cn` AND ct_hp.ID_SV = `id_sv`;
 	ELSE
 		IF `diem_chu` <> "F" THEN
@@ -419,12 +428,12 @@ INSERT INTO `ct_hp` (`ID_SV`, `ID_HP`, `DIEM_CHU`, `DIEM_10`, `DIEM_4`, `CAI_THI
 (1, 10, 'C', 6, 2, 0, 1),
 (1, 18, 'B+', 8, 3.5, 0, 1),
 (1, 21, 'B', 7.3, 3, 0, 1),
-(1, 26, 'F', 0, 0, 0, 0),
+(1, 26, 'D', 4, 1, 0, 0),
 (1, 36, 'D+', 5.3, 1.5, 0, 0),
 (1, 39, 'D', 4, 1, 0, 1),
 (1, 46, 'C', 6, 2, 1, 1),
 (1, 48, 'A', 9.8, 4, 0, 1),
-(1, 49, 'B+', 8.7, 3.5, 0, 1),
+(1, 49, 'B+', 8.7, 3.5, 0, 0),
 (1, 51, 'A', 9.3, 4, 0, 1),
 (1, 54, 'B+', 8, 3.5, 1, 1),
 (1, 55, 'B', 7.5, 3, 0, 1),
@@ -433,8 +442,8 @@ INSERT INTO `ct_hp` (`ID_SV`, `ID_HP`, `DIEM_CHU`, `DIEM_10`, `DIEM_4`, `CAI_THI
 (1, 72, 'I', 11, 5, 1, 0),
 (1, 73, 'F', 0, 0, 0, 0),
 (1, 75, '', NULL, NULL, 0, 0),
-(1, 78, '', NULL, NULL, 1, 0),
-(1, 79, '', NULL, NULL, 1, 0),
+(1, 78, 'C', 6, 2, 1, 1),
+(1, 79, 'C+', 6.53424, 2.5, 1, 0),
 (2, 1, 'C+', 6.6, 2.5, 0, 1),
 (2, 3, 'F', 0.6, 0, 0, 0),
 (2, 10, 'C', 6, 2, 0, 0),
@@ -448,12 +457,12 @@ INSERT INTO `ct_hp` (`ID_SV`, `ID_HP`, `DIEM_CHU`, `DIEM_10`, `DIEM_4`, `CAI_THI
 (2, 38, 'C+', 6.6, 2.5, 1, 1),
 (2, 45, 'B', 7.1, 3, 1, 1),
 (2, 48, 'F', 3, 0, 0, 0),
-(2, 49, 'B', 7.9, 3, 0, 1),
+(2, 49, 'B', 7.9, 3, 0, 0),
 (2, 54, 'A', 9, 4, 0, 1),
 (2, 55, 'B+', 8.3, 3.5, 1, 1),
 (2, 73, '\r\n', NULL, NULL, 1, 0),
 (2, 75, '\r\n', NULL, NULL, 0, 0),
-(2, 78, '\r\n', NULL, NULL, 1, 0),
+(2, 78, 'D', 4.5, 1, 1, 1),
 (3, 2, 'B', 7.6, 3, 0, 1),
 (3, 3, 'B', 7.6, 3, 0, 1),
 (3, 7, 'B+', 8.4, 3.5, 0, 1),
@@ -461,9 +470,9 @@ INSERT INTO `ct_hp` (`ID_SV`, `ID_HP`, `DIEM_CHU`, `DIEM_10`, `DIEM_4`, `CAI_THI
 (3, 18, 'F', 3.1, 0, 0, 0),
 (3, 20, 'B', 7.6, 3, 0, 1),
 (3, 24, 'D', 4.1, 1, 0, 1),
-(3, 26, 'D', 4.9, 1, 0, 1),
-(3, 28, 'D+', 5.1, 1.5, 0, 1),
-(3, 29, 'D', 4, 1, 0, 1),
+(3, 26, 'D', 4.9, 1, 0, 0),
+(3, 28, 'D+', 5.1, 1.5, 0, 0),
+(3, 29, 'D', 4, 1, 0, 0),
 (3, 35, 'C+', 6.3, 2.5, 0, 0),
 (3, 37, 'B+', 8.6, 3.5, 0, 1),
 (3, 45, 'B', 7.6, 3, 1, 1),
@@ -473,10 +482,10 @@ INSERT INTO `ct_hp` (`ID_SV`, `ID_HP`, `DIEM_CHU`, `DIEM_10`, `DIEM_4`, `CAI_THI
 (3, 68, 'W', 11, 5, 1, 0),
 (3, 70, '', NULL, NULL, 0, 0),
 (3, 72, 'W', 11, 5, 1, 0),
-(3, 74, '', NULL, NULL, 1, 0),
+(3, 74, 'D', 4, 1, 1, 1),
 (3, 75, '', NULL, NULL, 1, 0),
-(3, 78, '', NULL, NULL, 1, 0),
-(3, 79, '', NULL, NULL, 1, 0),
+(3, 78, 'D+', 5, 1.5, 1, 1),
+(3, 79, 'B+', 8, 3.5, 1, 1),
 (4, 5, 'C+', 6.7, 2.5, 0, 0),
 (4, 7, 'B', 7.5, 3, 0, 1),
 (4, 10, 'C+', 6.7, 2.5, 0, 1),
@@ -487,8 +496,8 @@ INSERT INTO `ct_hp` (`ID_SV`, `ID_HP`, `DIEM_CHU`, `DIEM_10`, `DIEM_4`, `CAI_THI
 (4, 21, 'C+', 6.7, 2.5, 0, 1),
 (4, 24, 'B', 7.9, 3, 0, 1),
 (4, 26, 'D+', 5.2, 1.5, 0, 0),
-(4, 27, 'B', 7, 3, 0, 1),
-(4, 30, 'C', 5.6, 2, 0, 1),
+(4, 27, 'B', 7, 3, 0, 0),
+(4, 30, 'C', 5.6, 2, 0, 0),
 (4, 31, 'B+', 8, 3.5, 0, 1),
 (4, 35, 'C', 5.7, 2, 1, 1),
 (4, 39, 'C+', 6.9, 2.5, 0, 1),
@@ -499,9 +508,9 @@ INSERT INTO `ct_hp` (`ID_SV`, `ID_HP`, `DIEM_CHU`, `DIEM_10`, `DIEM_4`, `CAI_THI
 (4, 59, 'F', 0, 0, 1, 0),
 (4, 70, '', NULL, NULL, 1, 0),
 (4, 72, '', NULL, NULL, 1, 0),
-(4, 74, '', NULL, NULL, 1, 0),
+(4, 74, 'B+', 8.5, 3.5, 1, 1),
 (4, 75, '', NULL, NULL, 1, 0),
-(4, 78, '', NULL, NULL, 1, 0);
+(4, 78, 'F', 0, 0, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -624,7 +633,7 @@ INSERT INTO `kh` (`ID`, `ID_HK_NH`, `MO_TA`, `BD`, `KT`, `LOAI`) VALUES
 (4, 2, 'Lập báo cáo thống kê học kỳ 2', '2015-05-22', '2015-05-29', 2),
 (5, 3, 'Nhập điểm học kỳ hè', '2015-06-15', '2015-06-22', 1),
 (6, 3, 'Lập báo cáo thống kê học kỳ hè', '2015-06-22', '2015-06-29', 2),
-(7, 4, 'Nhập điểm học kỳ 1', '2015-12-15', '2015-12-22', 1),
+(7, 4, 'Nhập điểm học kỳ 1', '2015-10-15', '2015-12-22', 1),
 (8, 4, 'Lập báo cáo thống kê học kỳ 1', '2015-12-22', '2015-12-29', 2);
 
 -- --------------------------------------------------------

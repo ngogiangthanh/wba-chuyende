@@ -103,26 +103,20 @@
 			<result type="freemarker" name="input">/WEB-INF/freemarker/gv/index.jsp
 			</result>
 		</action>
-		<action name="gv-nhapdiem" method="postIndex" class="actions.GVNhapDiemGUIAction">
-			<result type="freemarker" name="view-nhapdiem">/WEB-INF/freemarker/gv/view-nhapdiem.jsp
-			</result>
-			<result type="redirectAction" name="back">
-				    <param name="actionName">gv-dssvlophp.html</param>
-			</result>
-			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
-			</result>
-		</action>
-		<action name="gv-luudiem" method="postProcessSave" class="actions.GVNhapDiemGUIAction">
-			   <result type="json" name="SUCCESS">
+		<action name="gv-luudiem" method="postProcessSave" class="actions.GVNhapDiemAction">
+			   <result type="json" name="success">
 	        		<param name="ignoreHierarchy">false</param>
 			        <param name="excludeNullProperties">true</param>
 			        <param name="noCache">true</param>
 			         <param name="includeProperties">
+			         	diem_4.*,
+			         	diem_10.*,
+			         	diem_chu.*,
 				        actionErrors.*,
 				        actionMessages.*
 				    </param>
 		   		</result>
-				<result type="freemarker" name="ERROR">/WEB-INF/freemarker/login.jsp
+				<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
 				</result>
 		</action>
 		

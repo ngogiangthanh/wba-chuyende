@@ -10,6 +10,7 @@
 <link href="public/css/bootstrap.min.css" rel="stylesheet" />
 <!-- Custom styles for this template -->
 <link href="public/css/admin.css" rel="stylesheet" />
+<link href="public/css/toastr.css" rel="stylesheet" type="text/css"/>
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
         <script src="public/js/html5shiv.js"></script>
@@ -88,7 +89,7 @@
                         <div class="clearfix">&nbsp;</div>
 						<#if dsSVHP?? >
 								<div class="table-responsive"> 
-								<table class="table table-bordered text-center">
+								<table class="table table-bordered text-center" id="dssv_hp">
 								<tr><td colspan="7" class="well">Danh sách sinh viên học phần: ${ma_hp} - ${ten_mh} - Năm học:&nbsp;${nk}&nbsp;-&nbsp;Học kỳ:&nbsp;${hk}</td></tr>
 									<tr>
 										<th class="text-center info">STT</th>
@@ -99,26 +100,75 @@
 										<th class="text-center info">Điểm 4</th>
 										<th class="text-center info">Thao tác</th>
 									</tr>
+									<tbody>
 								<#list dsSVHP as sv>
 									<tr>
 										<td>${sv.stt}</td>
-										<td>${sv.mssv}</td>
-										<td>${sv.ho_ten}</td>
-										<td>${sv.diem_chu}</td>
-										<td>${sv.diem_10}</td>
-										<td>${sv.diem_4}</td>
+										<td id="${sv.mssv}_mssv" class="mssv">${sv.mssv}</td>
+										<td id="${sv.mssv}_ho_ten">${sv.ho_ten}</td>
+										<td id="${sv.mssv}_diem_chu">${sv.diem_chu}</td>
+										<td id="${sv.mssv}_diem_10">${sv.diem_10?string("0.00")}</td>
+										<td id="${sv.mssv}_diem_4">${sv.diem_4?string("0.00")}</td>
 										<td><#if nhapDiem>
-												<a href="#" onclick="setInfor2Form('${sv.ho_ten}','${sv.mssv}', '${sv.id_sv}','${sv.diem_10}', '${sv.cai_thien}');"><i class="glyphicon glyphicon-plus"></i>&nbsp;Nhập điểm</a>
+												<input type="hidden" value="${sv.id_sv}" name="id_sv_td" id="${sv.mssv}_id_sv"/>
+												<input type="hidden" value="${sv.cai_thien}" name="cai_thien_td" id="${sv.mssv}_cai_thien"/>
+												<a href="#" data-toggle="modal" data-target="#myModal" onclick="setInfor2Form('${sv.ho_ten}','${sv.mssv}', '${sv.id_sv}',$('#${sv.mssv}_diem_10').text(), '${sv.cai_thien}');"><i class="glyphicon glyphicon-plus"></i>&nbsp;Nhập điểm</a>
 											<#else>
 											<i class="glyphicon glyphicon-time"></i>&nbsp;
 											</#if>
 											</td>
 									</tr>
 								</#list>
+									</tbody>
 								</table>
 								</div>
 						</#if>
 						</div>
+						
+					<#if nhapDiem>	
+					<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+					  <div class="modal-dialog" role="document">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					        <h4 class="modal-title" id="myModalLabel">Khung nhập điểm</h4>
+					      </div>
+					      <div class="modal-body form-horizontal" role="form">
+					            <input name="id_hp" type="hidden" value="${id_hp}"/>
+					            <input name="id_sv" type="hidden" value=""/>
+					            <input name="cai_thien" type="hidden" value=""/>
+					            <div class="form-group">
+					                <label for="title" class="col-sm-3 col-xs-3 col-md-3 col-lg-3 control-label">
+                                        <span class="glyphicon glyphicon-user text-info"></span>&nbsp;MSSV:</label>
+					                <div class="col-sm-9 col-xs-9 col-md-9 col-lg-9">
+                                        <input type="text" value="" id="mssv" name="mssv" class="form-control" readonly="readonly"/>
+					                </div>
+					            </div>
+					            <div class="form-group">
+					                <label for="title" class="col-sm-3 col-xs-3 col-md-3 col-lg-3 control-label">
+                                        <span class="glyphicon glyphicon-user text-info"></span>&nbsp;Họ tên:</label>
+					                <div class="col-sm-9 col-xs-9 col-md-9 col-lg-9">
+                                        <input type="text" value="" id="ho_ten" name="ho_ten" class="form-control" readonly="readonly"/>
+					                </div>
+					            </div>
+					            <div class="form-group">
+					                <label for="title" class="col-sm-3 col-xs-3 col-md-3 col-lg-3 control-label">
+                                        <span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;Điểm 10:</label>
+					                <div class="col-sm-9 col-xs-9 col-md-9 col-lg-9">
+                                        <input type="number" value="" id="diem_10" name="diem_10" class="form-control" min="0" max="10" step="0.50"/>
+					                </div>
+					            </div>
+						</div>
+						      <div class="modal-footer">
+					            <button type="button" class="btn btn-success" id="btn_luu">Lưu</button>
+					            <button type="button" class="btn btn-info" id="btn_next">Kế tiếp</button>
+						        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+						      </div>
+						    </div>
+						  </div>
+						</div>
+						</#if>
+						
 				</div>
 				<!-- END CONTENT -->
 			</div>
@@ -127,23 +177,29 @@
 		<!--/row-->
 	</div>	
 	</div>
-	<form action="gv-nhapdiem.html" method="post" id="frm_Id" target="_blank">
-		<input type="hidden" value="${ma_hp}" name="ma_hp"/> 
-		<input type="hidden" value="${ten_mh}" name="ten_mh"/> 
-		<input type="hidden" value="${hk}" name="hk"/> 
-		<input type="hidden" value="${nk}" name="nk"/> 
-		<input type="hidden" value="" name="ho_ten"/> 
-		<input type="hidden" value="" name="mssv"/>
-		<input type="hidden" value="${id_hp}" name="id_hp"/> 
-		<input type="hidden" value="" name="id_sv"/> 
-		<input type="hidden" value="" name="diem_10"/> 
-		<input type="hidden" value="" name="cai_thien"/> 
-	</form>
 	<!--/.container-->
 	<script type="text/javascript" src="public/js/jquery-1.10.0.min.js"></script>
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
 	<script type="text/javascript" src="public/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="public/js/toastr.js"></script>
 	<script type="text/javascript">
+	toastr.options = {
+			  "closeButton": true,
+			  "debug": true,
+			  "newestOnTop": false,
+			  "progressBar": true,
+			  "positionClass": "toast-top-right",
+			  "preventDuplicates": false,
+			  "onclick": null,
+			  "showDuration": "300",
+			  "hideDuration": "1000",
+			  "timeOut": "5000",
+			  "extendedTimeOut": "1000",
+			  "showEasing": "swing",
+			  "hideEasing": "linear",
+			  "showMethod": "fadeIn",
+			  "hideMethod": "fadeOut"
+			}
 			$(document).ready(
 					function() {
 						
@@ -155,15 +211,85 @@
 											'glyphicon-plus-sign').toggleClass(
 											'glyphicon-minus-sign');
 								});
+						$("#btn_luu").click(function(){
+							var diem_10 = $("#diem_10").val();
+							if($.isNumeric(diem_10) & (diem_10 >=0 && diem_10 <= 10)){
+								$.getJSON('gv-luudiem.html', {
+									id_hp : $("input[name=id_hp]").val(),
+									id_sv : $("input[name=id_sv]").val(),
+									diem_10 : $("input[name=diem_10]").val(),
+									cai_thien : $("input[name=cai_thien]").val()
+									
+							      }, function(jsonResponse) {
+							    	  if (jsonResponse.actionErrors.length > 0) {
+							  			toastr["error"](jsonResponse.actionErrors);
+							    	    }
+							    	  if(jsonResponse.actionMessages.length > 0){
+								  			toastr["info"](jsonResponse.actionMessages);
+								  			var mssv = $("input[name=mssv]").val();
+								  			$("#"+mssv+"_diem_chu").text(jsonResponse.diem_chu);
+								  			$("#"+mssv+"_diem_10").text(parseFloat(jsonResponse.diem_10).toFixed(2));
+								  			$("#"+mssv+"_diem_4").text(parseFloat(jsonResponse.diem_4).toFixed(2));
+							    	  }
+							      });
+								} else{
+						  			toastr["error"]("Điểm 10 nhập vào không hợp lệ! Vui lòng nhập lại!");
+						  			$("input[name=diem_10]").focus()
+								}
+							
+						});
+						
+						var count = 0;
+						$("#btn_next").click(function(){
+							$('#dssv_hp > tbody  > tr').each(function() {
+					  			var mssv = $("input[name=mssv]").val();
+								var current_mssv = $(this).find("td.mssv").text();
+								if(mssv === current_mssv){
+									count++;
+									return;
+								}
+								
+								if(count === 1 & current_mssv.length > 0){
+						       		$("input[name=ho_ten]").val($("#"+current_mssv+"_ho_ten").text());
+							        $("input[name=mssv]").val($("#"+current_mssv+"_mssv").text());
+							        $("input[name=id_sv]").val($("#"+current_mssv+"_id_sv").val());
+							        $("input[name=diem_10]").val($("#"+current_mssv+"_diem_10").text());
+							        $("input[name=cai_thien]").val($("#"+current_mssv+"_cai_thien").val());
+									count = 0;
+									
+									if(isEndTable(current_mssv))
+										$("#btn_next").hide("slow");
+									
+									return false;
+								}
+							});
+						});
 					});
-
+	
+			function isEndTable(mssv){
+				var match = false;
+				var count = 0;
+				$('#dssv_hp > tbody  > tr').each(function() {
+					var current_mssv = $(this).find("td.mssv").text();
+					if(current_mssv === mssv){
+						match = true;
+						return;
+					}
+					
+					if(match) count++;
+				});
+				return (count > 0) ? false : true;
+			}
 			function setInfor2Form(ho_ten, mssv, id_sv, diem_10, cai_thien){
 	       		$("input[name=ho_ten]").val(ho_ten);
 		        $("input[name=mssv]").val(mssv);
 		        $("input[name=id_sv]").val(id_sv);
 		        $("input[name=diem_10]").val(diem_10);
 		        $("input[name=cai_thien]").val(cai_thien);
-		       	$("#frm_Id").submit();
+				if(isEndTable(mssv))
+					$("#btn_next").hide("slow");
+				else
+					$("#btn_next").show("slow");
 			}
 		</script>
 </body>
