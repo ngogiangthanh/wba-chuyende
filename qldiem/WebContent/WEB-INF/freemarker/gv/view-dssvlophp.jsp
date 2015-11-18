@@ -90,8 +90,8 @@
 						<#if dsSVHP?? >
 								<div class="table-responsive"> 
 								<table class="table table-bordered text-center" id="dssv_hp">
+								<thead>
 								<tr><td colspan="7" class="well">Danh sách sinh viên học phần: ${ma_hp} - ${ten_mh} - Năm học:&nbsp;${nk}&nbsp;-&nbsp;Học kỳ:&nbsp;${hk}</td></tr>
-									<thead>
 									<tr>
 										<th class="text-center info">STT</th>
 										<th class="text-center info">MSSV</th>

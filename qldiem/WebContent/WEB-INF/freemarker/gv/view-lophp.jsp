@@ -137,6 +137,7 @@
 						<#else>
 								<div class="alert alert-warning" role="alert">Học kỳ chưa mở. Vui lòng chọn lại học kỳ - năm học khác.</div>
 						</#if>
+						<a href="gv-index.html" class="btn btn-default"/>Quay lại</a>
 						</div>
 				</div>
 				<!-- END CONTENT -->

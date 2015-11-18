@@ -52,9 +52,6 @@
 			</interceptor-stack>
 		</interceptors>
 
-
-
-
 		<action name="index" method="getIndex" class="actions.Home">
 			<result type="freemarker" name="login">/WEB-INF/freemarker/login.jsp
 			</result>
@@ -109,14 +106,13 @@
 			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
 			</result>
 		</action>
+		
 		<action name="view-profile-cb" method="getViewProfile" class="actions.CBAction">
 			<result type="freemarker" name="view-profile-cb">/WEB-INF/freemarker/view-profile.jsp
 			</result>
 			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
 			</result>
 		</action>
-
-
 		<action name="gv-index" method="getIndex" class="actions.GVAction">
 			<result type="freemarker" name="index">/WEB-INF/freemarker/gv/index.jsp
 			</result>
@@ -180,6 +176,12 @@
 					actionErrors.*,
 					actionMessages.*
 				</param>
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+		</action>
+		<action name="gv-lopcv" class="actions.CVHTViewLopCVAction">
+			<result type="freemarker" name="success">/WEB-INF/freemarker/gv/view-lopcvht.jsp
 			</result>
 			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
 			</result>

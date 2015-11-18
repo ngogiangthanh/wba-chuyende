@@ -1,0 +1,26 @@
+package actions;
+
+import java.util.Map;
+
+import com.opensymphony.xwork2.ActionContext;
+import com.opensymphony.xwork2.ActionSupport;
+
+public class CVHTViewLopCVAction extends ActionSupport {
+
+	private static final long serialVersionUID = 1L;
+	private Map<String, Object> session = null;
+	private GVAction gvAction = null;
+	private ArrayList<lop_cv> dsLopCV = null;
+
+	public CVHTViewLopCVAction() {
+	}
+	
+	public String execute(){
+		this.gvAction = new GVAction();
+		this.session = ActionContext.getContext().getSession();
+		if (!gvAction.Prefix_Check("Trang chủ xem danh sách các lớp cố vấn", this.session))
+			return ERROR;
+
+		return SUCCESS;
+	}
+}

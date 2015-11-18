@@ -1,0 +1,9 @@
+package models;
+
+
+public class lop_cv{
+	private int stt;
+	private String lop;
+	private String tenLop;
+	
+}
