@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 18, 2015 at 02:12 PM
+-- Generation Time: Nov 18, 2015 at 04:30 PM
 -- Server version: 5.6.24
 -- PHP Version: 5.6.8
 
@@ -55,22 +55,24 @@ BEGIN
 		lop.TEN_LOP ASC;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `get_tt_cvht_lop_cv_ds_sv`(IN `id_lop` int)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_tt_cvht_lop_cv_ds_sv`(IN `id_lop` int, IN `id_gv` int)
 BEGIN
 	SELECT
-		sv.ID AS ID_SV,
-		sv.MSSV,
-		sv.HO_TEN,
-		sv.GIOI_TINH,
-		sv.NGAY_SINH,
-		khoa.KHOA,
-		cn.CHUYEN_NGANH
+			sv.ID AS ID_SV,
+			sv.MSSV,
+			sv.HO_TEN,
+			sv.GIOI_TINH,
+			DATE_FORMAT(sv.NGAY_SINH,"%d/%m/%Y") AS NGAY_SINH,
+			khoa.KHOA,
+			cn.CHUYEN_NGANH
 	FROM
-		sv
-		INNER JOIN khoa ON khoa.ID = sv.ID_KHOA
-		INNER JOIN cn ON cn.ID = sv.ID_CN
+	sv
+	INNER JOIN khoa ON khoa.ID = sv.ID_KHOA
+	INNER JOIN cn ON cn.ID = sv.ID_CN
+	INNER JOIN lop ON lop.ID = sv.ID_LOP
 	WHERE
-		sv.ID_LOP = `id_lop` 
+		sv.ID_LOP = `id_lop` AND
+		lop.ID_CB = `id_gv` 
 	ORDER BY
 		sv.MSSV ASC;
 END$$
@@ -433,7 +435,7 @@ INSERT INTO `ct_hp` (`ID_SV`, `ID_HP`, `DIEM_CHU`, `DIEM_10`, `DIEM_4`, `CAI_THI
 (1, 39, 'D', 4, 1, 0, 1),
 (1, 46, 'C', 6, 2, 1, 1),
 (1, 48, 'A', 9.8, 4, 0, 1),
-(1, 49, 'B+', 8.7, 3.5, 0, 0),
+(1, 49, 'B+', 8.7, 3.5, 0, 1),
 (1, 51, 'A', 9.3, 4, 0, 1),
 (1, 54, 'B+', 8, 3.5, 1, 0),
 (1, 55, 'B', 7.5, 3, 0, 1),
@@ -442,8 +444,8 @@ INSERT INTO `ct_hp` (`ID_SV`, `ID_HP`, `DIEM_CHU`, `DIEM_10`, `DIEM_4`, `CAI_THI
 (1, 72, 'I', 11, 5, 1, 0),
 (1, 73, 'F', 0, 0, 0, 0),
 (1, 75, '', NULL, NULL, 0, 0),
-(1, 78, 'A', 9, 4, 1, 1),
-(1, 79, 'A', 9, 4, 1, 1),
+(1, 78, '', 0, 0, 1, 0),
+(1, 79, 'A', 9.5, 4, 1, 1),
 (2, 1, 'C+', 6.6, 2.5, 0, 1),
 (2, 3, 'F', 0.6, 0, 0, 0),
 (2, 10, 'C', 6, 2, 0, 0),
@@ -672,8 +674,8 @@ CREATE TABLE IF NOT EXISTS `lop` (
 --
 
 INSERT INTO `lop` (`ID`, `ID_CB`, `LOP`, `TEN_LOP`) VALUES
-(1, 2, 'DI1094A1', 'Hệ thống thông tin K39'),
-(2, 3, 'DI1095A1', 'Công nghệ phần mềm K39');
+(1, 6, 'DI1094A1', 'Hệ thống thông tin K39'),
+(2, 6, 'DI1095A1', 'Công nghệ phần mềm K39');
 
 -- --------------------------------------------------------
 
