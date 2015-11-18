@@ -52,6 +52,7 @@ public class CVHTViewLopCVAction extends ActionSupport {
 				if (!rs.wasNull()) {
 					lop_cv lop = new lop_cv();
 					lop.setStt(stt++);
+					lop.setId_lop(rs.getInt("ID_LOP"));
 					lop.setLop(rs.getString("LOP"));
 					lop.setTen_lop(rs.getString("TEN_LOP"));
 					

@@ -186,7 +186,15 @@
 			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
 			</result>
 		</action>
-
+		<action name="cvht-dssvlopcv" class="actions.CVHTViewDSSVLopCVAction">
+			<result type="freemarker" name="success">/WEB-INF/freemarker/gv/view-dssvlopcvht.jsp
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+			<result type="redirectAction" name="input">
+				<param name="actionName">gv-lopcv.html</param>
+			</result>
+		</action>
 
 		<action name="qldvn-index" method="getIndex" class="actions.QLDVNAction">
 			<result type="freemarker" name="index">/WEB-INF/freemarker/qldvn/index.jsp

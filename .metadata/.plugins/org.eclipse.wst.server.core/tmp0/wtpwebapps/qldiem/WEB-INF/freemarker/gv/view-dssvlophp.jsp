@@ -446,6 +446,23 @@
 			
 			function delete_tr(mssv){
 				$("#"+mssv).remove().fadeOut("slow");
+				if(isEmptyTable()){
+					$("#content_file").show("slow");
+					$("#btn_upload").show("slow");
+					$("#dssv_div").hide("slow");
+					$("#btn_insert").hide("slow");
+					$('input[name=file_excel]').val("");
+					$('#dssv_ul > tbody > tr').remove();
+				}
+			}
+			
+			function isEmptyTable(){
+				var tbody = $("#dssv_ul tbody");
+
+				if (tbody.children().length == 0) {
+					return true;
+				}
+				return false;
 			}
 		</script>
 </body>

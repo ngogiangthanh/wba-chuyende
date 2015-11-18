@@ -82,6 +82,8 @@
 							<i class="glyphicon glyphicon-th-list"></i>&nbsp;Xem các lớp học cố vấn
 						</div>
 						<div class="panel-body">
+							<a href="gv-index.html" class="btn btn-default"/>Quay lại</a>&nbsp;
+	                        <div class="clearfix">&nbsp;</div>
 							<#if dsLopCV?? >
 								<div class="table-responsive"> 
 								<table class="table table-bordered text-center">
@@ -100,7 +102,7 @@
 										<td>${lop.stt}</td>
 										<td>${lop.lop}</td>
 										<td>${lop.ten_lop}</td>
-										<td><a href="cvht-dssvlopcv.html?id_lop"><i class="glyphicon glyphicon-plus"></i>&nbsp;Xem</a></td>
+										<td><a href="cvht-dssvlopcv.html?id_lop=${lop.id_lop}"><i class="glyphicon glyphicon-plus"></i>&nbsp;Xem</a></td>
 									</tr>
 								</#list>
 									</tbody>
