@@ -1,6 +1,5 @@
 package actions;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -11,9 +10,8 @@ import com.opensymphony.xwork2.ActionSupport;
 
 import connection.Connect;
 import models.lop_cv;
-import models.sv_hp;
 
-public class CVHTViewDSSVLopCVAction extends ActionSupport {
+public class CVHTViewLopCVAction extends ActionSupport {
 
 	private static final long serialVersionUID = 1L;
 	private Map<String, Object> session = null;
@@ -21,13 +19,13 @@ public class CVHTViewDSSVLopCVAction extends ActionSupport {
 	private ArrayList<lop_cv> dsLopCV = null;
 	private Connect conn;
 
-	public CVHTViewDSSVLopCVAction() {
+	public CVHTViewLopCVAction() {
 	}
 	
 	public String execute(){
 		this.gvAction = new GVAction();
 		this.session = ActionContext.getContext().getSession();
-		if (!gvAction.Prefix_Check("Trang chủ xem danh sách sinh viên các lớp cố vấn", this.session))
+		if (!gvAction.Prefix_Check("Trang chủ xem danh sách các lớp cố vấn", this.session))
 			return ERROR;
 		
 		this.conn = new Connect();

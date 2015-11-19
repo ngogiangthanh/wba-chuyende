@@ -1,5 +1,6 @@
 package actions;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -9,8 +10,8 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 import connection.Connect;
-import hash.base_64;
 import models.lop_cv;
+import models.sv_hp;
 
 public class CVHTViewLopCVAction extends ActionSupport {
 
@@ -42,7 +43,6 @@ public class CVHTViewLopCVAction extends ActionSupport {
 			// Thực thi procedure
 			pstmt.execute();
 			ResultSet rs = (ResultSet) pstmt.getResultSet();
-			base_64 hash_base_64 = new base_64();
 			int stt = 1;
 
 			// Duyệt kết quả
@@ -55,9 +55,6 @@ public class CVHTViewLopCVAction extends ActionSupport {
 					lop.setId_lop(rs.getInt("ID_LOP"));
 					lop.setLop(rs.getString("LOP"));
 					lop.setTen_lop(rs.getString("TEN_LOP"));
-					hash_base_64.setBase_64_string_input(rs.getString("TEN_LOP"));
-					hash_base_64.encode();
-					lop.setTen_lop_base_64(hash_base_64.getBase_64_string_encode());
 					
 					this.dsLopCV.add(lop);
 				}

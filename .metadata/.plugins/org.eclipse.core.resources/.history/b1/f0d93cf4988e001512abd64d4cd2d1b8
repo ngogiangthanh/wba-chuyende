@@ -47,8 +47,4 @@ public class lop_cv{
 	public void setTen_lop(String ten_lop) {
 		this.ten_lop = ten_lop;
 	}
-	
-	public void setTen_lop_base_64(String ten_lop_base_64) {
-		this.ten_lop_base_64 = ten_lop_base_64;
-	}
 }

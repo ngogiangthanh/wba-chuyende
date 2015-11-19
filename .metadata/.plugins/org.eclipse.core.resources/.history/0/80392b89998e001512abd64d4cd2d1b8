@@ -77,14 +77,49 @@
 			<div class="col-sm-12 col-xs-12 col-md-12 col-lg-12 pull-right">
 				<div class="row">
 					<!-- BEGIN CONTENT -->
-					    <div id="menu">
-                            <a href="gv-lopcv.html" class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
-                                <i class="glyphicon glyphicon-home"></i>&nbsp;Các lớp cố vấn
-                            </a>
-                            <a href="gv-lophp.html" class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
-                                <i class="glyphicon glyphicon-time"></i>&nbsp;Các lớp học phần giảng dạy
-                            </a>
-                        </div>
+					    <div class="panel panel-default">
+						<div class="panel-heading">
+							<i class="glyphicon glyphicon-th-list"></i>&nbsp;Xem các lớp học cố vấn
+						</div>
+						<div class="panel-body">
+							<a href="gv-index.html" class="btn btn-default"/>Quay lại</a>&nbsp;
+	                        <div class="clearfix">&nbsp;</div>
+							<#if dsLopCV?? >
+								<div class="table-responsive"> 
+								<table class="table table-bordered text-center">
+									<thead>
+								<tr><td colspan="4" class="well">Danh sách các lớp cố vấn</td></tr>
+									<tr>
+										<th class="text-center info">STT</th>
+										<th class="text-center info">Mã lớp</th>
+										<th class="text-center info">Tên lớp</th>
+										<th class="text-center info">Thao tác</th>
+									</tr>
+									</thead>
+									<tbody>
+								<#list dsLopCV as lop>
+									<tr>
+										<td>${lop.stt}</td>
+										<td>${lop.lop}</td>
+										<td>${lop.ten_lop}</td>
+										<td><a href="cvht-dssvlopcv.html?id_lop=${lop.id_lop}?ten_lop=${lop.ten_lop_base_64}"><i class="glyphicon glyphicon-plus"></i>&nbsp;Xem</a></td>
+									</tr>
+								</#list>
+									</tbody>
+								<#if dsLopCV?size == 0>
+									<tfoot>
+									<tr>
+										<td colspan="4">
+											Không có lớp nào.
+										</td>
+									</tr>
+									</tfoot>
+								</#if>
+								</table>
+								</div>
+						</#if>
+						</div>
+						</div>
 					<!-- END CONTENT -->
 				</div>
 				<!--/span-->
@@ -99,7 +134,24 @@
         <script type="text/javascript" src="public/js/toastr.js"></script>
 		<script type="text/javascript">
 			$(document).ready(
-					function() {
+					function() {						
+						toastr.options = {
+							  "closeButton": true,
+							  "debug": true,
+							  "newestOnTop": false,
+							  "progressBar": true,
+							  "positionClass": "toast-top-right",
+							  "preventDuplicates": false,
+							  "onclick": null,
+							  "showDuration": "300",
+							  "hideDuration": "1000",
+							  "timeOut": "5000",
+							  "extendedTimeOut": "1000",
+							  "showEasing": "swing",
+							  "hideEasing": "linear",
+							  "showMethod": "fadeIn",
+							  "hideMethod": "fadeOut"
+							}
 						$('#sidebar .panel-heading').click(
 								function() {
 									$('#sidebar .list-group').toggleClass(
@@ -111,7 +163,8 @@
 
 						<#if (actionErrors?? & actionErrors?size>0)>
 							toastr["error"]("${actionErrors}");
-						</#if> <#if (actionMessages?? & actionMessages?size>0)>
+						</#if> 
+						<#if (actionMessages?? & actionMessages?size>0)>
 							toastr["info"]("${actionMessages}");
 						</#if>
 					});

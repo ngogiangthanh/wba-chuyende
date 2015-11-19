@@ -102,7 +102,7 @@
 										<td>${lop.stt}</td>
 										<td>${lop.lop}</td>
 										<td>${lop.ten_lop}</td>
-										<td><a href="cvht-dssvlopcv.html?id_lop=${lop.id_lop}"><i class="glyphicon glyphicon-plus"></i>&nbsp;Xem</a></td>
+										<td><a href="cvht-dssvlopcv.html?id_lop=${lop.id_lop}&ten_lop=${lop.ten_lop_base_64}"><i class="glyphicon glyphicon-plus"></i>&nbsp;Xem</a></td>
 									</tr>
 								</#list>
 									</tbody>

@@ -88,7 +88,7 @@
 								<div class="table-responsive"> 
 								<table class="table table-bordered text-center">
 									<thead>
-								<tr><td colspan="6" class="well">Danh sách sinh viên lớp [---]</td></tr>
+								<tr><td colspan="6" class="well">Danh sách sinh viên lớp - ${ten_lop}</td></tr>
 									<tr>
 										<th class="text-center info">STT</th>
 										<th class="text-center info">MSSV</th>

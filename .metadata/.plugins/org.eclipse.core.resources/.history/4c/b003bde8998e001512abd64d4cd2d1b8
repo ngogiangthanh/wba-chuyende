@@ -84,10 +84,10 @@ public class CVHTViewDSSVLopCVAction extends ActionSupport {
 			
 			base_64 decode_base_64 = new base_64();
 			decode_base_64.setBase_64_string_encode(getTen_lop());
-			if (getTen_lop().length() <= 0 | !decode_base_64.decode()) {
+			if (getTen_lop() == "" | !decode_base_64.decode()) {
 				addActionError("Tên lớp không chính xác!");
 			}
-			setTen_lop(decode_base_64.getBase_64_string_decode());
+			setTen_mh(decode_base_64.getBase_64_string_decode());
 		} catch (Exception ex) {
 			addActionError("Lớp không hợp lệ!");
 		}

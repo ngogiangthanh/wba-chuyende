@@ -82,39 +82,34 @@
 							<i class="glyphicon glyphicon-th-list"></i>&nbsp;Xem các lớp học cố vấn
 						</div>
 						<div class="panel-body">
-							<a href="gv-index.html" class="btn btn-default"/>Quay lại</a>&nbsp;
+							<a href="gv-lopcv.html" class="btn btn-default"/>Quay lại</a>&nbsp;
 	                        <div class="clearfix">&nbsp;</div>
-							<#if dsLopCV?? >
+							<#if dsSVLopCV?? >
 								<div class="table-responsive"> 
 								<table class="table table-bordered text-center">
 									<thead>
-								<tr><td colspan="4" class="well">Danh sách các lớp cố vấn</td></tr>
+								<tr><td colspan="6" class="well">Danh sách sinh viên lớp ${ten_lop}</td></tr>
 									<tr>
 										<th class="text-center info">STT</th>
-										<th class="text-center info">Mã lớp</th>
-										<th class="text-center info">Tên lớp</th>
+										<th class="text-center info">MSSV</th>
+										<th class="text-center info">Họ tên</th>
+										<th class="text-center info">Năm sinh</th>
+										<th class="text-center info">Giới tính</th>
 										<th class="text-center info">Thao tác</th>
 									</tr>
 									</thead>
 									<tbody>
-								<#list dsLopCV as lop>
+								<#list dsSVLopCV as sv>
 									<tr>
-										<td>${lop.stt}</td>
-										<td>${lop.lop}</td>
-										<td>${lop.ten_lop}</td>
-										<td><a href="cvht-dssvlopcv.html?id_lop=${lop.id_lop}&ten_lop=${lop.ten_lop_base_64}"><i class="glyphicon glyphicon-plus"></i>&nbsp;Xem</a></td>
+										<td>${sv.stt}</td>
+										<td>${sv.mssv}</td>
+										<td>${sv.ho_ten}</td>
+										<td>${sv.ngay_sinh?string["dd/MM/yyyy"]}</td>
+										<td>${sv.gioi_tinh}</td>
+										<td><a href="#"><i class="glyphicon glyphicon-plus"></i>&nbsp;Xem</a></td>
 									</tr>
 								</#list>
 									</tbody>
-								<#if dsLopCV?size == 0>
-									<tfoot>
-									<tr>
-										<td colspan="4">
-											Không có lớp nào.
-										</td>
-									</tr>
-									</tfoot>
-								</#if>
 								</table>
 								</div>
 						</#if>
