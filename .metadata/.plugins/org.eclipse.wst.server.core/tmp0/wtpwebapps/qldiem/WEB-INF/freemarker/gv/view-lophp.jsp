@@ -85,6 +85,7 @@
 						<div class="panel-body">
 						<div class="alert alert-success text-center" role="alert">
 							<form action="gv-lophp.html" method="post">
+						<a href="gv-index.html" class="btn btn-default pull-left"/>Quay lại</a>
 								Năm học:&nbsp;
 								<select name="nk"  id="id_nk" >
 								<#list hknk.entrySet() as entry>  
@@ -137,7 +138,6 @@
 						<#else>
 								<div class="alert alert-warning" role="alert">Học kỳ chưa mở. Vui lòng chọn lại học kỳ - năm học khác.</div>
 						</#if>
-						<a href="gv-index.html" class="btn btn-default"/>Quay lại</a>
 						</div>
 				</div>
 				<!-- END CONTENT -->

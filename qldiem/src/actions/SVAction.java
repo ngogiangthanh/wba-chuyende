@@ -182,6 +182,7 @@ public class SVAction extends ActionSupport {
 				}
 			}
 			// Đóng kết nối
+			pstmt.close();
 			rs.close();
 			this.conn.Close();
 		} catch (Exception ex) {

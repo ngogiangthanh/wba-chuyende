@@ -1,0 +1,53 @@
+package models;
+
+public class sv_lop_cv{
+	private int tstcdk;
+	private float dtbhk;
+	private int tstctlhk;
+	private float dtbtlhk;
+	private int tstctl;
+	
+	public sv_lop_cv() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public float getDtbhk() {
+		return dtbhk;
+	}
+	
+	public float getDtbtlhk() {
+		return dtbtlhk;
+	}
+	
+	public int getTstcdk() {
+		return tstcdk;
+	}
+	
+	public int getTstctl() {
+		return tstctl;
+	}
+	
+	public int getTstctlhk() {
+		return tstctlhk;
+	}
+	
+	public void setDtbhk(float dtbhk) {
+		this.dtbhk = dtbhk;
+	}
+	
+	public void setDtbtlhk(float dtbtlhk) {
+		this.dtbtlhk = dtbtlhk;
+	}
+	public void setTstcdk(int tstcdk) {
+		this.tstcdk = tstcdk;
+	}
+	
+	public void setTstctl(int tstctl) {
+		this.tstctl = tstctl;
+	}
+	
+	public void setTstctlhk(int tstctlhk) {
+		this.tstctlhk = tstctlhk;
+	}
+	
+}

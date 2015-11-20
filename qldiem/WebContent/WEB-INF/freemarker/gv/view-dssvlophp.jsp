@@ -335,7 +335,7 @@
 							formData.append('nk', '${nk}');
 							formData.append('id_hp', ${id_hp});
 							formData.append('id_gv', ${id_gv});
-							JSON.stringify(formData);
+							
 							 $.ajax({
 					                url: "gv-excelUpload.html",
 					                type: "POST",

@@ -14,12 +14,11 @@ public class sv_diem_hp {
 	private float diem4;
 	private String tichLuy;
 	private String caiThien;
-	
 	private float tichDiem;
 	private thang_diem thang_diem_qd;
 	private String tichLuyTC;
 	private String tichLuyDiem;
-	
+
 	public sv_diem_hp() {
 		stt = -1;
 		maMH = "";
@@ -35,15 +34,15 @@ public class sv_diem_hp {
 		tichLuyDiem = "0";
 		tichLuyTC = "0";
 	}
-	
-	public void tinhTichDiem(){
+
+	public void tinhTichDiem() {
 		ArrayList<muc_chuyen_doi> ds_mcd = this.thang_diem_qd.getDs_muc_chuyen_doi();
 		int size_ds = ds_mcd.size();
-		
-		for(int i = 0; i < size_ds; i++){
-			if(ds_mcd.get(i).getDiemChu().equals(this.diemChu))
-			{
-				System.out.println("Diem "+ diemChu + " | tl tc "+ ds_mcd.get(i).isTichLuyTC() + "| tl diem "+ ds_mcd.get(i).isTichLuyDiem());
+
+		for (int i = 0; i < size_ds; i++) {
+			if (ds_mcd.get(i).getDiemChu().equals(this.diemChu)) {
+				System.out.println("Diem " + diemChu + " | tl tc " + ds_mcd.get(i).isTichLuyTC() + "| tl diem "
+						+ ds_mcd.get(i).isTichLuyDiem());
 				this.setTichLuyTC((ds_mcd.get(i).isTichLuyTC()) ? "1" : "0");
 				this.setTichLuyDiem((ds_mcd.get(i).isTichLuyDiem()) ? "1" : "0");
 				break;
@@ -91,23 +90,23 @@ public class sv_diem_hp {
 	public String getTichLuy() {
 		return tichLuy;
 	}
-	
+
 	public float getTichDiem() {
 		return tichDiem;
 	}
-	
+
 	public float getDiem4() {
 		return diem4;
 	}
-	
+
 	public String getTichLuyDiem() {
 		return tichLuyDiem;
 	}
-	
+
 	public String getTichLuyTC() {
 		return tichLuyTC;
 	}
-	
+
 	public thang_diem getThang_diem_qd() {
 		return thang_diem_qd;
 	}
@@ -151,23 +150,23 @@ public class sv_diem_hp {
 	public void setTichLuy(String tichLuy) {
 		this.tichLuy = tichLuy;
 	}
-	
+
 	public void setTichDiem(float tichDiem) {
 		this.tichDiem = tichDiem;
 	}
-	
+
 	public void setDiem4(float diem4) {
 		this.diem4 = diem4;
 	}
-	
+
 	public void setThang_diem_qd(thang_diem thang_diem_qd) {
 		this.thang_diem_qd = thang_diem_qd;
 	}
-	
+
 	public void setTichLuyDiem(String tichLuyDiem) {
 		this.tichLuyDiem = tichLuyDiem;
 	}
-	
+
 	public void setTichLuyTC(String tichLuyTC) {
 		this.tichLuyTC = tichLuyTC;
 	}

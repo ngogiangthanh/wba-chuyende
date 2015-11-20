@@ -195,6 +195,38 @@
 				<param name="actionName">gv-lopcv.html</param>
 			</result>
 		</action>
+		<action name="cvht-xemctsv" class="actions.CVHTViewCTSVLopCVAction">
+			<result type="json" name="success">
+				<param name="ignoreHierarchy">false</param>
+				<param name="excludeNullProperties">true</param>
+				<param name="noCache">true</param>
+				<param name="includeProperties">
+					dsTTSV.*,
+					actionErrors.*
+				</param>
+			</result>
+			<result type="json" name="fail">
+				<param name="ignoreHierarchy">false</param>
+				<param name="excludeNullProperties">true</param>
+				<param name="noCache">true</param>
+				<param name="includeProperties">
+					dsTTSV.*,
+					actionErrors.*
+				</param>
+			</result>
+			<result type="json" name="input">
+				<param name="ignoreHierarchy">false</param>
+				<param name="excludeNullProperties">true</param>
+				<param name="noCache">true</param>
+				<param name="includeProperties">
+					dsTTSV.*,
+					actionErrors.*
+				</param>
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+		</action>
+		
 
 		<action name="qldvn-index" method="getIndex" class="actions.QLDVNAction">
 			<result type="freemarker" name="index">/WEB-INF/freemarker/qldvn/index.jsp

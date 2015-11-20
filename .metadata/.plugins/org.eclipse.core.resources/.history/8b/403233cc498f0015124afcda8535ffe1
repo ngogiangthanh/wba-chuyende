@@ -1,0 +1,85 @@
+package actions;
+
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.opensymphony.xwork2.ActionContext;
+import com.opensymphony.xwork2.ActionSupport;
+import connection.Connect;
+import models.hk_nk;
+import models.sv_lop_ct_cv;
+
+public class CVHTViewCTSVLopCVAction extends ActionSupport {
+
+	private static final long serialVersionUID = 1L;
+	private Map<String, Object> session = null;
+	private GVAction gvAction = null;
+	private String hk;
+	private String nk;
+	private String id_sv;
+	private Map<hk_nk, List<sv_lop_ct_cv>> dsTTSV = new LinkedHashMap<hk_nk, List<sv_lop_ct_cv>>();
+	private Connect conn;
+	
+	public CVHTViewCTSVLopCVAction() {
+	}
+
+	public String execute() {
+		this.gvAction = new GVAction();
+		this.session = ActionContext.getContext().getSession();
+		if (!gvAction.Prefix_Check("", this.session))
+			return ERROR;
+
+		// Kiểm tra xem nếu session thang_diem đã có thì khởi tạo lại và ngược
+		// lại
+		if (!session.containsKey("thang_diem")) {
+			System.out.println("Gán thang điểm lần đầu");
+			ThangDiemAction thangDiemAction = new ThangDiemAction();
+			thangDiemAction.assignTDValues(this.session);
+		}
+
+		// Kiểm tra xem năm chọn có mở chưa, nếu chưa mở thì báo học kỳ chưa mở
+		// không thực hiện các bước phía dưới
+		SVAction svAct = new SVAction();
+		if (!svAct.isOpenHKNK(this.session)) {
+			System.out.println("Học kỳ chưa mở " + this.getHk() + " - " + this.getNk());
+			return "fail";
+		}
+		
+		
+		
+		return SUCCESS;
+	}
+	
+	public String getNk() {
+		return nk;
+	}
+	
+	public String getHk() {
+		return hk;
+	}
+	
+	public Map<hk_nk, List<sv_lop_ct_cv>> getDsTTSV() {
+		return dsTTSV;
+	}
+	
+	public String getId_sv() {
+		return id_sv;
+	}
+	
+	public void setNk(String nk) {
+		this.nk = nk;
+	}
+	
+	public void setHk(String hk) {
+		this.hk = hk;
+	}
+	
+	public void setDsTTSV(Map<hk_nk, List<sv_lop_ct_cv>> dsTTSV) {
+		this.dsTTSV = dsTTSV;
+	}
+	
+	public void setId_sv(String id_sv) {
+		this.id_sv = id_sv;
+	}
+}

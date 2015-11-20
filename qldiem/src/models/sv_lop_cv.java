@@ -88,5 +88,4 @@ public class sv_lop_cv{
 	public void setStt(int stt) {
 		this.stt = stt;
 	}
-	
 }

@@ -159,8 +159,6 @@
                             		<#assign tdtbHK = tdtbHK + hocPhan.tichDiem >
                             		<#assign tstchk = tstchk + hocPhan.soTC >
                             		</#if>
-										<#if hocPhan.tichLuyDiem == "1">
-										</#if>
 								</#list>
 								<#else>
 								<tr>

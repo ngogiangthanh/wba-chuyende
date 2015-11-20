@@ -47,7 +47,6 @@ INDEX VERSION 1.127+C:\xampp\htdocs\wba-chuyende\.metadata\.plugins\org.eclipse.
 3356408933.index
 1964044422.index
 1486015882.index
-1030621801.index
 3505763699.index
 2899965704.index
 4081414418.index

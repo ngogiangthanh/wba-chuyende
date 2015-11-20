@@ -132,6 +132,7 @@
 								<li class="list-group-item gioi_tinh">Giới tính:</li>
 								<li class="list-group-item ngay_sinh">Năm sinh:</li>
 							</ul>
+							<input type="hidden" value="" name="id_sv_modal" id="id_sv_modal"/>
 							<div class="alert alert-success text-center" role="alert">
 								Năm học:&nbsp;
 								<select name="nk"  id="id_nk" >
@@ -150,14 +151,7 @@
 							</div>
 							
 							<div id="content_tt_ht">
-							<ul class="list-group">
-								<li class="list-group-item">Học kỳ: - niên khóa: </li>
-								<li class="list-group-item list-group-item-success">Tổng số tín chỉ đăng ký:&nbsp;<span class="badge"></span></li>
-								<li class="list-group-item list-group-item-info">Điểm trung bình học kỳ:&nbsp;<span class="badge"></span></li>
-								<li class="list-group-item list-group-item-success">Tổng số tín chỉ tích lũy học kỳ:&nbsp;<span class="badge"></span></li>
-								<li class="list-group-item list-group-item-info">Điểm trung bình tích lũy:&nbsp;<span class="badge"></span></li>
-								<li class="list-group-item list-group-item-success">Tổng số tín chỉ tích lũy:&nbsp;<span class="badge"></span></li>
-							</ul>
+							
 							</div>
 							
 						</div>
@@ -212,7 +206,44 @@
 						//Xử lý gửi nhận xem tt chi tiết sinh viên
 						
 						$('#btn_lk_tt_hk_nk').click(function() {
-							toastr["info"]("Liệt kê");
+							var formData = new FormData();
+							formData.append('hk', $("#id_hk").val());
+							formData.append('nk', $("#id_nk").val());
+							formData.append('id_sv',$("input[name=id_sv_modal]").val());
+							$.ajax({
+					                url: "cvht-xemctsv.html",
+					                type: "POST",
+					                dataType: "json",
+					                processData: false,
+					                contentType: false,
+					                cache: false,
+					                data: formData
+					            }).done(function(data) {
+							    	if (data.actionErrors.length > 0) {
+								  		toastr["error"](data.actionErrors);
+								    }
+							  				$("#content_tt_ht").empty();
+							  			$.each(data.dsTTSV, function(key, value) {
+							  				var ul = document.createElement("ul");
+							  				ul.className = "list-group";
+											var hk_nk = "<li class='list-group-item text-center'>"+key+"</li>";
+											var tstcdk = "<li class='list-group-item list-group-item-success'>Tổng số tín chỉ đăng ký:&nbsp;<span class='badge'>"+
+											value["tstcdk"]+"</span></li>";
+											var dtbhk = "<li class='list-group-item list-group-item-info'>Điểm trung bình học kỳ:&nbsp;<span class='badge'>"+
+											value["dtbhk"].toFixed(2)+"</span></li>";
+											var tstctlhk = "<li class='list-group-item list-group-item-success'>Tổng số tín chỉ tích lũy học kỳ:&nbsp;<span class='badge'>"+
+											value["tstctlhk"]+"</span></li>";
+											var dtbtl = "<li class='list-group-item list-group-item-info'>Điểm trung bình tích lũy:&nbsp;<span class='badge'>"+
+											value["dtbtl"].toFixed(2)+"</span></li>";
+											var tstctl = "<li class='list-group-item list-group-item-success'>Tổng số tín chỉ tích lũy:&nbsp;<span class='badge'>"+
+											value["tstctl"]+"</span></li>";
+											ul.innerHTML =  hk_nk + " " +tstcdk + " " + dtbhk + " "+ tstctlhk + " "+ dtbtl + " "+ tstctl;
+							  				$("#content_tt_ht").append(ul);
+							  				$("#content_tt_ht").hide();
+							  				$("#content_tt_ht").show("slow");
+							  			});
+					            });
+							
 								});
 								
 						//Kết thúc xử lý gửi nhận xem tt chi tiết sinh viên
@@ -222,7 +253,8 @@
 			 $("#tt_cn_sv").find(".ho_ten").text("Họ tên: "+ho_ten);
 			 $("#tt_cn_sv").find(".gioi_tinh").text("Giới tính: "+gioi_tinh);
 			 $("#tt_cn_sv").find(".ngay_sinh").text("Ngày sinh: "+ngay_sinh);
-			 $("#content_tt_ht").hide();
+		     $("input[name=id_sv_modal]").val(id_sv);
+			 $("#content_tt_ht").empty();
 			
 		}
 		<#if (actionErrors?? & actionErrors?size>0)>

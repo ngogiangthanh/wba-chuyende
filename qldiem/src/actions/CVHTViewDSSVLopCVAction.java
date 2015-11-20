@@ -63,7 +63,7 @@ public class CVHTViewDSSVLopCVAction extends ActionSupport {
 					sv_lop.setId_sv(rs.getInt("ID_SV"));
 					sv_lop.setMssv(rs.getString("MSSV"));
 					sv_lop.setHo_ten(rs.getString("HO_TEN"));
-					sv_lop.setGioi_tinh((rs.getString("GIOI_TINH").equals("0")) ? "nam" : "nữ");
+					sv_lop.setGioi_tinh((rs.getString("GIOI_TINH").equals("0")) ? "Nam" : "Nữ");
 					sv_lop.setNgay_sinh(rs.getString("NGAY_SINH"));
 					sv_lop.setKhoa(rs.getString("KHOA"));
 					sv_lop.setChuyen_nganh(rs.getString("CHUYEN_NGANH"));
