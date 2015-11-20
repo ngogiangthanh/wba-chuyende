@@ -1,0 +1,49 @@
+package actions;
+
+import java.util.ArrayList;
+import java.util.Map;
+
+import com.mysql.jdbc.CallableStatement;
+import com.mysql.jdbc.ResultSet;
+import com.opensymphony.xwork2.ActionContext;
+import com.opensymphony.xwork2.ActionSupport;
+
+import connection.Connect;
+import hash.base_64;
+import models.sv_lop_cv;
+
+public class CVHTViewCTSVLopCVAction extends ActionSupport {
+
+	private static final long serialVersionUID = 1L;
+	private Map<String, Object> session = null;
+	private GVAction gvAction = null;
+	private Connect conn;
+	
+
+	public CVHTViewCTSVLopCVAction() {
+	}
+
+	public String execute() {
+		
+		return SUCCESS;
+	}
+
+	public void validate() {
+		try {
+			int test_id_lop = Integer.parseInt(getId_lop());
+			if (test_id_lop <= 0)
+				addActionError("Lớp không hợp lệ!");
+			
+			base_64 decode_base_64 = new base_64();
+			decode_base_64.setBase_64_string_encode(getTen_lop());
+			if (getTen_lop().length() <= 0 | !decode_base_64.decode()) {
+				addActionError("Tên lớp không chính xác!");
+			}
+			setTen_lop(decode_base_64.getBase_64_string_decode());
+		} catch (Exception ex) {
+			addActionError("Lớp không hợp lệ!");
+		}
+	}
+
+	
+}

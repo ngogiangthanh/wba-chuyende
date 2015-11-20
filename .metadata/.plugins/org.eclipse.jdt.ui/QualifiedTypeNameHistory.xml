@@ -57,4 +57,5 @@
 <fullyQualifiedTypeName name="java.util.Date"/>
 <fullyQualifiedTypeName name="models.sv_lop_cv"/>
 <fullyQualifiedTypeName name="java.lang.Integer"/>
+<fullyQualifiedTypeName name="actions.SVAction"/>
 </qualifiedTypeNameHistroy>

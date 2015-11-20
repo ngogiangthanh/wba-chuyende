@@ -31,6 +31,13 @@ public class CVHTViewDSSVLopCVAction extends ActionSupport {
 		if (!gvAction.Prefix_Check("Trang chủ xem danh sách sinh viên lớp cố vấn", this.session))
 			return ERROR;
 
+		// Kiểm tra xem nếu session hknk đã có thì khỏi tạo lại và ngược lại
+		if (!session.containsKey("hknk")) {
+			SVAction svAct = new SVAction();
+			System.out.println("Gán hknk lần đầu");
+			svAct.assignHKNKValues(this.session);
+		}
+
 		this.conn = new Connect();
 		Map<String, String> infor_user = (Map<String, String>) session.get("information");
 		String procedure = "call get_tt_cvht_lop_cv_ds_sv(?,?);";

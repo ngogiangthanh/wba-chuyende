@@ -102,11 +102,11 @@
 								<#list dsSVLopCV as sv>
 									<tr>
 										<td>${sv.stt}</td>
-										<td>${sv.mssv}</td>
-										<td>${sv.ho_ten}</td>
-										<td>${sv.ngay_sinh?string["dd/MM/yyyy"]}</td>
-										<td>${sv.gioi_tinh}</td>
-										<td><a href="#"><i class="glyphicon glyphicon-plus"></i>&nbsp;Xem</a></td>
+										<td id="${sv.mssv}_mssv">${sv.mssv}</td>
+										<td id="${sv.mssv}_ho_ten">${sv.ho_ten}</td>
+										<td id="${sv.mssv}_ngay_sinh">${sv.ngay_sinh?string["dd/MM/yyyy"]}</td>
+										<td id="${sv.mssv}_gioi_tinh">${sv.gioi_tinh}</td>
+										<td><a  href="#" data-toggle="modal" data-target="#xemTTSV" onclick="setInfor2Form('${sv.id_sv}','${sv.ho_ten}','${sv.mssv}','${sv.gioi_tinh}', $('#${sv.mssv}_ngay_sinh').text());"><i class="glyphicon glyphicon-plus"></i>&nbsp;Xem</a></td>
 									</tr>
 								</#list>
 									</tbody>
@@ -116,6 +116,60 @@
 						</div>
 						</div>
 					<!-- END CONTENT -->
+					
+					<!-- Bắt đầu nội dung modal xem thông tin sinh viên -->
+						<div class="modal fade" id="xemTTSV" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+					  <div class="modal-dialog" role="document">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					        <h4 class="modal-title" id="myModalLabel">Thông tin chi tiết sinh viên</h4>
+					      </div>
+					      <div class="modal-body form-horizontal" role="form">
+							<ul class="list-group" id="tt_cn_sv">
+								<li class="list-group-item mssv">MSSV:</li>
+								<li class="list-group-item ho_ten">Họ tên:</li>
+								<li class="list-group-item gioi_tinh">Giới tính:</li>
+								<li class="list-group-item ngay_sinh">Năm sinh:</li>
+							</ul>
+							<div class="alert alert-success text-center" role="alert">
+								Năm học:&nbsp;
+								<select name="nk"  id="id_nk" >
+								<#list hknk.entrySet() as entry>  
+									<option value="${entry.key}">${entry.key}</option>
+								</#list>
+									<option value="0" >Tất cả</option>
+								</select> 
+								&nbsp;Học kỳ&nbsp; <select name="hk" id="id_hk">
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">Hè</option>
+									<option value="0">Tất cả</option>
+								</select>&nbsp; 
+								<input type="button" value="Liệt kê" class="btn btn-primary" id="btn_lk_tt_hk_nk"/>
+							</div>
+							
+							<div id="content_tt_ht">
+							<ul class="list-group">
+								<li class="list-group-item">Học kỳ: - niên khóa: </li>
+								<li class="list-group-item list-group-item-success">Tổng số tín chỉ đăng ký:&nbsp;<span class="badge"></span></li>
+								<li class="list-group-item list-group-item-info">Điểm trung bình học kỳ:&nbsp;<span class="badge"></span></li>
+								<li class="list-group-item list-group-item-success">Tổng số tín chỉ tích lũy học kỳ:&nbsp;<span class="badge"></span></li>
+								<li class="list-group-item list-group-item-info">Điểm trung bình tích lũy:&nbsp;<span class="badge"></span></li>
+								<li class="list-group-item list-group-item-success">Tổng số tín chỉ tích lũy:&nbsp;<span class="badge"></span></li>
+							</ul>
+							</div>
+							
+						</div>
+						      <div class="modal-footer">
+						        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+						      </div>
+						    </div>
+						  </div>
+						</div>
+					<!-- Kết thúc nội dung modal xem thông tin sinh viên -->
+					
+					
 				</div>
 				<!--/span-->
 			</div>
@@ -127,26 +181,26 @@
 		<!-- Include all compiled plugins (below), or include individual files as needed -->
 		<script type="text/javascript" src="public/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="public/js/toastr.js"></script>
-		<script type="text/javascript">
+		<script type="text/javascript">	
+		toastr.options = {
+				  "closeButton": true,
+				  "debug": true,
+				  "newestOnTop": false,
+				  "progressBar": true,
+				  "positionClass": "toast-top-right",
+				  "preventDuplicates": false,
+				  "onclick": null,
+				  "showDuration": "300",
+				  "hideDuration": "1000",
+				  "timeOut": "5000",
+				  "extendedTimeOut": "1000",
+				  "showEasing": "swing",
+				  "hideEasing": "linear",
+				  "showMethod": "fadeIn",
+				  "hideMethod": "fadeOut"
+				}
 			$(document).ready(
-					function() {						
-						toastr.options = {
-							  "closeButton": true,
-							  "debug": true,
-							  "newestOnTop": false,
-							  "progressBar": true,
-							  "positionClass": "toast-top-right",
-							  "preventDuplicates": false,
-							  "onclick": null,
-							  "showDuration": "300",
-							  "hideDuration": "1000",
-							  "timeOut": "5000",
-							  "extendedTimeOut": "1000",
-							  "showEasing": "swing",
-							  "hideEasing": "linear",
-							  "showMethod": "fadeIn",
-							  "hideMethod": "fadeOut"
-							}
+					function() {					
 						$('#sidebar .panel-heading').click(
 								function() {
 									$('#sidebar .list-group').toggleClass(
@@ -155,14 +209,28 @@
 											'glyphicon-plus-sign').toggleClass(
 											'glyphicon-minus-sign');
 								});
-
-						<#if (actionErrors?? & actionErrors?size>0)>
-							toastr["error"]("${actionErrors}");
-						</#if> 
-						<#if (actionMessages?? & actionMessages?size>0)>
-							toastr["info"]("${actionMessages}");
-						</#if>
+						//Xử lý gửi nhận xem tt chi tiết sinh viên
+						
+						$('#btn_lk_tt_hk_nk').click(function() {
+							toastr["info"]("Liệt kê");
+								});
+								
+						//Kết thúc xử lý gửi nhận xem tt chi tiết sinh viên
 					});
+		function setInfor2Form(id_sv, ho_ten, mssv,  gioi_tinh, ngay_sinh){
+			 $("#tt_cn_sv").find(".mssv").text("MSSV: "+mssv);
+			 $("#tt_cn_sv").find(".ho_ten").text("Họ tên: "+ho_ten);
+			 $("#tt_cn_sv").find(".gioi_tinh").text("Giới tính: "+gioi_tinh);
+			 $("#tt_cn_sv").find(".ngay_sinh").text("Ngày sinh: "+ngay_sinh);
+			 $("#content_tt_ht").hide();
+			
+		}
+		<#if (actionErrors?? & actionErrors?size>0)>
+			toastr["error"]("${actionErrors}");
+		</#if> 
+		<#if (actionMessages?? & actionMessages?size>0)>
+			toastr["info"]("${actionMessages}");
+		</#if>
 		</script>
 </body>
 </html>

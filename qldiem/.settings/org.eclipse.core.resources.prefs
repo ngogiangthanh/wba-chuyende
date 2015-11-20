@@ -17,6 +17,7 @@ encoding//WebContent/WEB-INF/freemarker/sv/view-profile.jsp=UTF-8
 encoding//WebContent/WEB-INF/freemarker/view-profile.jsp=UTF-8
 encoding//src/actions/AdminAction.java=UTF-8
 encoding//src/actions/CBAction.java=UTF-8
+encoding//src/actions/CVHTViewCTSVLopCVAction.java=UTF-8
 encoding//src/actions/CVHTViewDSSVLopCVAction.java=UTF-8
 encoding//src/actions/CVHTViewLopCVAction.java=UTF-8
 encoding//src/actions/ExcelUploadAction.java=UTF-8
