@@ -234,12 +234,44 @@
 			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
 			</result>
 		</action>
+		
+		
 		<action name="pdt-index" method="getIndex" class="actions.PDTAction">
 			<result type="freemarker" name="index">/WEB-INF/freemarker/pdt/index.jsp
 			</result>
 			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
 			</result>
 		</action>
+		<action name="pdt-viewin" class="actions.PDTViewFindInAction">
+			<result type="freemarker" name="index">/WEB-INF/freemarker/pdt/view-findsv.jsp
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+		</action>
+		<action name="pdt-xulytimsv" class="actions.PDTXLFindInAction">
+			<result type="json" name="success">
+				<param name="ignoreHierarchy">false</param>
+				<param name="excludeNullProperties">true</param>
+				<param name="noCache">true</param>
+				<param name="includeProperties">
+					kq_sv.*,
+					actionErrors.*
+				</param>
+			</result>
+			<result type="json" name="input">
+				<param name="ignoreHierarchy">false</param>
+				<param name="excludeNullProperties">true</param>
+				<param name="noCache">true</param>
+				<param name="includeProperties">
+					kq_sv.*,
+					actionErrors.*
+				</param>
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+		</action>
+		
+		
 		<action name="admin-index" method="getIndex" class="actions.AdminAction">
 			<result type="freemarker" name="index">/WEB-INF/freemarker/admin/index.jsp
 			</result>

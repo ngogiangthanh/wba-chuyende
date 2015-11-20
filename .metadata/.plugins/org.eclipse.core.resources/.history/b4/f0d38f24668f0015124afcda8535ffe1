@@ -1,0 +1,35 @@
+package actions;
+
+import java.util.Map;
+
+import com.mysql.jdbc.CallableStatement;
+import com.opensymphony.xwork2.ActionContext;
+import com.opensymphony.xwork2.ActionSupport;
+
+import connection.Connect;
+
+public class PDTXLFindInAction extends ActionSupport {
+
+	private static final long serialVersionUID = 1L;
+	private Map<String, Object> session = null;
+	private PDTAction pdtAction = null;
+	private Connect conn;
+	private String MSSV;
+
+	public PDTXLFindInAction() {
+	}
+
+	public String execute() {
+		this.pdtAction = new PDTAction();
+		this.session = ActionContext.getContext().getSession();
+		if (!this.pdtAction.Prefix_Check("", this.session))
+			return ERROR;
+		
+		// Gọi procedure lấy thông tin 
+		this.conn = new Connect();
+		String procedure = "call get_tt_sv_diem_hp(?,?,?);";
+		CallableStatement pstmt = null;
+
+		return SUCCESS;
+	}
+}

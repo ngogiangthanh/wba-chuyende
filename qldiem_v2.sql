@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 19, 2015 at 09:50 AM
+-- Generation Time: Nov 20, 2015 at 10:39 AM
 -- Server version: 5.6.24
 -- PHP Version: 5.6.8
 
@@ -162,6 +162,22 @@ BEGIN
 		hk_nh.KT desc,
 		hk_nh.NK desc,
 		hk_nh.HK desc
+	LIMIT 0, 1;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_tt_pdt_tim_sv`(IN `mssv` varchar(8))
+BEGIN
+	SELECT
+	sv.ID,
+	sv.MSSV,
+	sv.HO_TEN,
+	lop.LOP,
+	lop.TEN_LOP
+	FROM
+	sv
+	INNER JOIN lop ON lop.ID = sv.ID_LOP
+	WHERE
+	sv.MSSV like `mssv`
 	LIMIT 0, 1;
 END$$
 
@@ -553,7 +569,7 @@ INSERT INTO `ct_hp` (`ID_SV`, `ID_HP`, `DIEM_CHU`, `DIEM_10`, `DIEM_4`, `CAI_THI
 (1, 39, 'D', 4, 1, 0, 1),
 (1, 46, 'C', 6, 2, 1, 1),
 (1, 48, 'A', 9.8, 4, 0, 1),
-(1, 49, 'B+', 8.7, 3.5, 0, 1),
+(1, 49, 'B+', 8.7, 3.5, 0, 0),
 (1, 51, 'A', 9.3, 4, 0, 1),
 (1, 54, 'B+', 8, 3.5, 1, 0),
 (1, 55, 'B', 7.5, 3, 0, 1),
@@ -562,7 +578,7 @@ INSERT INTO `ct_hp` (`ID_SV`, `ID_HP`, `DIEM_CHU`, `DIEM_10`, `DIEM_4`, `CAI_THI
 (1, 72, 'I', 11, 5, 1, 0),
 (1, 73, 'F', 0, 0, 0, 0),
 (1, 75, '', NULL, NULL, 0, 0),
-(1, 78, '', 0, 0, 1, 0),
+(1, 78, 'A', 10, 4, 1, 1),
 (1, 79, 'A', 9, 4, 1, 1),
 (2, 1, 'C+', 6.6, 2.5, 0, 1),
 (2, 3, 'F', 0.6, 0, 0, 0),
@@ -605,7 +621,7 @@ INSERT INTO `ct_hp` (`ID_SV`, `ID_HP`, `DIEM_CHU`, `DIEM_10`, `DIEM_4`, `CAI_THI
 (3, 74, 'C', 6, 2, 1, 1),
 (3, 75, '', NULL, NULL, 1, 0),
 (3, 78, 'B+', 8, 3.5, 1, 1),
-(3, 79, 'B+', 8.5, 3.5, 1, 1),
+(3, 79, 'B+', 8, 3.5, 1, 1),
 (4, 5, 'C+', 6.7, 2.5, 0, 0),
 (4, 7, 'B', 7.5, 3, 0, 1),
 (4, 10, 'C+', 6.7, 2.5, 0, 1),

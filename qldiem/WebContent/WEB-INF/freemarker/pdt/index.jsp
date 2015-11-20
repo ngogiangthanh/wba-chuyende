@@ -77,7 +77,7 @@
 				<div class="row">
 					<!-- BEGIN CONTENT -->
 					  <div id="menu">
-                            <a href="pdt-indiem.html" class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
+                            <a href="pdt-viewin.html" class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
                                 <i class="glyphicon glyphicon-print"></i>&nbsp;In bảng điểm
                             </a>
                         </div>
