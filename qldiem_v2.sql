@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 20, 2015 at 10:39 AM
+-- Generation Time: Nov 22, 2015 at 08:48 AM
 -- Server version: 5.6.24
 -- PHP Version: 5.6.8
 
@@ -179,6 +179,27 @@ BEGIN
 	WHERE
 	sv.MSSV like `mssv`
 	LIMIT 0, 1;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_tt_pdt_tt_sv`(IN `id_sv` int)
+BEGIN
+	SELECT
+			sv.ID AS ID_SV,
+			sv.MSSV,
+			sv.HO_TEN,
+			sv.GIOI_TINH,
+			DATE_FORMAT(sv.NGAY_SINH,"%d/%m/%Y") AS NGAY_SINH,
+			khoa.KHOA,
+			cn.CHUYEN_NGANH,
+			lop.LOP,
+			lop.TEN_LOP
+	FROM
+	sv
+	INNER JOIN khoa ON khoa.ID = sv.ID_KHOA
+	INNER JOIN cn ON cn.ID = sv.ID_CN
+	INNER JOIN lop ON lop.ID = sv.ID_LOP
+	WHERE
+		sv.ID = `id_sv`;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_tt_qldvn_sv_cc_hv`(IN `id_khoa` int, IN `nk` char(9), IN `hk` int)

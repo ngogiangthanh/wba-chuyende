@@ -75,63 +75,50 @@
                                     <p><strong>Số......</strong></p>
                                 </td>
                                 <td>
-                                     <p><h4><strong>BẢNG ĐIỂM ĐẠI HỌC</strong></h4></p>
+                                     <p><h4><strong>BẢNG GHI ĐIỂM THI HỌC KỲ</strong></h4></p>
                                 </td>
                             </tr>
 						</table>
                         <div class="clearfix">&nbsp;</div>
+                        <#if sv_print_mark??>
                         <table class="col-sm-12 col-xs-12 col-md-12 col-lg-12 pull-right">
                             <tbody>
-                                <#list information.entrySet() as entry>  
-							<#switch entry.key>
-							 <#case "1_MSSV">
 							    <tr>
                                     <td>
-                                        Mã số sinh viên:&nbsp;<strong>${entry.value}</strong>
+                                        Mã số sinh viên:&nbsp;<strong>${sv_print_mark.mssv}</strong>
                                     </td>
-							    <#break>
-							  <#case "2_HO_TEN">
                                     <td>
-                                        Cấp cho:&nbsp;<strong>${entry.value}</strong>
+                                        Cấp cho:&nbsp;<strong>${sv_print_mark.ho_ten}</strong>
                                     </td>
                                 </tr>
-							    <#break>
-							  <#case "4_NGAY_SINH">
                                 <tr>
                                     <td>
-                                        Ngày sinh:&nbsp;<strong>${entry.value}</strong>
+                                        Ngày sinh:&nbsp;<strong>${sv_print_mark.ngay_sinh?string["dd/MM/yyyy"]}</strong>
                                     </td>
-							    <#break>
-							  <#case "5_LOP">
                                     <td>
-                                        Lớp:&nbsp;<strong>${entry.value}</strong>
+                                        Lớp:&nbsp;<strong>${sv_print_mark.lop}</strong>
                                     </td>
                                 </tr>
-							    <#break>	
-							  <#case "6_TEN_LOP">
                                 <tr>
                                     <td>
-                                        Tên lớp:&nbsp;<strong>${entry.value}</strong>
+                                        Tên lớp:&nbsp;<strong>${sv_print_mark.ten_lop}</strong>
                                     </td>
-							    <#break>	
-							  <#case "7_CHUYEN_NGANH">
                                     <td>
-                                        Ngành:&nbsp;<strong>${entry.value}</strong>
+                                        Ngành:&nbsp;<strong>${sv_print_mark.chuyen_nganh}</strong>
                                     </td>
                                 </tr>
-							    <#break>	
-							  <#case "8_KHOA">
                                 <tr>
-                                    <td colspan="2">
-                                        Khoa:&nbsp;<strong>${entry.value}</strong>
+                                    <td>
+                                        Khoa:&nbsp;<strong>${sv_print_mark.khoa}</strong>
+                                    </td>
+                                    <td>
+                                        Hệ:&nbsp;<strong>Đại học - Chính quy</strong>
                                     </td>
                                 </tr>
-							    <#break>								    						    						    						    
-							</#switch>
-						     </#list>
                             </tbody>
                         </table>
                         <div class="clearfix">&nbsp;</div>
+                        </#if>
                         <#if dsDiemHP?has_content>
                         <#list dsDiemHP.entrySet() as hknk_ds_hocPhan>  
 						<#assign tstcdkhk = 0 >
@@ -240,8 +227,8 @@
                         <#assign aDateTime = .now>
 	                        <p class="pull-right">
 	                        Cần Thơ,&nbsp;ngày&nbsp;${aDateTime?string["dd"]}&nbsp;tháng&nbsp;${aDateTime?string["MM"]}&nbsp;năm&nbsp;${aDateTime?string["yyyy"]}<br/>
-	                        <strong>Người in</strong><br/><br/><br/>
-	                        <em>(Ký và ghi rõ họ tên)</em>
+	                        <strong>TL. Hiệu trưởng</strong><br/>
+	                        <strong>TRƯỞNG PHÒNG ĐÀO TẠO</strong><br/><br/><br/><br/>
 	                        </p>
                         </div>
                         </div>

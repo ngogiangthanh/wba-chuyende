@@ -108,7 +108,7 @@
 											</tr>
 											</thead>
 											<tbody>
-											<input type="hidden" value="" name="id_sv"/>
+											<input type="hidden" value="" name="id_sv_find"/>
 											<tr>
 												<td class="mssv">
 												</td>
@@ -117,7 +117,7 @@
 												<td class="lop">
 												</td>
 												<td>
-													<select name="nk"  id="id_nk" >
+													<select name="nk_select"  id="id_nk_select" >
 													<#list hknk.entrySet() as entry>  
 														<option value="${entry.key}">${entry.key}</option>
 													</#list>
@@ -125,7 +125,7 @@
 													</select> 
 												</td>
 												<td>
-													<select name="hk" id="id_hk">
+													<select name="hk_select" id="id_hk_select">
 														<option value="1">1</option>
 														<option value="2">2</option>
 														<option value="3">Hè</option>
@@ -133,7 +133,7 @@
 													</select>
 												</td>
 												<td>
-													<a href='#' onclick=""><i class="glyphicon glyphicon-print"></i>&nbsp;Lập bảng in</a>
+													<a href='#' onclick="setInfor2Form()"><i class="glyphicon glyphicon-print"></i>&nbsp;Lập bảng in</a>
 												</td>
 											</tr>
 											</tbody>
@@ -143,7 +143,11 @@
 						</div>
 						</div>
 					<!-- END CONTENT -->
-					
+					<form action="pdt-printed-mark.html" method="post" target="_blank" id="frmPrintedMark">
+						<input type="hidden" value="" id="id_id_sv" name="id_sv"/>
+						<input type="hidden" value="" id="id_hk" name="hk"/>
+						<input type="hidden" value="" id="id_nk" name="nk"/>
+					</form>
 				</div>
 				<!--/span-->
 			</div>
@@ -204,6 +208,7 @@
 					                data: formData
 					            }).done(function(data) {
 					            	if(data.kq_sv != null){
+					            		$("input[name='id_sv_find']").val(data.kq_sv["id_sv"]);
 										$('#sv_in > tbody > tr > td.mssv').text(data.kq_sv["mssv"]);
 										$('#sv_in > tbody > tr > td.ho_ten').text(data.kq_sv["ho_ten"]);
 										$('#sv_in > tbody > tr > td.lop').text(data.kq_sv["lop"]+" - "+data.kq_sv["ten_lop"]);
@@ -217,7 +222,20 @@
 					            });
 						});
 						//Kết thúc Xử lý tìm sinh viên 
+						//Bắt đầu xử lý lấy thông tin học kỳ niên khóa để in
+						
+						//Kết thúc xử lý lấy thông tin học kỳ niên khóa để in
 					});
+		function setInfor2Form(){
+			var id_sv = $("input[name='id_sv_find']").val();
+			var hk = $("#id_hk_select option:selected").val();
+			var nk = $("#id_nk_select option:selected").val();
+			$("#id_id_sv").val(id_sv);
+			$("#id_hk").val(hk);
+			$("#id_nk").val(nk);
+			$("#frmPrintedMark").submit();
+			
+		}
 		<#if (actionErrors?? & actionErrors?size>0)>
 			toastr["error"]("${actionErrors}");
 		</#if> 

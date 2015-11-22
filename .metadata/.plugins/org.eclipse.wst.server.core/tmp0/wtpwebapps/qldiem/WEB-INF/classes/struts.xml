@@ -270,6 +270,16 @@
 			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
 			</result>
 		</action>
+		<action name="pdt-printed-mark" class="actions.PDTPrintedMarkAction">
+			<result type="freemarker" name="printed-mark">/WEB-INF/freemarker/pdt/printed-mark.jsp
+			</result>
+			<result type="freemarker" name="print-mark">/WEB-INF/freemarker/pdt/view-findsv.jsp
+			</result>
+			<result type="freemarker" name="input">/WEB-INF/freemarker/pdt/view-findsv.jsp
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+		</action>
 		
 		
 		<action name="admin-index" method="getIndex" class="actions.AdminAction">

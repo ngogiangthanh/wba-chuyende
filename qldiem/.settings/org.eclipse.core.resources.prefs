@@ -31,6 +31,7 @@ encoding//src/actions/Home.java=UTF-8
 encoding//src/actions/LoginAction.java=UTF-8
 encoding//src/actions/LogoutAction.java=UTF-8
 encoding//src/actions/PDTAction.java=UTF-8
+encoding//src/actions/PDTPrintedMarkAction.java=UTF-8
 encoding//src/actions/PDTViewFindInAction.java=UTF-8
 encoding//src/actions/PDTXLFindInAction.java=UTF-8
 encoding//src/actions/QLDVNAction.java=UTF-8
