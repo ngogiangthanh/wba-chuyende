@@ -8,6 +8,6 @@
 </head>
 <body>
 Lỗi 404: PAGE NOT FOUND<br/>
-Quay trở về <a href="/">trang chủ</a>
+Quay trở về <a href="/qldiem/">trang chủ</a>
 </body>
 </html>

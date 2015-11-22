@@ -37,7 +37,7 @@ public class AdminAction extends ActionSupport {
 				}
 			return "error";
 		}
-		session.put("title", "Chức năng đang xây dựng");
+		session.put("title", "Trang chủ administrator");
 		return "index";
 	}
 }

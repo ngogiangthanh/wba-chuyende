@@ -4,10 +4,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Lỗi 500</title>
+<title>Thông báo lỗi 404</title>
 </head>
 <body>
-Lỗi 500: ERROR INTERNAL SERVER<br/>
-Quay trở về <a href="/qldiem/">trang chủ</a>
+Lỗi 404: PAGE NOT FOUND<br/>
+Quay trở về <a href="/">trang chủ</a>
 </body>
 </html>

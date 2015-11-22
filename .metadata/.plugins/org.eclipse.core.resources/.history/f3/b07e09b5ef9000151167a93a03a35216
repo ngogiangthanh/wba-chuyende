@@ -288,8 +288,8 @@
 			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
 			</result>
 		</action>
-		<action name="admin-thangdiem" method="wattingPage" class="actions.AdminAction">
-			<result type="freemarker" name="index">/WEB-INF/freemarker/admin/watting-page.jsp
+		<action name="admin-index" method="getIndex" class="actions.AdminAction">
+			<result type="freemarker" name="index">/WEB-INF/freemarker/admin/index.jsp
 			</result>
 			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
 			</result>
