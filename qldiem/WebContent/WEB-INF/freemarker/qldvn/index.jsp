@@ -87,7 +87,10 @@
                                 <i class="glyphicon glyphicon-warning-sign"></i>&nbsp;Thống kê sinh viên bị kỷ luật
                             </a>
                             <a href="qldvn-nhapdiem.html" class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
-                                <i class="glyphicon glyphicon-pencil"></i>&nbsp;Nhập điểm cho sinh viên
+                                <i class="glyphicon glyphicon-pencil"></i>&nbsp;Nhập điểm (M, I) cho sinh viên
+                            </a>
+                            <a href="qldvn-ktdiemno.html" class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
+                                <i class="glyphicon glyphicon-list-alt"></i>&nbsp;Kiểm tra sinh viên nợ điểm I
                             </a>
                         </div>
 					<!-- END CONTENT -->

@@ -151,7 +151,7 @@
 			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
 			</result>
 		</action>
-		<action name="gv-excelUpload" class="actions.ExcelUploadAction">
+		<action name="gv-excelUpload" class="actions.GVExcelUploadAction">
 			<interceptor-ref name="fileUploadStack" />
 			<result type="json" name="success">
 				<param name="ignoreHierarchy">false</param>
@@ -227,7 +227,6 @@
 			</result>
 		</action>
 		
-
 		<action name="qldvn-index" method="getIndex" class="actions.QLDVNAction">
 			<result type="freemarker" name="index">/WEB-INF/freemarker/qldvn/index.jsp
 			</result>
