@@ -140,7 +140,7 @@ public class SVAction extends ActionSupport {
 					hp.setHpDieuKien(rs.getString("DIEU_KIEN"));
 					hp.setMaHP(rs.getString("MA_HP"));
 					hp.setSoTC(rs.getInt("SO_TC"));
-					hp.setDiemChu(rs.getString("DIEM_CHU"));
+					hp.setDiemChu(rs.getString("DIEM_CHU").trim());
 					hp.setDiem10(rs.getFloat("DIEM_10"));
 					hp.setDiem4(rs.getFloat("DIEM_4"));
 					hp.setTichLuy(rs.getString("TL"));
@@ -356,7 +356,7 @@ public class SVAction extends ActionSupport {
 					hp.setHpDieuKien(rs.getString("DIEU_KIEN"));
 					hp.setMaHP(rs.getString("MA_HP"));
 					hp.setSoTC(rs.getInt("SO_TC"));
-					hp.setDiemChu(rs.getString("DIEM_CHU"));
+					hp.setDiemChu(rs.getString("DIEM_CHU").trim());
 					hp.setDiem10(rs.getFloat("DIEM_10"));
 					hp.setDiem4(rs.getFloat("DIEM_4"));
 					hp.setTichLuy(rs.getString("TL"));

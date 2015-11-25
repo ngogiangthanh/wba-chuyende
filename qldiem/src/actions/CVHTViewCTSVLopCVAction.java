@@ -1,6 +1,5 @@
 package actions;
 
-import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -11,8 +10,8 @@ import com.mysql.jdbc.CallableStatement;
 import com.mysql.jdbc.ResultSet;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+
 import connection.Connect;
-import hash.base_64;
 import models.hk_nk;
 import models.sv_diem_hp;
 import models.sv_lop_ct_cv;
@@ -126,7 +125,7 @@ public class CVHTViewCTSVLopCVAction extends ActionSupport {
 					hp.setHpDieuKien(rs.getString("DIEU_KIEN"));
 					hp.setMaHP(rs.getString("MA_HP"));
 					hp.setSoTC(rs.getInt("SO_TC"));
-					hp.setDiemChu(rs.getString("DIEM_CHU"));
+					hp.setDiemChu(rs.getString("DIEM_CHU").trim());
 					hp.setDiem10(rs.getFloat("DIEM_10"));
 					hp.setDiem4(rs.getFloat("DIEM_4"));
 					hp.setTichLuy(rs.getString("TL"));
@@ -208,11 +207,11 @@ public class CVHTViewCTSVLopCVAction extends ActionSupport {
 				ct_sv = new sv_lop_ct_cv();
 				if (sv_diem.getDiemChu() != "W")
 					tstcdk += sv_diem.getSoTC();	
-				if (sv_diem.getDiemChu() != "W" & sv_diem.getDiemChu() != "I" & sv_diem.getDiemChu() != ""){
+				if (!sv_diem.getDiemChu().equals("M") & !sv_diem.getDiemChu().equals("W") & !sv_diem.getDiemChu().equals("I") & !sv_diem.getDiemChu().equals("")){
 	        		tdtbHK += sv_diem.getTichDiem();
 	        		tstchk += sv_diem.getSoTC();
+					System.out.println("tinh diem chu "+ sv_diem.getDiemChu());
 				}
-				System.out.println(sv_diem.getTichLuy());
 				if (sv_diem.getTichLuy().equals("1")) tstctlhk += sv_diem.getSoTC();
 			}
 			if (tstchk == 0) tstchk = 1;

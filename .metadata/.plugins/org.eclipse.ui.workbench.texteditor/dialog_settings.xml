@@ -2,12 +2,13 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="tstctlhk" key="selection"/>
+		<item value="ExcelUploadAction" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="ExcelUploadAction"/>
 			<item value="tstctlhk"/>
 			<item value="tstchk"/>
 			<item value="tstcdkhk"/>
@@ -15,7 +16,6 @@
 			<item value="assignHKNKValues"/>
 			<item value="thang_diem"/>
 			<item value="id_gv"/>
-			<item value="id_hp"/>
 		</list>
 		<list key="replacehistory">
 			<item value=""/>

@@ -175,7 +175,7 @@
                                     </#if>
                                 </td>
                             </tr>
-									<#if hocPhan.diemChu != "W" & hocPhan.diemChu != "I" & hocPhan.diemChu != "">
+									<#if hocPhan.diemChu != "W" & hocPhan.diemChu != "M" & hocPhan.diemChu != "I" & hocPhan.diemChu != "">
                             		<#assign tdtbHK = tdtbHK + hocPhan.tichDiem >
                             		<#assign tstchk = tstchk + hocPhan.soTC >
                             		</#if>
