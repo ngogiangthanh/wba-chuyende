@@ -3,6 +3,7 @@ package models;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class ke_hoach {
@@ -47,7 +48,7 @@ public class ke_hoach {
 
 	public void setNgay_bd(String ngay_bd) {
 		try {
-			this.ngay_bd = dateFormat.parse(ngay_bd);
+			this.ngay_bd = removeTime(dateFormat.parse(ngay_bd));
 		} catch (ParseException e) {
 			this.ngay_bd = null;
 			e.printStackTrace();
@@ -56,7 +57,7 @@ public class ke_hoach {
 
 	public void setNgay_kt(String ngay_kt) {
 		try {
-			this.ngay_kt = dateFormat.parse(ngay_kt);
+			this.ngay_kt = removeTime(dateFormat.parse(ngay_kt));
 		} catch (ParseException e) {
 			this.ngay_kt = null;
 			e.printStackTrace();
@@ -65,5 +66,15 @@ public class ke_hoach {
 
 	public void setNk(String nk) {
 		this.nk = nk;
+	}
+	
+	public Date removeTime(Date date) {    
+	    Calendar cal = Calendar.getInstance();  
+	    cal.setTime(date);  
+	    cal.set(Calendar.HOUR_OF_DAY, 0);  
+	    cal.set(Calendar.MINUTE, 0);  
+	    cal.set(Calendar.SECOND, 0);  
+	    cal.set(Calendar.MILLISECOND, 0);  
+	    return cal.getTime(); 
 	}
 }

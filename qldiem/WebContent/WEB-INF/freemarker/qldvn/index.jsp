@@ -77,14 +77,8 @@
 				<div class="row">
 					<!-- BEGIN CONTENT -->
 					 <div id="menu">
-                            <a href="qldvn-nohp.html" class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
-                                <i class="glyphicon glyphicon-bell"></i>&nbsp;Thống kê sinh viên còn nợ học phần
-                            </a>
-                            <a href="qldvn-khenthuongsv.html" class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
-                                <i class="glyphicon glyphicon-gift"></i>&nbsp;Thống kê sinh viên được khen thưởng
-                            </a>
-                            <a href="qldvn-kyluat.html" class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
-                                <i class="glyphicon glyphicon-warning-sign"></i>&nbsp;Thống kê sinh viên bị kỷ luật
+                            <a href="qldvn-thongke.html" class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
+                                <i class="glyphicon glyphicon-bell"></i>&nbsp;Thống kê - báo cáo
                             </a>
                             <a href="qldvn-nhapdiem.html" class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
                                 <i class="glyphicon glyphicon-pencil"></i>&nbsp;Nhập điểm (M, I) cho sinh viên

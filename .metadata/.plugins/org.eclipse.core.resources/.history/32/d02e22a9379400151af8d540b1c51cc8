@@ -1,0 +1,9 @@
+package models;
+
+
+public class sv_no_hp {
+	private int stt;
+	private String mssv;
+	private int ho_ten;
+	
+}

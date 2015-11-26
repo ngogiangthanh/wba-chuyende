@@ -85,7 +85,7 @@
 						<div class="panel-body">
 						<div class="alert alert-success text-center" role="alert">
 							<form action="gv-lophp.html" method="post">
-						<a href="gv-index.html" class="btn btn-default pull-left"/>Quay lại</a>
+								<a href="gv-index.html" class="btn btn-default pull-left"/>Quay lại</a>
 								Năm học:&nbsp;
 								<select name="nk"  id="id_nk" >
 								<#list hknk.entrySet() as entry>  

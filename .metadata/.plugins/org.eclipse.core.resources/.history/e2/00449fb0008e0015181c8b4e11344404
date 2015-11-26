@@ -1,9 +1,0 @@
-package models;
-
-
-public class sv_lop_cv{
-	private int stt;
-	private int id_sv;
-	private String mssv;
-	
-}

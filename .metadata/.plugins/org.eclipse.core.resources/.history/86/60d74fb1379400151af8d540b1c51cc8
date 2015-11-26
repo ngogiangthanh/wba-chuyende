@@ -1,0 +1,11 @@
+package models;
+
+
+public class sv_no_hp {
+	private int stt;
+	private String mssv;
+	private String ho_ten;
+	private String ma_lop;
+	private String ten_lop;
+	
+}

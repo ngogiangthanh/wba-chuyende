@@ -1,9 +1,0 @@
-package models;
-
-import java.util.Objects;
-
-public class ke_hoach{
-	
-	
-	
-}

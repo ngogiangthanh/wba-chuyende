@@ -233,6 +233,36 @@
 			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
 			</result>
 		</action>
+		<action name="qldvn-thongke" class="actions.QLDVNTKAction">
+			<result type="freemarker" name="success">/WEB-INF/freemarker/qldvn/view-thongke.jsp
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+		</action>
+		<action name="qldvn-nhapdiem" class="actions.QLDVNFindSVAction">
+			<result type="freemarker" name="success">/WEB-INF/freemarker/qldvn/view-nhapdiem.jsp
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+		</action>
+		<action name="qldvn-ktdiemno" class="actions.QLDVNKTNoAction">
+			<result type="freemarker" name="success">/WEB-INF/freemarker/qldvn/view-ktdiemno.jsp
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+		</action>
+		<action name="qldvn-nohp" class="actions.QLDVNTKNoAction">
+			<result type="freemarker" name="success">/WEB-INF/freemarker/qldvn/view-tknohp.jsp
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+		</action>
+		<action name="qldvn-cchv" class="actions.QLDVNTKCCHVAction">
+			<result type="freemarker" name="success">/WEB-INF/freemarker/qldvn/view-cchv.jsp
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+		</action>
 		
 		
 		<action name="pdt-index" method="getIndex" class="actions.PDTAction">
