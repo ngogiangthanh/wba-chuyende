@@ -118,49 +118,49 @@
 					<!-- END CONTENT -->
 					
 					<!-- Bắt đầu nội dung modal xem thông tin sinh viên -->
-						<div class="modal fade" id="xemTTSV" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-					  <div class="modal-dialog" role="document">
-					    <div class="modal-content">
-					      <div class="modal-header">
-					        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					        <h4 class="modal-title" id="myModalLabel">Thông tin chi tiết sinh viên</h4>
-					      </div>
-					      <div class="modal-body form-horizontal" role="form">
-							<ul class="list-group" id="tt_cn_sv">
-								<li class="list-group-item mssv">MSSV:</li>
-								<li class="list-group-item ho_ten">Họ tên:</li>
-								<li class="list-group-item gioi_tinh">Giới tính:</li>
-								<li class="list-group-item ngay_sinh">Năm sinh:</li>
-							</ul>
-							<input type="hidden" value="" name="id_sv_modal" id="id_sv_modal"/>
-							<div class="alert alert-success text-center" role="alert">
-								Năm học:&nbsp;
-								<select name="nk"  id="id_nk" >
-								<#list hknk.entrySet() as entry>  
-									<option value="${entry.key}">${entry.key}</option>
-								</#list>
-									<option value="0" >Tất cả</option>
-								</select> 
-								&nbsp;Học kỳ&nbsp; <select name="hk" id="id_hk">
-									<option value="1">1</option>
-									<option value="2">2</option>
-									<option value="3">Hè</option>
-									<option value="0">Tất cả</option>
-								</select>&nbsp; 
-								<input type="button" value="Liệt kê" class="btn btn-primary" id="btn_lk_tt_hk_nk"/>
+					<div class="modal fade" id="xemTTSV" tabindex="-1" role="dialog"
+						aria-labelledby="myModalLabel">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+									<h4 class="modal-title" id="myModalLabel">Thông tin chi
+										tiết sinh viên</h4>
+								</div>
+								<div class="modal-body form-horizontal" role="form">
+									<ul class="list-group" id="tt_cn_sv">
+										<li class="list-group-item mssv">MSSV:</li>
+										<li class="list-group-item ho_ten">Họ tên:</li>
+										<li class="list-group-item gioi_tinh">Giới tính:</li>
+										<li class="list-group-item ngay_sinh">Năm sinh:</li>
+									</ul>
+									<input type="hidden" value="" name="id_sv_modal"
+										id="id_sv_modal" />
+									<div class="alert alert-success text-center" role="alert">
+										Năm học:&nbsp; <select name="nk" id="id_nk"> <#list
+											hknk.entrySet() as entry>
+											<option value="${entry.key}">${entry.key}</option> </#list>
+											<option value="0">Tất cả</option>
+										</select> &nbsp;Học kỳ&nbsp; <select name="hk" id="id_hk">
+											<option value="1">1</option>
+											<option value="2">2</option>
+											<option value="3">Hè</option>
+											<option value="0">Tất cả</option>
+										</select>&nbsp; <input type="button" value="Liệt kê"
+											class="btn btn-primary" id="btn_lk_tt_hk_nk" />
+									</div>
+									<div id="content_tt_ht"></div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default"
+										data-dismiss="modal">Đóng</button>
+								</div>
 							</div>
-							
-							<div id="content_tt_ht">
-							
-							</div>
-							
 						</div>
-						      <div class="modal-footer">
-						        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-						      </div>
-						    </div>
-						  </div>
-						</div>
+					</div>
 					<!-- Kết thúc nội dung modal xem thông tin sinh viên -->
 					
 					

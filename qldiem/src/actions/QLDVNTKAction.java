@@ -84,6 +84,12 @@ public class QLDVNTKAction extends ActionSupport {
 					session.put("current_nk", nk);
 					first++;
 				}
+				
+				if (first == 2 & hk != 3) {
+					session.put("pre_hk", hk);
+					session.put("pre_nk", nk);
+					first++;
+				}
 			}
 			// Đóng kết nối
 			rs.close();

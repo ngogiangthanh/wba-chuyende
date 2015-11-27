@@ -1,0 +1,7 @@
+package models;
+
+
+public class tk_theo_lop{
+	private String ten_lop;
+	private int so_sv;
+}

@@ -7,6 +7,7 @@
 <title>${title}</title>
 <link rel="shortcut icon" href="public/img/logo_dhct.ico" />
 <!-- Bootstrap -->
+<link href="public/css/morris.css" rel="stylesheet">
 <link href="public/css/bootstrap.min.css" rel="stylesheet" />
 <!-- Custom styles for this template -->
 <link href="public/css/admin.css" rel="stylesheet" />
@@ -60,7 +61,7 @@
 		</div>
 		<!-- /.container-fluid -->
 	</nav>
-	<style type="text/css">
+<style type="text/css">
 .dropdown-menu>li>a:hover {
 	color: #000;
 	font-weight: normal;
@@ -70,9 +71,58 @@
 .dropdown-menu>li>a {
 	color: #000;
 }
+
+#display_print {
+	display: none !important;
+}
+svg text{
+      font-size:15px !important;
+      font-weight: normal !important;
+}
+</style>
+<style type="text/css" media="print">
+@media print {
+	#none_print,#xemThongKe {
+		display: none !important;
+	}
+	#display_print {
+		display: block !important;
+	}
+	body {
+		background-color: #fff;
+		margin-top: 0mm;
+		margin-bottom: 0mm;
+	}
+	.page-break, table {
+		page-break-inside: avoid;
+	}
+	tr {
+		page-break-inside: avoid;
+		page-break-after: avoid;
+	}
+	thead {
+		display: table-header-group;
+	}
+	tfoot {
+		display: table-footer-group;
+		margin-top: 25mm;
+	}
+	@page {
+		size: A4;
+		margin: 2cm; /* this affects the margin in the printer settings */
+	}
+	@page :left {
+		margin-left: 2.5cm;
+		margin-right: 2.5cm;
+	}
+	@page :right {
+		margin-right: 2.5cm;
+		margin-left: 2.5cm;
+	}
+}
 </style>
 	<div class="container">
-		<div class="row">
+		<div class="row" id="none_print">
 			<div class="col-sm-12 col-xs-12 col-md-12 col-lg-12 pull-right">
 				<div class="row">
 					<!-- BEGIN CONTENT -->
@@ -82,6 +132,9 @@
 						</div>
 						<div class="panel-body">
 							<a href="qldvn-thongke.html" class="btn btn-default"/>Quay lại</a>&nbsp;
+							<#if dsSVCCHV?? & dsSVCCHV?size gt 0 >
+							<a  href="#" class="btn btn-success" data-toggle="modal" data-target="#xemThongKe" id="click_view_tk"><i class="glyphicon glyphicon-picture"></i>&nbsp;Biểu đồ thống kê</a>
+	                       	</#if>
 	                        <div class="clearfix">&nbsp;</div>
 							<div class="table-responsive">
 								<table class="table table-bordered text-center">
@@ -105,14 +158,14 @@
 									</thead>
 									<tbody>
 									<#if dsSVCCHV?? & dsSVCCHV?size gt 0 >
-											<#list dsSVNoHp as sv>
+											<#list dsSVCCHV as sv>
 												<tr>
 													<td>${sv.stt}</td>
 													<td>${sv.mssv}</td>
 													<td>${sv.ho_ten}</td>
 													<td>${sv.gioi_tinh}</td>
-													<td>${sv.ngay_sinh}</td>
-													<td>${sv.lop}</td>
+													<td>${sv.ngay_sinh?string["dd/MM/yyyy"]}</td>
+													<td>${sv.ten_lop}</td>
 													<td>${sv.chuyen_nganh}</td>
 													<td>${sv.dtb}</td>
 												</tr>
@@ -120,7 +173,7 @@
 									<#else>
 										<tr>
 											<td colspan="8">
-												Không có sinh viên nào nợ học phần.
+												Không có sinh viên nào bị cảnh cáo học vụ.
 											</td>
 										</tr>
 									</#if>
@@ -144,14 +197,148 @@
 			</div>
 			<!--/row-->
 		</div>
+		
+		<!--/Bat dau định dạng in-->
+		<div class="row" id="display_print">
+			<table
+				class="col-sm-12 col-xs-12 col-md-12 col-lg-12 pull-right text-center">
+				<tr>
+					<td>BỘ GIÁO DỤC VÀ ĐÀO TẠO<br /> <strong>TRƯỜNG ĐẠI
+							HỌC CẦN THƠ</strong>
+					</td>
+					<td><strong>CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</strong></br> <strong>Độc
+							lập - Tự do - Hạnh phúc</strong>&nbsp;</td>
+				</tr>
+				<tr>
+					<td>
+						<p>
+							<strong>Số......</strong>
+						</p>
+					</td>
+					<td>
+						<p>
+						<h4>
+							<strong>D/S SINH VIÊN BỊ CẢNH CÁO HỌC VỤ</strong>
+						</h4>
+						</p>
+					</td>
+				</tr>
+			</table>
+			<div class="clearfix">&nbsp;</div>
+			<table class="col-sm-12 col-xs-12 col-md-12 col-lg-12 pull-right">
+				<tbody>
+					<tr>
+						<td>Đơn vị:&nbsp;<strong>${tenKhoa}</strong>
+						</td>
+						<td>Trường:&nbsp;<strong>Đại học Cần Thơ</strong>
+						</td>
+					<tr>
+					<tr>
+						<td>Học kỳ:&nbsp;<strong>${current_hk}</strong>
+						</td>
+						<td>Niên khóa:&nbsp;<strong>${current_nk}</strong>
+						</td>
+					<tr>
+				</tbody>
+			</table>
+			<div class="clearfix">&nbsp;</div>
+			<table class="table table-bordered text-center">
+				<thead>
+					<tr>
+						<th class="text-center info">STT</th>
+						<th class="text-center info">MSSV</th>
+						<th class="text-center info">Họ tên</th>
+						<th class="text-center info">Giới tính</th>
+						<th class="text-center info">Lớp</th>
+						<th class="text-center info">ĐTB</th>
+					</tr>
+				</thead>
+				<tbody>
+					<#if dsSVCCHV?? & dsSVCCHV?size gt 0 > <#list dsSVCCHV as sv>
+					<tr>
+						<td>${sv.stt}</td>
+						<td>${sv.mssv}</td>
+						<td>${sv.ho_ten}</td>
+						<td>${sv.gioi_tinh}</td>
+						<td>${sv.ten_lop}</td>
+						<td>${sv.dtb}</td>
+					</tr>
+					</#list> 
+					<#else>
+					<tr>
+						<td colspan="6">Không có sinh viên nào bị cảnh cáo học vụ.</td>
+					</tr>
+					</#if>
+				</tbody>
+			</table>
+			<table class="col-sm-12 col-xs-12 col-md-12 col-lg-12 pull-right ">
+				<tr class="">
+					<td>
+						<p>
+							<em>*&nbsp;<u>Ghi chú:</u></em>
+						</p>
+					</td>
+				</tr>
+				<tr class="">
+					<td>&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Sinh viên bị cảnh cáo học
+						vụ là sinh viên có điểm trung bình học kỳ nhỏ &lt;= 0.8.</td>
+				</tr>
+			</table>
+			<div class="clearfix">&nbsp;</div>
+			<div class="clearfix">&nbsp;</div>
+			<div
+				class="col-sm-12 col-xs-12 col-md-12 col-lg-12 text-center page-break">
+				<#assign aDateTime = .now>
+				<p class="pull-right">
+					Cần
+					Thơ,&nbsp;ngày&nbsp;${aDateTime?string["dd"]}&nbsp;tháng&nbsp;${aDateTime?string["MM"]}&nbsp;năm&nbsp;${aDateTime?string["yyyy"]}<br />
+					<strong>Người in</strong><br /> <br /> <br /> <br /> <em>(Ký
+						và ghi rõ họ tên)</em>
+				</p>
+			</div>
 		</div>
+		<!--/Ket thuc định dạng in-->
+		
+		<#if dsSVCCHV?? & dsSVCCHV?size gt 0 >
+		<!-- Bat dau modal -->
+		<div class="modal fade" id="xemThongKe" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title">Thống kê số lượng sinh viên bị cảnh cáo học vụ theo lớp</h4>
+					</div>
+					<div class="modal-body form-horizontal">
+        				<div id="morris-donut-chart"></div>
+						<div class="clearfix">&nbsp;</div>
+        				<div class="text-center" id="pie_info">
+        					<em>Tổng cộng: ${tsLop} lớp.</em><br/>
+        					<strong>Thống kê số lượng sinh viên bị cảnh cáo học vụ theo lớp của ${tenKhoa}</strong>
+        				</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Ket thuc modal -->
+		</#if>
+		
+	</div>
 		<!--/.container-->
 		<script type="text/javascript" src="public/js/jquery-1.10.0.min.js"></script>
 		<!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script type="text/javascript" src="public/js/raphael-min.js"></script>
+        <script type="text/javascript" src="public/js/morris.min.js"></script>
 		<script type="text/javascript" src="public/js/bootstrap.min.js"></script>
-		<script type="text/javascript">	
+		<script type="text/javascript">
 			$(document).ready(
-					function() {					
+					function() {
 						$('#sidebar .panel-heading').click(
 								function() {
 									$('#sidebar .list-group').toggleClass(
@@ -160,7 +347,52 @@
 											'glyphicon-plus-sign').toggleClass(
 											'glyphicon-minus-sign');
 								});
+
+
+						<#if dsSVCCHV?? & dsSVCCHV?size gt 0 >
+						$("#pie_info").hide();
+						$("#click_view_tk").click(function() {
+										var colors = getRandomColor(${tsLop});
+										setTimeout(function() {
+				  							$("#morris-donut-chart").hide();
+											Morris.Donut({
+												element : 'morris-donut-chart',
+												colors : colors,
+												data : [ 
+														<#list dsSVTrongLop as sv>
+														{
+															label : "${sv.ten_lop}",
+															value : ${sv.so_sv}
+														},
+														</#list>
+												],
+												formatter: function (data) { return data + ' sinh viên'; },
+												resize : true
+											});
+							  				$("#morris-donut-chart").show("slow");
+										}, 500);
+						  				$("#pie_info").show("slow");
+						});
+						
+						$('#xemThongKe').on('hidden.bs.modal', function () {
+  							$("#morris-donut-chart").empty();
+  							$("#pie_info").hide();
+						})
+						</#if>
 					});
+			function getRandomColor(number) {
+				var colors = new Array();
+				var letters = '0123456789ABCDEF'.split('');
+				for(var k = 0; k < number; k++){
+					var color = '#';
+					for (var i = 0; i < 6; i++) {
+						color += letters[Math.floor(Math.random() * 16)];
+					}
+					colors[k] = color;
+				}
+				
+				return colors;
+			}
 		</script>
 </body>
 </html>

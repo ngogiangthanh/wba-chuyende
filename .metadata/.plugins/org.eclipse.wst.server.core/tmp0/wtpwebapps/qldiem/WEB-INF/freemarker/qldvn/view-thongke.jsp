@@ -79,7 +79,7 @@
 					<!-- BEGIN CONTENT -->
 					    <div class="panel panel-default">
 						<div class="panel-heading">
-							<i class="glyphicon glyphicon-th-list"></i>&nbsp;Lựa chọn thống kê - báo cáo
+							<i class="glyphicon glyphicon-th-list"></i>&nbsp;Lựa chọn lập thống kê - báo cáo
 						</div>
 						<div class="panel-body">
 							<a href="qldvn-index.html" class="btn btn-default"/>Quay lại</a>&nbsp;
@@ -99,7 +99,7 @@
 											<td>Lập danh sách sinh viên bị cảnh cáo học vụ</td>
 											<td>
 												<#if thongKeCCHV>
-													<a href="qldvn-cchv.html" ><i class="glyphicon glyphicon-print"></i>&nbsp;Thống kê</a>
+													<a href="qldvn-cchv.html" ><i class="glyphicon glyphicon-print"></i>&nbsp;Lập</a>
 												<#else>
 													<i class="glyphicon glyphicon-time"></i>&nbsp;
 												</#if>
@@ -110,7 +110,7 @@
 											<td>Lập danh sách sinh viên bị buộc thôi học</td>
 											<td>
 												<#if thongKeBuocThoiHoc>
-													<a href="#" ><i class="glyphicon glyphicon-print"></i>&nbsp;Thống kê</a>
+													<a href="qldvn-thoihoc.html" ><i class="glyphicon glyphicon-print"></i>&nbsp;Lập</a>
 												<#else>
 													<i class="glyphicon glyphicon-time"></i>&nbsp;
 												</#if>
@@ -121,7 +121,7 @@
 											<td>Lập danh sách sinh viên bị nợ học phần</td>
 											<td>
 												<#if thongKeNoHP>
-													<a href="qldvn-nohp.html" ><i class="glyphicon glyphicon-print"></i>&nbsp;Thống kê</a>
+													<a href="qldvn-nohp.html" ><i class="glyphicon glyphicon-print"></i>&nbsp;Lập</a>
 												<#else>
 													<i class="glyphicon glyphicon-time"></i>&nbsp;
 												</#if>
@@ -132,7 +132,7 @@
 											<td>Lập danh sách sinh viên nhận học bổng trong học kỳ</td>
 											<td>
 												<#if thongKeHB>
-													<a href="#" ><i class="glyphicon glyphicon-print"></i>&nbsp;Thống kê</a>
+													<a href="#" ><i class="glyphicon glyphicon-print"></i>&nbsp;Lập</a>
 												<#else>
 													<i class="glyphicon glyphicon-time"></i>&nbsp;
 												</#if>
@@ -143,7 +143,7 @@
 											<td>Lập danh sách sinh viên khen thưởng năm học</td>
 											<td>
 												<#if thongKeKhenThuong>
-													<a href="#" ><i class="glyphicon glyphicon-print"></i>&nbsp;Thống kê</a>
+													<a href="#" ><i class="glyphicon glyphicon-print"></i>&nbsp;Lập</a>
 												<#else>
 													<i class="glyphicon glyphicon-time"></i>&nbsp;
 												</#if>

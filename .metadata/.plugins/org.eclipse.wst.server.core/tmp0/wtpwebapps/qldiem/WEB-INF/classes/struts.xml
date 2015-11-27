@@ -263,6 +263,12 @@
 			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
 			</result>
 		</action>
+		<action name="qldvn-thoihoc" class="actions.QLDVNTKBuocTHAction">
+			<result type="freemarker" name="success">/WEB-INF/freemarker/qldvn/view-thoihoc.jsp
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+		</action>
 		
 		
 		<action name="pdt-index" method="getIndex" class="actions.PDTAction">
