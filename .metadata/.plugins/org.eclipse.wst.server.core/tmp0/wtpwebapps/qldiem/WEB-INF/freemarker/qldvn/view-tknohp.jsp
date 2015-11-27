@@ -323,7 +323,9 @@
         				<div id="morris-donut-chart"></div>
 						<div class="clearfix">&nbsp;</div>
         				<div class="text-center" id="pie_info">
-        					<strong>Thống kê số lượng điểm theo I và F của ${tenKhoa}</strong>
+        					<em>Tổng cộng: ${tsDiem} điểm nợ.</em><br/>
+        					<strong>Thống kê số lượng điểm theo I và F của ${tenKhoa}</strong><br/>
+        					Học kỳ:&nbsp;${current_hk}&nbsp;-&nbsp;Niên khóa:&nbsp;${current_nk}
         				</div>
 					</div>
 					<div class="modal-footer">
@@ -365,7 +367,7 @@
 												data : [ 
 														<#list dsTSSVNo as diem>
 														{
-															label : "${diem.diem_chu}",
+															label : "Điểm ${diem.diem_chu}",
 															value : ${diem.so_diem}
 														},
 														</#list>

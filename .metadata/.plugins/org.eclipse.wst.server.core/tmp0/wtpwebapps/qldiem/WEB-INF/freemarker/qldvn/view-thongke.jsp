@@ -132,7 +132,7 @@
 											<td>Lập danh sách sinh viên nhận học bổng trong học kỳ</td>
 											<td>
 												<#if thongKeHB>
-													<a href="#" ><i class="glyphicon glyphicon-print"></i>&nbsp;Lập</a>
+													<a href="qldvn-hocbong.html" ><i class="glyphicon glyphicon-print"></i>&nbsp;Lập</a>
 												<#else>
 													<i class="glyphicon glyphicon-time"></i>&nbsp;
 												</#if>
@@ -143,7 +143,7 @@
 											<td>Lập danh sách sinh viên khen thưởng năm học</td>
 											<td>
 												<#if thongKeKhenThuong>
-													<a href="#" ><i class="glyphicon glyphicon-print"></i>&nbsp;Lập</a>
+													<a href="qldvn-khenthuong.html" ><i class="glyphicon glyphicon-print"></i>&nbsp;Lập</a>
 												<#else>
 													<i class="glyphicon glyphicon-time"></i>&nbsp;
 												</#if>

@@ -1,5 +1,0 @@
-package models;
-
-public class sv_lop_cv{
-	private int tstcdk;
-}

@@ -99,7 +99,6 @@ public class QLDVNTKNoAction extends ActionSupport {
 			pstmt.setInt(1, Integer.parseInt(infor_user.get("8_ID_KHOA")));
 			pstmt.setInt(2, Integer.parseInt(session.get("current_hk").toString()));
 			pstmt.setString(3, session.get("current_nk").toString());
-			setTenKhoa(infor_user.get("6_KHOA"));
 			// Thực thi procedure
 			pstmt.execute();
 			ResultSet rs = (ResultSet) pstmt.getResultSet();

@@ -1,8 +1,0 @@
-package models;
-
-public class sv_pdt {
-	private int id_sv;
-	private String mssv;
-	private String ho_ten;
-	private String lop;
-}

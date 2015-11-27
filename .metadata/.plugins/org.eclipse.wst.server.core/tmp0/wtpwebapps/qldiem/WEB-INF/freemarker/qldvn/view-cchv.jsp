@@ -317,7 +317,8 @@ svg text{
 						<div class="clearfix">&nbsp;</div>
         				<div class="text-center" id="pie_info">
         					<em>Tổng cộng: ${tsLop} lớp.</em><br/>
-        					<strong>Thống kê số lượng sinh viên bị cảnh cáo học vụ theo lớp của ${tenKhoa}</strong>
+        					<strong>Thống kê số lượng sinh viên bị cảnh cáo học vụ theo lớp của ${tenKhoa}</strong><br/>
+        					Học kỳ:&nbsp;${current_hk}&nbsp;-&nbsp;Niên khóa:&nbsp;${current_nk}
         				</div>
 					</div>
 					<div class="modal-footer">
@@ -347,7 +348,6 @@ svg text{
 											'glyphicon-plus-sign').toggleClass(
 											'glyphicon-minus-sign');
 								});
-
 
 						<#if dsSVCCHV?? & dsSVCCHV?size gt 0 >
 						$("#pie_info").hide();
@@ -390,7 +390,6 @@ svg text{
 					}
 					colors[k] = color;
 				}
-				
 				return colors;
 			}
 		</script>

@@ -269,7 +269,18 @@
 			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
 			</result>
 		</action>
-		
+		<action name="qldvn-hocbong" class="actions.QLDVNTKHocBongAction">
+			<result type="freemarker" name="success">/WEB-INF/freemarker/qldvn/view-hocbong.jsp
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+		</action>
+		<action name="qldvn-khenthuong" class="actions.QLDVNTKKhenThuongAction">
+			<result type="freemarker" name="success">/WEB-INF/freemarker/qldvn/view-khenthuong.jsp
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+		</action>
 		
 		<action name="pdt-index" method="getIndex" class="actions.PDTAction">
 			<result type="freemarker" name="index">/WEB-INF/freemarker/pdt/index.jsp

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 26, 2015 at 03:03 PM
+-- Generation Time: Nov 27, 2015 at 09:54 AM
 -- Server version: 5.6.24
 -- PHP Version: 5.6.8
 
@@ -237,7 +237,7 @@ BEGIN
 				sv.MSSV,
 				sv.HO_TEN,
 				sv.GIOI_TINH,
-				sv.NGAY_SINH
+				DATE_FORMAT(sv.NGAY_SINH,'%d/%m/%Y') as NGAY_SINH
 				FROM
 				hp
 				INNER JOIN mh ON mh.ID = hp.ID_MH
@@ -294,20 +294,34 @@ END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_tt_qldvn_sv_thoi_hoc`(IN `id_khoa` int,IN `current_hk` tinyint,IN `current_nk` char(9),IN `pre_hk` tinyint,IN `pre_nk` char(9))
 BEGIN
-	SELECT ID_SV FROM (SELECT ID_SV FROM (
+	SELECT * FROM (SELECT ID_SV,
+						MSSV,
+						HO_TEN,
+						GIOI_TINH,
+						LOP,
+						TEN_LOP,
+						DATE_FORMAT(NGAY_SINH,'%d/%m/%Y') as NGAY_SINH,
+						CHUYEN_NGANH FROM (
 					SELECT
 						mh.SO_TC,
 						ct_hp.DIEM_CHU,
 						ct_hp.DIEM_4,
-						hk_nh.NK,
-						hk_nh.HK,
-						ct_hp.ID_SV
+						ct_hp.ID_SV,
+						sv.MSSV,
+						sv.HO_TEN,
+						sv.GIOI_TINH,
+						sv.NGAY_SINH,
+						lop.LOP,
+						lop.TEN_LOP,
+						cn.CHUYEN_NGANH
 						FROM
 						hp
 						INNER JOIN mh ON mh.ID = hp.ID_MH
 						INNER JOIN ct_hp ON hp.ID = ct_hp.ID_HP
 						INNER JOIN hk_nh ON hk_nh.ID = hp.ID_HK_NH
 						INNER JOIN sv ON sv.ID = ct_hp.ID_SV
+						INNER JOIN lop ON lop.ID = sv.ID_LOP
+						INNER JOIN cn ON cn.ID = sv.ID_CN
 					WHERE
 						(hk_nh.NK = `current_nk` OR `current_nk` IS NULL) AND
 						(hk_nh.HK = `current_hk` OR `current_hk` IS NULL) AND 
@@ -323,8 +337,6 @@ BEGIN
 						mh.SO_TC,
 						ct_hp.DIEM_CHU,
 						ct_hp.DIEM_4,
-						hk_nh.NK,
-						hk_nh.HK,
 						ct_hp.ID_SV
 						FROM
 						hp
@@ -340,6 +352,64 @@ BEGIN
 				WHERE DIEM_4 <= 4 AND DIEM_4 >= 0 AND (DIEM_CHU <> "" AND DIEM_CHU is not null AND DIEM_CHU <> "M" AND DIEM_CHU <> "W" AND DIEM_CHU <> "I")
 				GROUP BY ID_SV
 				HAVING SUM(DIEM_4*SO_TC)/SUM(SO_TC) <= 3);
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_tt_qldvn_tk_sv_cc_hv`(IN `id_khoa` int,IN `hk` int, IN `nk` char(9))
+BEGIN
+	SELECT TEN_LOP, COUNT(ID_SV) as SO_SV FROM (
+	SELECT ID_SV, LOP, TEN_LOP, CHUYEN_NGANH, MSSV, HO_TEN, GIOI_TINH, NGAY_SINH, FORMAT(SUM(DIEM_4*SO_TC)/SUM(SO_TC),2) AS DTBHK FROM (
+			SELECT
+				mh.SO_TC,
+				ct_hp.DIEM_CHU,
+				ct_hp.DIEM_4,
+				ct_hp.ID_SV,
+				lop.LOP,
+				lop.TEN_LOP,
+				cn.CHUYEN_NGANH,
+				sv.MSSV,
+				sv.HO_TEN,
+				sv.GIOI_TINH,
+				DATE_FORMAT(sv.NGAY_SINH,'%d/%m/%Y') as NGAY_SINH
+				FROM
+				hp
+				INNER JOIN mh ON mh.ID = hp.ID_MH
+				INNER JOIN ct_hp ON hp.ID = ct_hp.ID_HP
+				INNER JOIN hk_nh ON hk_nh.ID = hp.ID_HK_NH
+				INNER JOIN sv ON sv.ID = ct_hp.ID_SV
+				INNER JOIN lop ON lop.ID = sv.ID_LOP
+				INNER JOIN cn ON cn.ID = sv.ID_CN
+			WHERE
+				(hk_nh.NK = `nk` OR `nk` IS NULL) AND
+				(hk_nh.HK = `hk` OR `hk` IS NULL) AND 
+				sv.ID_KHOA = `id_khoa`
+		) x
+		WHERE DIEM_4 <= 4 AND DIEM_4 >= 0 AND (DIEM_CHU <> "" AND DIEM_CHU is not null AND DIEM_CHU <> "M" AND DIEM_CHU <> "W" AND DIEM_CHU <> "I")
+		GROUP BY ID_SV
+		HAVING SUM(DIEM_4*SO_TC)/SUM(SO_TC) <= 3
+		) y 
+		GROUP BY TEN_LOP;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_tt_qldvn_tk_sv_no_hp`(IN `id_khoa` int,IN `hk` tinyint,IN `nk` char(9))
+BEGIN
+	SELECT
+				ct_hp.DIEM_CHU,
+				COUNT(sv.ID) AS SO_DIEM
+			FROM
+				sv
+				INNER JOIN ct_hp ON sv.ID = ct_hp.ID_SV
+				INNER JOIN lop ON lop.ID = sv.ID_LOP
+				INNER JOIN cn ON cn.ID = sv.ID_CN
+				INNER JOIN hp ON hp.ID = ct_hp.ID_HP
+				INNER JOIN mh ON mh.ID = hp.ID_MH
+				INNER JOIN hk_nh ON hk_nh.ID = hp.ID_HK_NH
+			WHERE
+				sv.ID_KHOA = `id_khoa` AND
+				hk_nh.NK = `nk` AND
+				hk_nh.HK = `hk` AND
+				(ct_hp.DIEM_CHU LIKE "F" OR ct_hp.DIEM_CHU LIKE "I")
+			GROUP BY ct_hp.DIEM_CHU
+			ORDER BY ct_hp.DIEM_CHU ASC;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_tt_sv_diem_hp`(IN `nk` char(9),IN `hk` tinyint(4),IN `id_sv` int)
@@ -663,7 +733,7 @@ INSERT INTO `ct_hp` (`ID_SV`, `ID_HP`, `DIEM_CHU`, `DIEM_10`, `DIEM_4`, `CAI_THI
 (3, 68, 'W', 11, 5, 1, 0),
 (3, 70, '', NULL, NULL, 0, 0),
 (3, 72, 'W', 11, 5, 1, 0),
-(3, 74, 'C', 6, 2, 1, 1),
+(3, 74, 'D', 4, 1, 1, 1),
 (3, 75, '', NULL, NULL, 1, 0),
 (3, 78, 'B+', 8, 3.5, 1, 1),
 (3, 79, 'B+', 8, 3.5, 1, 1),
@@ -689,7 +759,7 @@ INSERT INTO `ct_hp` (`ID_SV`, `ID_HP`, `DIEM_CHU`, `DIEM_10`, `DIEM_4`, `CAI_THI
 (4, 59, 'F', 0, 0, 1, 0),
 (4, 70, '', NULL, NULL, 1, 0),
 (4, 72, '', NULL, NULL, 1, 0),
-(4, 74, 'B', 7, 3, 1, 1),
+(4, 74, 'F', 3, 0, 1, 0),
 (4, 75, '', NULL, NULL, 1, 0),
 (4, 78, 'A', 9, 4, 1, 1),
 (5, 1, 'A', 9, 4, 0, 1),

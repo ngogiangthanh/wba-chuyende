@@ -7,6 +7,7 @@
 <title>${title}</title>
 <link rel="shortcut icon" href="public/img/logo_dhct.ico" />
 <!-- Bootstrap -->
+<link href="public/css/morris.css" rel="stylesheet">
 <link href="public/css/bootstrap.min.css" rel="stylesheet" />
 <!-- Custom styles for this template -->
 <link href="public/css/admin.css" rel="stylesheet" />
@@ -74,10 +75,14 @@
 #display_print {
 	display: none !important;
 }
+svg text{
+	font-size:15px !important;
+	font-weight: normal !important;
+}
 </style>
 <style type="text/css" media="print">
 @media print {
-	#none_print {
+	#none_print,#xemThongKe {
 		display: none !important;
 	}
 	#display_print {
@@ -127,6 +132,9 @@
 						</div>
 						<div class="panel-body">
 							<a href="qldvn-thongke.html" class="btn btn-default"/>Quay lại</a>&nbsp;
+							<#if dsSVThoiHoc?? & dsSVThoiHoc?size gt 0 >
+							<a href="#" class="btn btn-success" data-toggle="modal" data-target="#xemThongKe" id="click_view_tk"><i class="glyphicon glyphicon-picture"></i>&nbsp;Biểu đồ thống kê</a>
+	                       	</#if>
 	                        <div class="clearfix">&nbsp;</div>
 							<div class="table-responsive">
 								<table class="table table-bordered text-center">
@@ -294,10 +302,43 @@
 		</div>
 		<!--/Ket thuc định dạng in-->
 		
+		<#if dsSVThoiHoc?? & dsSVThoiHoc?size gt 0 >
+		<!-- Bat dau modal -->
+		<div class="modal fade" id="xemThongKe" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title">Thống kê số lượng sinh viên bị buộc thôi học theo lớp</h4>
+					</div>
+					<div class="modal-body form-horizontal">
+        				<div id="morris-donut-chart"></div>
+						<div class="clearfix">&nbsp;</div>
+        				<div class="text-center" id="pie_info">
+        					<em>Tổng cộng: ${tsLop} lớp.</em><br/>
+        					<strong>Thống kê số lượng sinh viên bị buộc thôi học theo lớp của ${tenKhoa}</strong><br/>
+        					Học kỳ:&nbsp;${current_hk}&nbsp;-&nbsp;Niên khóa:&nbsp;${current_nk}
+        				</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Ket thuc modal -->
+		</#if>
+		
 		</div>
 		<!--/.container-->
 		<script type="text/javascript" src="public/js/jquery-1.10.0.min.js"></script>
 		<!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script type="text/javascript" src="public/js/raphael-min.js"></script>
+        <script type="text/javascript" src="public/js/morris.min.js"></script>
 		<script type="text/javascript" src="public/js/bootstrap.min.js"></script>
 		<script type="text/javascript">	
 
@@ -311,7 +352,50 @@
 											'glyphicon-plus-sign').toggleClass(
 											'glyphicon-minus-sign');
 								});
+						
+						<#if dsSVThoiHoc?? & dsSVThoiHoc?size gt 0 >
+						$("#pie_info").hide();
+						$("#click_view_tk").click(function() {
+										var colors = getRandomColor(${tsLop});
+										setTimeout(function() {
+				  							$("#morris-donut-chart").hide();
+											Morris.Donut({
+												element : 'morris-donut-chart',
+												colors : colors,
+												data : [ 
+														<#list dsSVTheoLop as sv>
+														{
+															label : "${sv.ten_lop}",
+															value : ${sv.so_sv}
+														},
+														</#list>
+												],
+												formatter: function (data) { return data + ' sinh viên'; },
+												resize : true
+											});
+							  				$("#morris-donut-chart").show("slow");
+										}, 500);
+						  				$("#pie_info").show("slow");
+						});
+						
+						$('#xemThongKe').on('hidden.bs.modal', function () {
+  							$("#morris-donut-chart").empty();
+  							$("#pie_info").hide();
+						})
+						</#if>
 					});
+			function getRandomColor(number) {
+				var colors = new Array();
+				var letters = '0123456789ABCDEF'.split('');
+				for(var k = 0; k < number; k++){
+					var color = '#';
+					for (var i = 0; i < 6; i++) {
+						color += letters[Math.floor(Math.random() * 16)];
+					}
+					colors[k] = color;
+				}
+				return colors;
+			}
 		</script>
 </body>
 </html>

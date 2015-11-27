@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 27, 2015 at 09:54 AM
+-- Generation Time: Nov 27, 2015 at 08:09 PM
 -- Server version: 5.6.24
 -- PHP Version: 5.6.8
 
@@ -223,6 +223,116 @@ BEGIN
 		sv.ID = `id_sv`;
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_tt_qldvn_ds_sv_hb`(IN `id_khoa` int,IN `hk` int, IN `nk` char(9))
+BEGIN
+SELECT * FROM (SELECT ID_SV, LOP, TEN_LOP, CHUYEN_NGANH, MSSV, HO_TEN, GIOI_TINH, NGAY_SINH, FORMAT(SUM(DIEM_4*SO_TC)/SUM(SO_TC),2) AS DTBHK FROM (SELECT
+				mh.SO_TC,
+				ct_hp.DIEM_CHU,
+				ct_hp.DIEM_4,
+				ct_hp.ID_SV,
+				lop.LOP,
+				lop.TEN_LOP,
+				cn.CHUYEN_NGANH,
+				sv.MSSV,
+				sv.HO_TEN,
+				sv.GIOI_TINH,
+				DATE_FORMAT(sv.NGAY_SINH,'%d/%m/%Y') as NGAY_SINH
+				FROM
+				hp
+				INNER JOIN mh ON mh.ID = hp.ID_MH
+				INNER JOIN ct_hp ON hp.ID = ct_hp.ID_HP
+				INNER JOIN hk_nh ON hk_nh.ID = hp.ID_HK_NH
+				INNER JOIN sv ON sv.ID = ct_hp.ID_SV
+				INNER JOIN lop ON lop.ID = sv.ID_LOP
+				INNER JOIN cn ON cn.ID = sv.ID_CN
+			WHERE
+				hk_nh.NK = `nk` AND
+				hk_nh.HK = `hk` AND 
+				sv.ID_KHOA = `id_khoa`) x
+		WHERE DIEM_4 <= 4 AND DIEM_4 >= 0 AND (DIEM_CHU <> "" AND DIEM_CHU is not null AND DIEM_CHU <> "M" AND DIEM_CHU <> "W" AND DIEM_CHU <> "I")
+		GROUP BY ID_SV
+		HAVING SUM(DIEM_4*SO_TC)/SUM(SO_TC) >= 2.5) y 
+		ORDER BY LOP ASC,
+				DTBHK DESC;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_tt_qldvn_ds_sv_khen_thuong`(IN `id_khoa` int,IN `hk` int, IN `nk` char(9))
+BEGIN
+	DROP TABLE IF EXISTS temp_table_ds_sv_cao_diem;
+	DROP TABLE IF EXISTS temp_table_ds_sv_cao_diem_1;
+
+	CREATE TEMPORARY TABLE IF NOT EXISTS temp_table_ds_sv_cao_diem AS (SELECT ID_SV, LOP, TEN_LOP, CHUYEN_NGANH, MSSV, HO_TEN, GIOI_TINH, NGAY_SINH, FORMAT(SUM(DIEM_4*SO_TC)/SUM(SO_TC),2) AS DTBCN FROM (SELECT
+					mh.SO_TC,
+					ct_hp.DIEM_CHU,
+					ct_hp.DIEM_4,
+					ct_hp.ID_SV,
+					lop.LOP,
+					lop.TEN_LOP,
+					cn.CHUYEN_NGANH,
+					sv.MSSV,
+					sv.HO_TEN,
+					sv.GIOI_TINH,
+					DATE_FORMAT(sv.NGAY_SINH,'%d/%m/%Y') as NGAY_SINH
+					FROM
+					hp
+					INNER JOIN mh ON mh.ID = hp.ID_MH
+					INNER JOIN ct_hp ON hp.ID = ct_hp.ID_HP
+					INNER JOIN hk_nh ON hk_nh.ID = hp.ID_HK_NH
+					INNER JOIN sv ON sv.ID = ct_hp.ID_SV
+					INNER JOIN lop ON lop.ID = sv.ID_LOP
+					INNER JOIN cn ON cn.ID = sv.ID_CN
+				WHERE
+					hk_nh.NK = `nk` AND
+					(hk_nh.HK = `hk` or hk_nh.HK = 1) AND 
+					sv.ID_KHOA = `id_khoa`) x
+			WHERE DIEM_4 <= 4 AND DIEM_4 >= 0 AND (DIEM_CHU <> "" AND DIEM_CHU is not null AND DIEM_CHU <> "M" AND DIEM_CHU <> "W" AND DIEM_CHU <> "I")
+			GROUP BY ID_SV
+			HAVING SUM(DIEM_4*SO_TC)/SUM(SO_TC) >= 2);
+
+	CREATE TEMPORARY TABLE IF NOT EXISTS temp_table_ds_sv_cao_diem_1 AS (SELECT LOP, FORMAT(SUM(DIEM_4*SO_TC)/SUM(SO_TC),2) AS DTBCN FROM (SELECT
+					mh.SO_TC,
+					ct_hp.DIEM_CHU,
+					ct_hp.DIEM_4,
+					ct_hp.ID_SV,
+					lop.LOP
+					FROM
+					hp
+					INNER JOIN mh ON mh.ID = hp.ID_MH
+					INNER JOIN ct_hp ON hp.ID = ct_hp.ID_HP
+					INNER JOIN hk_nh ON hk_nh.ID = hp.ID_HK_NH
+					INNER JOIN sv ON sv.ID = ct_hp.ID_SV
+					INNER JOIN lop ON lop.ID = sv.ID_LOP
+				WHERE
+					hk_nh.NK = `nk` AND
+					(hk_nh.HK = `hk` or hk_nh.HK = 1) AND 
+					sv.ID_KHOA = `id_khoa`) x
+			WHERE DIEM_4 <= 4 AND DIEM_4 >= 0 AND (DIEM_CHU <> "" AND DIEM_CHU is not null AND DIEM_CHU <> "M" AND DIEM_CHU <> "W" AND DIEM_CHU <> "I")
+			GROUP BY ID_SV
+			HAVING SUM(DIEM_4*SO_TC)/SUM(SO_TC) >= 2);
+
+	SELECT ID_SV,MA_LOP,TEN_LOP, CHUYEN_NGANH,MSSV,HO_TEN,GIOI_TINH,NGAY_SINH,DTBCN FROM (SELECT LOP as MA_LOP, MAX(DTBCN) as dtb_cao_nhat FROM temp_table_ds_sv_cao_diem_1 GROUP BY LOP) k
+				INNER JOIN temp_table_ds_sv_cao_diem
+				ON (temp_table_ds_sv_cao_diem.LOP = k.MA_LOP and temp_table_ds_sv_cao_diem.DTBCN = k.dtb_cao_nhat)
+			ORDER BY MA_LOP ASC;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_tt_qldvn_so_hb_tren_lop`(IN `id_khoa` int)
+BEGIN
+	SELECT
+		lop.LOP,
+		lop.TEN_LOP,
+		CEIL(count(sv.ID)*0.4) as SO_SV,
+		cn.CHUYEN_NGANH
+	FROM
+		sv
+		INNER JOIN lop ON lop.ID = sv.ID_LOP
+		INNER JOIN cn ON cn.ID = sv.ID_CN
+	WHERE
+		sv.ID_KHOA = `id_khoa` 
+	GROUP BY
+		sv.ID_LOP;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_tt_qldvn_sv_cc_hv`(IN `id_khoa` int,IN `hk` int, IN `nk` char(9))
 BEGIN
 		SELECT ID_SV, LOP, TEN_LOP, CHUYEN_NGANH, MSSV, HO_TEN, GIOI_TINH, NGAY_SINH, FORMAT(SUM(DIEM_4*SO_TC)/SUM(SO_TC),2) AS DTBHK FROM (
@@ -410,6 +520,71 @@ BEGIN
 				(ct_hp.DIEM_CHU LIKE "F" OR ct_hp.DIEM_CHU LIKE "I")
 			GROUP BY ct_hp.DIEM_CHU
 			ORDER BY ct_hp.DIEM_CHU ASC;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_tt_qldvn_tk_thoi_hoc`(IN `id_khoa` int,IN `current_hk` tinyint,IN `current_nk` char(9),IN `pre_hk` tinyint,IN `pre_nk` char(9))
+BEGIN
+		SELECT TEN_LOP, COUNT(ID_SV) as SO_SV FROM (
+					SELECT * FROM (SELECT ID_SV,
+						MSSV,
+						HO_TEN,
+						GIOI_TINH,
+						LOP,
+						TEN_LOP,
+						DATE_FORMAT(NGAY_SINH,'%d/%m/%Y') as NGAY_SINH,
+						CHUYEN_NGANH FROM (
+					SELECT
+						mh.SO_TC,
+						ct_hp.DIEM_CHU,
+						ct_hp.DIEM_4,
+						ct_hp.ID_SV,
+						sv.MSSV,
+						sv.HO_TEN,
+						sv.GIOI_TINH,
+						sv.NGAY_SINH,
+						lop.LOP,
+						lop.TEN_LOP,
+						cn.CHUYEN_NGANH
+						FROM
+						hp
+						INNER JOIN mh ON mh.ID = hp.ID_MH
+						INNER JOIN ct_hp ON hp.ID = ct_hp.ID_HP
+						INNER JOIN hk_nh ON hk_nh.ID = hp.ID_HK_NH
+						INNER JOIN sv ON sv.ID = ct_hp.ID_SV
+						INNER JOIN lop ON lop.ID = sv.ID_LOP
+						INNER JOIN cn ON cn.ID = sv.ID_CN
+					WHERE
+						(hk_nh.NK = `current_nk` OR `current_nk` IS NULL) AND
+						(hk_nh.HK = `current_hk` OR `current_hk` IS NULL) AND 
+						sv.ID_KHOA = `id_khoa`
+				) x
+				WHERE DIEM_4 <= 4 AND DIEM_4 >= 0 AND (DIEM_CHU <> "" AND DIEM_CHU is not null AND DIEM_CHU <> "M" AND DIEM_CHU <> "W" AND DIEM_CHU <> "I")
+				GROUP BY ID_SV
+				HAVING SUM(DIEM_4*SO_TC)/SUM(SO_TC) <= 3) z
+		WHERE
+		ID_SV IN
+		(SELECT ID_SV FROM (
+					SELECT
+						mh.SO_TC,
+						ct_hp.DIEM_CHU,
+						ct_hp.DIEM_4,
+						ct_hp.ID_SV
+						FROM
+						hp
+						INNER JOIN mh ON mh.ID = hp.ID_MH
+						INNER JOIN ct_hp ON hp.ID = ct_hp.ID_HP
+						INNER JOIN hk_nh ON hk_nh.ID = hp.ID_HK_NH
+						INNER JOIN sv ON sv.ID = ct_hp.ID_SV
+					WHERE
+						(hk_nh.NK = `pre_nk` OR `pre_nk` IS NULL) AND
+						(hk_nh.HK = `pre_hk` OR `pre_hk` IS NULL) AND 
+						sv.ID_KHOA = `id_khoa`
+				) x
+				WHERE DIEM_4 <= 4 AND DIEM_4 >= 0 AND (DIEM_CHU <> "" AND DIEM_CHU is not null AND DIEM_CHU <> "M" AND DIEM_CHU <> "W" AND DIEM_CHU <> "I")
+				GROUP BY ID_SV
+				HAVING SUM(DIEM_4*SO_TC)/SUM(SO_TC) <= 3)
+				) w
+				GROUP BY TEN_LOP;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_tt_sv_diem_hp`(IN `nk` char(9),IN `hk` tinyint(4),IN `id_sv` int)
@@ -864,7 +1039,7 @@ INSERT INTO `hk_nh` (`ID`, `NK`, `HK`, `BD`, `KT`) VALUES
 (1, '2014-2015', 1, '2014-08-01', '2014-12-31'),
 (2, '2014-2015', 2, '2015-01-01', '2015-06-01'),
 (3, '2014-2015', 3, '2015-06-01', '2015-07-01'),
-(4, '2015-2016', 1, '2015-08-01', '2015-12-31');
+(4, '2015-2016', 2, '2015-08-01', '2015-12-31');
 
 -- --------------------------------------------------------
 

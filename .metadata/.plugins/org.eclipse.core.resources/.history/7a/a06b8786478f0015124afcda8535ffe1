@@ -1,9 +1,0 @@
-package models;
-
-public class sv_lop_cv{
-	private int tstcdk;
-	private float dtbhk;
-	private int tstctlhk;
-	private float dtbtlhk;
-	
-}

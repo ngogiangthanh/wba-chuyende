@@ -26,8 +26,8 @@ public class QLDVNTKCCHVAction extends ActionSupport {
 
 	public QLDVNTKCCHVAction() {
 	}
-	
-	public String execute(){
+
+	public String execute() {
 		this.qlnAction = new QLDVNAction();
 		this.session = ActionContext.getContext().getSession();
 		// Kiểm tra xem nếu session hknk đã có thì khỏi tạo lại và ngược lại
@@ -36,13 +36,13 @@ public class QLDVNTKCCHVAction extends ActionSupport {
 			System.out.println("Gán hknk lần đầu");
 			this.qlntkAction.assignHKNKValues(this.session);
 		}
-		
-		if(!this.qlnAction.Prefix_Check("Thống kê danh sách sinh viên bị cảnh cáo học vụ",this.session))
+
+		if (!this.qlnAction.Prefix_Check("Thống kê danh sách sinh viên bị cảnh cáo học vụ", this.session))
 			return ERROR;
 		this.assignDSSVCCHV(this.session);
-		if(this.dsSVCCHV.size() > 0)
+		if (this.dsSVCCHV.size() > 0)
 			this.assignDSSVTrongLop(this.session);
-		
+
 		return SUCCESS;
 	}
 
@@ -89,7 +89,7 @@ public class QLDVNTKCCHVAction extends ActionSupport {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void assignDSSVTrongLop(Map<String, Object> session) {
 		this.conn = new Connect();
 		Map<String, String> infor_user = (Map<String, String>) session.get("information");
@@ -101,7 +101,6 @@ public class QLDVNTKCCHVAction extends ActionSupport {
 			pstmt.setInt(1, Integer.parseInt(infor_user.get("8_ID_KHOA")));
 			pstmt.setInt(2, Integer.parseInt(session.get("current_hk").toString()));
 			pstmt.setString(3, session.get("current_nk").toString());
-			setTenKhoa(infor_user.get("6_KHOA"));
 			// Thực thi procedure
 			pstmt.execute();
 			ResultSet rs = (ResultSet) pstmt.getResultSet();
@@ -128,35 +127,35 @@ public class QLDVNTKCCHVAction extends ActionSupport {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public ArrayList<sv_cc_hv> getDsSVCCHV() {
 		return dsSVCCHV;
 	}
-	
+
 	public String getTenKhoa() {
 		return tenKhoa;
 	}
-	
+
 	public ArrayList<tk_theo_lop> getDsSVTrongLop() {
 		return dsSVTrongLop;
 	}
-	
+
 	public int getTsLop() {
 		return tsLop;
 	}
-	
+
 	public void setDsSVCCHV(ArrayList<sv_cc_hv> dsSVCCHV) {
 		this.dsSVCCHV = dsSVCCHV;
 	}
-	
+
 	public void setTenKhoa(String tenKhoa) {
 		this.tenKhoa = tenKhoa;
 	}
-	
+
 	public void setDsSVTrongLop(ArrayList<tk_theo_lop> dsSVTrongLop) {
 		this.dsSVTrongLop = dsSVTrongLop;
 	}
-	
+
 	public void setTsLop(int tsLop) {
 		this.tsLop = tsLop;
 	}
