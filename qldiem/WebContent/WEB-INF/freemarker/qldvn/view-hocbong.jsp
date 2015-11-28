@@ -130,11 +130,12 @@
 	                        <div class="clearfix">&nbsp;</div>
 							<div class="table-responsive">
 								<table class="table table-bordered text-center">
-										<thead>
+									<thead>
 										<tr>
-											<td colspan="6" class="well">Danh sách sinh viên nhận được học bổng - Niên khóa:&nbsp;${current_nk}&nbsp;-&nbsp;Học kỳ:&nbsp;${current_hk}
-											<br/>
-											<strong>${tenKhoa}</strong>
+											<td colspan="6" class="well">Danh sách sinh viên nhận
+												được học bổng - Niên
+												khóa:&nbsp;${current_nk}&nbsp;-&nbsp;Học
+												kỳ:&nbsp;${current_hk} <br /> <strong>${tenKhoa}</strong>
 											</td>
 										</tr>
 										<tr>
@@ -145,50 +146,39 @@
 											<th class="text-center info">Ngày sinh</th>
 											<th class="text-center info">ĐTB</th>
 										</tr>
-										</thead>
-										<tbody>
-										<#if dsSVNhanHB?has_content>
-											<#list dsSVNhanHB.entrySet() as list_dssv>  
-												<#assign dssv = list_dssv.value>
-												<#assign flag = 0 >
-												<#list dssv as sv>  
-												<#if flag = 0>
-													<tr>
-														<td colspan="6">
-															${sv.lop}&nbsp;-&nbsp;${sv.ten_lop}
-															<#assign flag = 1 >
-														</td>
-													</tr>
-												</#if>
-													<tr>
-														<td>${sv.stt}</td>
-														<td>${sv.mssv}</td>
-														<td>${sv.ho_ten}</td>
-														<td>${sv.gioi_tinh}</td>
-														<td>${sv.ngay_sinh?string["dd/MM/yyyy"]}</td>
-														<td>${sv.dtb}</td>
-													</tr>
-											</#list>
-											<#assign flag = 0 >
-											</#list>
-										<#else>
-											<tr>
-												<td colspan="6">
-													Không có sinh viên nào nhận học bổng.
-												</td>
-											</tr>
+									</thead>
+									<tbody>
+										<#if dsSVNhanHB?has_content> <#list dsSVNhanHB.entrySet() as
+										list_dssv> <#assign dssv = list_dssv.value> <#assign flag = 0
+										> <#list dssv as sv> <#if flag = 0>
+										<tr class="warning">
+											<td colspan="6"><strong>${sv.ten_lop} -
+													${sv.lop}</strong> <#assign flag = 1 ></td>
+										</tr>
 										</#if>
-										</tbody>	
-										<#if dsSVNhanHB?has_content>
-										<tfoot>
-											<tr>
-												<td colspan="6">
-													<a href="#" onclick="window.print()"><i class="glyphicon glyphicon-print"></i>&nbspIn</a>
-												</td>
-											</tr>
-										</tfoot>	
+										<tr>
+											<td>${sv.stt}</td>
+											<td>${sv.mssv}</td>
+											<td>${sv.ho_ten}</td>
+											<td>${sv.gioi_tinh}</td>
+											<td>${sv.ngay_sinh?string["dd/MM/yyyy"]}</td>
+											<td>${sv.dtb}</td>
+										</tr>
+										</#list> <#assign flag = 0 > </#list> <#else>
+										<tr>
+											<td colspan="6">Không có sinh viên nào nhận học bổng.</td>
+										</tr>
 										</#if>
-									</table>
+									</tbody>
+									<#if dsSVNhanHB?has_content>
+									<tfoot>
+										<tr>
+											<td colspan="6"><a href="#" onclick="window.print()"><i
+													class="glyphicon glyphicon-print"></i>&nbspIn</a></td>
+										</tr>
+									</tfoot>
+									</#if>
+								</table>
 							</div>
 						</div>
 						</div>
@@ -259,8 +249,8 @@
 					list_dssv> <#assign dssv = list_dssv.value> <#assign flag = 0 >
 					<#list dssv as sv> <#if flag = 0>
 					<tr>
-						<td colspan="6">${sv.lop}&nbsp;-&nbsp;${sv.ten_lop} <#assign
-							flag = 1 ></td>
+						<td colspan="6">${sv.ten_lop}&nbsp;-&nbsp;${sv.lop}
+						<#assign flag = 1 ></td>
 					</tr>
 					</#if>
 					<tr>
@@ -287,10 +277,10 @@
 					</td>
 				</tr>
 				<tr class="">
-					<td>&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Điều kiện: điểm trung bình học kỳ >= 2.5.</td>
+					<td>&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Điều kiện:&nbsp;Điểm trung bình học kỳ >= 2.5.</td>
 				</tr>
 				<tr class="">
-					<td>&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Số lượng: chiếm 10% sĩ số mỗi lớp.</td>
+					<td>&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Số lượng:&nbsp;Theo tỉ lệ 10% sĩ số mỗi lớp.</td>
 				</tr>
 			</table>
 			<div class="clearfix">&nbsp;</div>

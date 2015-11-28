@@ -90,6 +90,7 @@
 					                <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
 								        <button type="button" class="btn btn-success" id="btn_tim">Tìm</button>
 										<button type="button" onclick="location.href='pdt-index.html'" class="btn btn-default"/>Quay lại</button>&nbsp;
+										<button type="button" id="btn_clear_content" class="btn btn-warning" style="display:none"/>Xóa kết quả</button>&nbsp;
 					                </div>
 					            </div>
 							</div>
@@ -213,6 +214,7 @@
 										$('#sv_in > tbody > tr > td.ho_ten').text(data.kq_sv["ho_ten"]);
 										$('#sv_in > tbody > tr > td.lop').text(data.kq_sv["lop"]+" - "+data.kq_sv["ten_lop"]);
 						  				$("#id_content_kq").show("slow");
+						  				$("#btn_clear_content").show("slow");
 										$("#id_mssv").val('');
 					            	}
 					            	else{
@@ -221,10 +223,12 @@
 					            	}
 					            });
 						});
-						//Kết thúc Xử lý tìm sinh viên 
-						//Bắt đầu xử lý lấy thông tin học kỳ niên khóa để in
-						
-						//Kết thúc xử lý lấy thông tin học kỳ niên khóa để in
+						//Kết thúc Xử lý tìm sinh viên
+
+						$("#btn_clear_content").click(function(){
+							$("#id_content_kq").hide("slow");
+			  				$("#btn_clear_content").hide("slow");
+						});
 					});
 		function setInfor2Form(){
 			var id_sv = $("input[name='id_sv_find']").val();

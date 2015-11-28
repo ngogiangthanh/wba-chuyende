@@ -90,9 +90,36 @@
 					                <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
 								        <button type="button" class="btn btn-success" id="btn_tim">Tìm</button>
 										<button type="button" onclick="location.href='qldvn-index.html'" class="btn btn-default"/>Quay lại</button>&nbsp;
+										<button type="button" id="btn_clear_content" class="btn btn-warning" style="display:none"/>Xóa kết quả</button>&nbsp;
 					                </div>
 					            </div>
 	                        	<div class="clearfix">&nbsp;</div>
+							<div id="id_content_kq" style="display:none">
+								<div class="table-responsive">
+										<table class="table table-bordered text-center" id="sv_nhap_diem">
+											<thead>
+												<tr>
+													<th class="text-center info">MSSV</th>
+													<th class="text-center info">Họ tên</th>
+													<th class="text-center info">Lớp</th>
+													<th class="text-center info">Tên lớp</th>
+													<th class="text-center info">Thao tác</th>
+												</tr>
+											</thead>
+											<tbody>
+												<input type="hidden" value="" name="id_sv_find" />
+												<tr>
+													<td class="mssv"></td>
+													<td class="ho_ten"></td>
+													<td class="lop"></td>
+													<td class="ten_lop"></td>
+													<td><a href='#' onclick=""><i
+															class="glyphicon glyphicon-plus"></i>&nbsp;Nhập điểm</a></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+							</div>
 							</div>
 						</div>
 						</div>
@@ -136,6 +163,48 @@
 											'glyphicon-plus-sign').toggleClass(
 											'glyphicon-minus-sign');
 								});
+						//Bắt đầu xử lý tìm sinh viên
+						$("#btn_tim").click(function(){
+							var mssv = $.trim($("#id_mssv").val());
+							//--kiem tra rang buoc
+							if(mssv.length > 8 || mssv.length <= 0){
+								toastr["error"]("Mã số sinh viên không hợp lệ!");
+								$("#id_mssv").focus();
+								return false;
+							}
+							var formData = new FormData();
+							formData.append('mssv', mssv);
+							$.ajax({
+					                url: "qldvn-xulytimsv.html",
+					                type: "POST",
+					                dataType: "json",
+					                processData: false,
+					                contentType: false,
+					                cache: false,
+					                data: formData
+					            }).done(function(data) {
+					            	if(data.kq_sv != null){
+					            		$("input[name='id_sv_find']").val(data.kq_sv["id_sv"]);
+										$('#sv_nhap_diem > tbody > tr > td.mssv').text(data.kq_sv["mssv"]);
+										$('#sv_nhap_diem > tbody > tr > td.ho_ten').text(data.kq_sv["ho_ten"]);
+										$('#sv_nhap_diem > tbody > tr > td.lop').text(data.kq_sv["lop"]);
+										$('#sv_nhap_diem > tbody > tr > td.ten_lop').text(data.kq_sv["ten_lop"]);
+						  				$("#id_content_kq").show("slow");
+						  				$("#btn_clear_content").show("slow");
+										$("#id_mssv").val('');
+					            	}
+					            	else{
+										toastr["warning"]("Không tìm thấy sinh viên có mã số này!");
+										$("#id_mssv").focus();
+					            	}
+					            });
+						});
+						//Kết thúc xử lý tìm sinh viên
+						
+						$("#btn_clear_content").click(function(){
+							$("#id_content_kq").hide("slow");
+			  				$("#btn_clear_content").hide("slow");
+						});
 					});
 		<#if (actionErrors?? & actionErrors?size>0)>
 			toastr["error"]("${actionErrors}");

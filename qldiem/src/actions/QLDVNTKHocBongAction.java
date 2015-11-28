@@ -1,14 +1,12 @@
 package actions;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
-
 import com.mysql.jdbc.CallableStatement;
 import com.mysql.jdbc.ResultSet;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
-
 import connection.Connect;
 import models.quy_dinh;
 import models.sv_khen_thuong;
@@ -24,6 +22,7 @@ public class QLDVNTKHocBongAction extends ActionSupport {
 	private String tenKhoa = null;
 
 	public QLDVNTKHocBongAction() {
+		
 	}
 
 	public String execute() {
@@ -77,13 +76,12 @@ public class QLDVNTKHocBongAction extends ActionSupport {
 					qd.setLop(rs_tren_lop.getString("LOP").trim());
 					qd.setSo_sv(rs_tren_lop.getInt("SO_SV"));
 
-					System.out.println("lop gan " + rs_tren_lop.getString("LOP"));
 					quyDinh.add(qd);
 				}
 			}
 			// Duyệt kết quả ds sv đủ điều kiện nhận học bổng
 			int sizeQD = quyDinh.size();
-			this.dsSVNhanHB = new HashMap<String, ArrayList<sv_khen_thuong>>();
+			this.dsSVNhanHB = new LinkedHashMap<String, ArrayList<sv_khen_thuong>>();
 			while (rs_nhan_hb.next()) {
 				// Khi hàng đó không null
 				if (!rs_nhan_hb.wasNull()) {
@@ -96,7 +94,6 @@ public class QLDVNTKHocBongAction extends ActionSupport {
 							break;
 						}
 					}
-					System.out.println("index " + index);
 
 					ArrayList<sv_khen_thuong> dssv;
 					if (this.dsSVNhanHB.containsKey(qd.getLop())) {
@@ -127,7 +124,6 @@ public class QLDVNTKHocBongAction extends ActionSupport {
 					this.dsSVNhanHB.put(current_lop, dssv);
 				}
 			}
-
 			// Đóng kết nối
 			pstmt_nhan_hb.close();
 			pstmt_hb_tren_lop.close();

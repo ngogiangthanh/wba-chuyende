@@ -1,0 +1,59 @@
+package actions;
+
+import java.util.ArrayList;
+import java.util.Map;
+
+import com.opensymphony.xwork2.ActionContext;
+import com.opensymphony.xwork2.ActionSupport;
+
+import connection.Connect;
+import models.sv_khen_thuong;
+
+public class QLDVNTKKhenThuongAction extends ActionSupport {
+
+	private static final long serialVersionUID = 1L;
+	private Connect conn;
+	private Map<String, Object> session = null;
+	private QLDVNTKAction qlntkAction = null;
+	private QLDVNAction qlnAction = null;
+	private ArrayList<sv_khen_thuong> dsSVNhanKhenThuong = null;
+	private String tenKhoa = null;
+
+	public QLDVNTKKhenThuongAction() {
+	}
+	
+	public String execute(){
+		this.qlnAction = new QLDVNAction();
+		this.session = ActionContext.getContext().getSession();
+		// Kiểm tra xem nếu session hknk đã có thì khỏi tạo lại và ngược lại
+		this.qlntkAction = new QLDVNTKAction();
+		if (!session.containsKey("hknk")) {
+			System.out.println("Gán hknk lần đầu");
+			this.qlntkAction.assignHKNKValues(this.session);
+		}
+		
+		if(!this.qlnAction.Prefix_Check("Thống kê danh sách sinh viên được khen thưởng",this.session))
+			return ERROR;
+		return SUCCESS;
+	}
+	
+	public void assignDSSVKhenThuong(){
+		
+	}
+	
+	public ArrayList<sv_khen_thuong> getDsSVNhanKhenThuong() {
+		return dsSVNhanKhenThuong;
+	}
+	
+	public String getTenKhoa() {
+		return tenKhoa;
+	}
+	
+	public void setDsSVNhanKhenThuong(ArrayList<sv_khen_thuong> dsSVNhanKhenThuong) {
+		this.dsSVNhanKhenThuong = dsSVNhanKhenThuong;
+	}
+	
+	public void setTenKhoa(String tenKhoa) {
+		this.tenKhoa = tenKhoa;
+	}
+}

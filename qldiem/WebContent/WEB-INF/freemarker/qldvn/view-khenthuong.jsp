@@ -70,9 +70,54 @@
 .dropdown-menu>li>a {
 	color: #000;
 }
+#display_print{
+	display: none !important;
+}
+</style>
+</style>
+<style type="text/css" media="print">
+@media print {
+	#none_print {
+		display: none !important;
+	}
+	#display_print {
+		display: block !important;
+	}
+	body {
+		background-color: #fff;
+		margin-top: 0mm;
+		margin-bottom: 0mm;
+	}
+	.page-break, table {
+		page-break-inside: avoid;
+	}
+	tr {
+		page-break-inside: avoid;
+		page-break-after: avoid;
+	}
+	thead {
+		display: table-header-group;
+	}
+	tfoot {
+		display: table-footer-group;
+		margin-top: 25mm;
+	}
+	@page {
+		size: A4;
+		margin: 2cm; /* this affects the margin in the printer settings */
+	}
+	@page :left {
+		margin-left: 2.5cm;
+		margin-right: 2.5cm;
+	}
+	@page :right {
+		margin-right: 2.5cm;
+		margin-left: 2.5cm;
+	}
+}
 </style>
 	<div class="container">
-		<div class="row">
+		<div class="row" id="none_print">
 			<div class="col-sm-12 col-xs-12 col-md-12 col-lg-12 pull-right">
 				<div class="row">
 					<!-- BEGIN CONTENT -->
@@ -83,7 +128,56 @@
 						<div class="panel-body">
 							<a href="qldvn-thongke.html" class="btn btn-default"/>Quay lại</a>&nbsp;
 	                        <div class="clearfix">&nbsp;</div>
-							
+							<div class="table-responsive">
+								<table class="table table-bordered text-center">
+									<thead>
+										<tr>
+											<td colspan="5" class="well">Danh sách sinh viên nhận
+												khen thưởng - Niên
+												khóa:&nbsp;${current_nk}<br/> 
+												<strong>${tenKhoa}</strong>
+											</td>
+										</tr>
+										<tr>
+											<th class="text-center info">MSSV</th>
+											<th class="text-center info">Họ tên</th>
+											<th class="text-center info">Giới tính</th>
+											<th class="text-center info">Ngày sinh</th>
+											<th class="text-center info">ĐTB</th>
+										</tr>
+									</thead>
+									<tbody>
+										<#if dsSVNhanKhenThuong?has_content> 
+										<#list dsSVNhanKhenThuong as sv> 
+										<tr class="warning">
+											<td colspan="5">
+												<strong>${sv.ten_lop} - ${sv.lop}</strong>
+											</td>
+										</tr>
+										<tr>
+											<td>${sv.mssv}</td>
+											<td>${sv.ho_ten}</td>
+											<td>${sv.gioi_tinh}</td>
+											<td>${sv.ngay_sinh?string["dd/MM/yyyy"]}</td>
+											<td>${sv.dtb}</td>
+										</tr>
+										</#list> 
+										<#else>
+										<tr>
+											<td colspan="5">Không có sinh viên nào nhận khen thưởng.</td>
+										</tr>
+										</#if>
+									</tbody>
+									<#if dsSVNhanKhenThuong?has_content>
+									<tfoot>
+										<tr>
+											<td colspan="5"><a href="#" onclick="window.print()"><i
+													class="glyphicon glyphicon-print"></i>&nbspIn</a></td>
+										</tr>
+									</tfoot>
+									</#if>
+								</table>
+							</div>
 						</div>
 						</div>
 					<!-- END CONTENT -->
@@ -92,6 +186,109 @@
 			</div>
 			<!--/row-->
 		</div>
+		
+		<!--/Bat dau định dạng in-->
+		<div class="row" id="display_print">
+			<table
+				class="col-sm-12 col-xs-12 col-md-12 col-lg-12 pull-right text-center">
+				<tr>
+					<td>BỘ GIÁO DỤC VÀ ĐÀO TẠO<br /> <strong>TRƯỜNG ĐẠI
+							HỌC CẦN THƠ</strong>
+					</td>
+					<td><strong>CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</strong></br> <strong>Độc
+							lập - Tự do - Hạnh phúc</strong>&nbsp;</td>
+				</tr>
+				<tr>
+					<td>
+						<p>
+							<strong>Số......</strong>
+						</p>
+					</td>
+					<td>
+						<p>
+						<h4>
+							<strong>DS SINH VIÊN KHEN THƯỞNG</strong>
+						</h4>
+						</p>
+					</td>
+				</tr>
+			</table>
+			<div class="clearfix">&nbsp;</div>
+			<table class="col-sm-12 col-xs-12 col-md-12 col-lg-12 pull-right">
+				<tbody>
+					<tr>
+						<td>Đơn vị:&nbsp;<strong>${tenKhoa}</strong>
+						</td>
+						<td>Trường:&nbsp;<strong>Đại học Cần Thơ</strong>
+						</td>
+					<tr>
+					<tr>
+						<td colspan="2">Niên khóa:&nbsp;<strong>${current_nk}</strong>
+						</td>
+					<tr>
+				</tbody>
+			</table>
+			<div class="clearfix">&nbsp;</div>
+			<table class="table table-bordered text-center">
+				<thead>
+					<tr>
+						<th class="text-center info">MSSV</th>
+						<th class="text-center info">Họ tên</th>
+						<th class="text-center info">Giới tính</th>
+						<th class="text-center info">Ngày sinh</th>
+						<th class="text-center info">ĐTB</th>
+					</tr>
+				</thead>
+				<tbody>
+					<#if dsSVNhanKhenThuong?has_content> 
+					<#list dsSVNhanKhenThuong as sv>
+					<tr class="warning">
+						<td colspan="5"><strong>${sv.ten_lop} - ${sv.lop}</strong></td>
+					</tr>
+					<tr>
+						<td>${sv.mssv}</td>
+						<td>${sv.ho_ten}</td>
+						<td>${sv.gioi_tinh}</td>
+						<td>${sv.ngay_sinh?string["dd/MM/yyyy"]}</td>
+						<td>${sv.dtb}</td>
+					</tr>
+					</#list>
+					<#else>
+					<tr>
+						<td colspan="5">Không có sinh viên nào nhận khen thưởng.</td>
+					</tr>
+					</#if>
+				</tbody>
+			</table>
+			<table class="col-sm-12 col-xs-12 col-md-12 col-lg-12 pull-right ">
+				<tr class="">
+					<td>
+						<p>
+							<em>*&nbsp;<u>Ghi chú:</u></em>
+						</p>
+					</td>
+				</tr>
+				<tr class="">
+					<td>&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;Điều kiện:&nbsp;Điểm trung bình học kỳ >= 2.5 và cao điểm nhất lớp.</td>
+				</tr>
+			</table>
+			<div class="clearfix">&nbsp;</div>
+			<div class="clearfix">&nbsp;</div>
+			<div
+				class="col-sm-12 col-xs-12 col-md-12 col-lg-12 text-center page-break">
+				<#assign aDateTime = .now>
+				<p class="pull-right">
+					Cần
+					Thơ,&nbsp;ngày&nbsp;${aDateTime?string["dd"]}&nbsp;tháng&nbsp;${aDateTime?string["MM"]}&nbsp;năm&nbsp;${aDateTime?string["yyyy"]}<br />
+					<strong>Người in</strong><br />
+					<br />
+					<br />
+					<br /> <em>(Ký và ghi rõ họ tên)</em>
+				</p>
+			</div>
+		</div>
+		<!--/Ket thuc định dạng in-->
+		
 		</div>
 		<!--/.container-->
 		<script type="text/javascript" src="public/js/jquery-1.10.0.min.js"></script>

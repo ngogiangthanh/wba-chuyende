@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 27, 2015 at 08:09 PM
+-- Generation Time: Nov 28, 2015 at 09:58 AM
 -- Server version: 5.6.24
 -- PHP Version: 5.6.8
 
@@ -35,8 +35,8 @@ BEGIN
 				cb.GIOI_TINH as 3_GIOI_TINH, DATE_FORMAT(cb.NGAY_SINH,'%d/%m/%Y') as 4_NGAY_SINH,
 				cb.PHONG_BAN as 5_PHONG_BAN, khoa.KHOA as 6_KHOA, 
 				cb.ID as 7_ID, khoa.ID as 8_ID_KHOA
-	FROM qldiem.cb 
-		INNER JOIN qldiem.khoa ON khoa.ID = cb.ID_KHOA
+	FROM cb 
+		INNER JOIN khoa ON khoa.ID = cb.ID_KHOA
 	WHERE cb.ID = `id_cb`;
 END$$
 
@@ -199,7 +199,6 @@ BEGIN
 	WHERE
 	sv.MSSV like `mssv`
 	LIMIT 0, 1;
-
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_tt_pdt_tt_sv`(IN `id_sv` int)
@@ -256,7 +255,7 @@ SELECT * FROM (SELECT ID_SV, LOP, TEN_LOP, CHUYEN_NGANH, MSSV, HO_TEN, GIOI_TINH
 				DTBHK DESC;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `get_tt_qldvn_ds_sv_khen_thuong`(IN `id_khoa` int,IN `hk` int, IN `nk` char(9))
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_tt_qldvn_ds_sv_khen_thuong`(IN `id_khoa` int, IN `nk` char(9))
 BEGIN
 	DROP TABLE IF EXISTS temp_table_ds_sv_cao_diem;
 	DROP TABLE IF EXISTS temp_table_ds_sv_cao_diem_1;
@@ -283,7 +282,7 @@ BEGIN
 					INNER JOIN cn ON cn.ID = sv.ID_CN
 				WHERE
 					hk_nh.NK = `nk` AND
-					(hk_nh.HK = `hk` or hk_nh.HK = 1) AND 
+					(hk_nh.HK = 2 or hk_nh.HK = 1) AND 
 					sv.ID_KHOA = `id_khoa`) x
 			WHERE DIEM_4 <= 4 AND DIEM_4 >= 0 AND (DIEM_CHU <> "" AND DIEM_CHU is not null AND DIEM_CHU <> "M" AND DIEM_CHU <> "W" AND DIEM_CHU <> "I")
 			GROUP BY ID_SV
@@ -304,7 +303,7 @@ BEGIN
 					INNER JOIN lop ON lop.ID = sv.ID_LOP
 				WHERE
 					hk_nh.NK = `nk` AND
-					(hk_nh.HK = `hk` or hk_nh.HK = 1) AND 
+					(hk_nh.HK = 2 or hk_nh.HK = 1) AND 
 					sv.ID_KHOA = `id_khoa`) x
 			WHERE DIEM_4 <= 4 AND DIEM_4 >= 0 AND (DIEM_CHU <> "" AND DIEM_CHU is not null AND DIEM_CHU <> "M" AND DIEM_CHU <> "W" AND DIEM_CHU <> "I")
 			GROUP BY ID_SV
@@ -462,6 +461,23 @@ BEGIN
 				WHERE DIEM_4 <= 4 AND DIEM_4 >= 0 AND (DIEM_CHU <> "" AND DIEM_CHU is not null AND DIEM_CHU <> "M" AND DIEM_CHU <> "W" AND DIEM_CHU <> "I")
 				GROUP BY ID_SV
 				HAVING SUM(DIEM_4*SO_TC)/SUM(SO_TC) <= 3);
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_tt_qldvn_tim_sv`(IN `id_khoa` int, IN `mssv` varchar(8))
+BEGIN
+	SELECT
+	sv.ID,
+	sv.MSSV,
+	sv.HO_TEN,
+	lop.LOP,
+	lop.TEN_LOP
+	FROM
+	sv
+	INNER JOIN lop ON lop.ID = sv.ID_LOP
+	WHERE
+	sv.MSSV like `mssv` AND
+	sv.ID_KHOA = `id_khoa`
+	LIMIT 0, 1;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_tt_qldvn_tk_sv_cc_hv`(IN `id_khoa` int,IN `hk` int, IN `nk` char(9))
@@ -868,7 +884,7 @@ INSERT INTO `ct_hp` (`ID_SV`, `ID_HP`, `DIEM_CHU`, `DIEM_10`, `DIEM_4`, `CAI_THI
 (1, 72, 'I', 11, 5, 1, 0),
 (1, 73, 'F', 0, 0, 0, 0),
 (1, 75, '', NULL, NULL, 0, 0),
-(1, 78, 'A', 10, 4, 1, 1),
+(1, 78, 'A', 9, 4, 1, 1),
 (1, 79, 'A', 9, 4, 1, 1),
 (2, 1, 'C+', 6.6, 2.5, 0, 1),
 (2, 3, 'F', 0.6, 0, 0, 0),
@@ -908,7 +924,7 @@ INSERT INTO `ct_hp` (`ID_SV`, `ID_HP`, `DIEM_CHU`, `DIEM_10`, `DIEM_4`, `CAI_THI
 (3, 68, 'W', 11, 5, 1, 0),
 (3, 70, '', NULL, NULL, 0, 0),
 (3, 72, 'W', 11, 5, 1, 0),
-(3, 74, 'D', 4, 1, 1, 1),
+(3, 74, 'B+', 8, 3.5, 1, 1),
 (3, 75, '', NULL, NULL, 1, 0),
 (3, 78, 'B+', 8, 3.5, 1, 1),
 (3, 79, 'B+', 8, 3.5, 1, 1),
@@ -934,7 +950,7 @@ INSERT INTO `ct_hp` (`ID_SV`, `ID_HP`, `DIEM_CHU`, `DIEM_10`, `DIEM_4`, `CAI_THI
 (4, 59, 'F', 0, 0, 1, 0),
 (4, 70, '', NULL, NULL, 1, 0),
 (4, 72, '', NULL, NULL, 1, 0),
-(4, 74, 'F', 3, 0, 1, 0),
+(4, 74, 'A', 9, 4, 1, 1),
 (4, 75, '', NULL, NULL, 1, 0),
 (4, 78, 'A', 9, 4, 1, 1),
 (5, 1, 'A', 9, 4, 0, 1),
@@ -994,7 +1010,7 @@ INSERT INTO `ct_hp` (`ID_SV`, `ID_HP`, `DIEM_CHU`, `DIEM_10`, `DIEM_4`, `CAI_THI
 (7, 72, '', NULL, NULL, 0, 0),
 (7, 73, '', NULL, NULL, 1, 0),
 (7, 75, '', NULL, NULL, 0, 0),
-(7, 79, '', NULL, NULL, 0, 0),
+(7, 79, 'D', 4, 1, 0, 1),
 (8, 2, 'A', 9.5, 4, 0, 1),
 (8, 3, 'B+', 8.7, 3.5, 0, 1),
 (8, 5, 'B+', 8.2, 3.5, 0, 1),
@@ -1039,7 +1055,7 @@ INSERT INTO `hk_nh` (`ID`, `NK`, `HK`, `BD`, `KT`) VALUES
 (1, '2014-2015', 1, '2014-08-01', '2014-12-31'),
 (2, '2014-2015', 2, '2015-01-01', '2015-06-01'),
 (3, '2014-2015', 3, '2015-06-01', '2015-07-01'),
-(4, '2015-2016', 2, '2015-08-01', '2015-12-31');
+(4, '2015-2016', 1, '2015-08-01', '2015-12-31');
 
 -- --------------------------------------------------------
 
@@ -1294,7 +1310,7 @@ INSERT INTO `tk` (`ID`, `ID_SV`, `ID_CB`, `USERNAME`, `PASSWORD`, `STATUS`, `ROL
 (3, NULL, 3, '1133', 'fd06b8ea02fe5b1c2496fe1700e9d16c', 1, '1'),
 (4, NULL, 4, '1234', '81dc9bdb52d04dc20036dbd8313ed055', 1, '1'),
 (5, NULL, 5, '1204', 'fb2fcd534b0ff3bbed73cc51df620323', 1, '1'),
-(6, NULL, 6, '0029 ', '0e0b24fc303d2b384be5a2464654a5d2', 1, '0,1,2,3,4'),
+(6, NULL, 6, '0029 ', '0e0b24fc303d2b384be5a2464654a5d2', 1, '1,2,3,4'),
 (7, NULL, 7, '0430 ', '1b8ecc49a1e5dba91d313dd3a41aaff2', 1, '4'),
 (8, NULL, 8, '0434', 'c6a135d746c5a896b4c8ac6bc502fa00', 1, '3'),
 (9, 1, NULL, '1101682', '75e8f21f426828d2d89be9681b8f829c', 1, '0'),

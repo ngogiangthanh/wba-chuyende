@@ -5,8 +5,11 @@ import java.io.FileInputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Map.Entry;
+
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -139,19 +142,6 @@ public class GVExcelUploadAction extends ActionSupport {
 
 		// Lấy ds sv của gv đó dạy hp
 		this.getDSSVHP();
-		// So khớp và giữ lại phần giao nhau
-		int sizeDSSV = this.dsSVHP.size();
-		for (int i = 0; i < sizeDSSV; i++) {
-			String mssv = this.dsSVHP.get(i).getMssv();
-			if (!this.dataOfFile.containsKey(mssv)) {
-				this.dsSVHP.remove(i);
-			} else {
-				sv_hp sv_trung = this.dataOfFile.get(mssv);
-				this.dsSVHP.get(i).setDiem_10(sv_trung.getDiem_10());
-			}
-		}
-
-		this.dataOfFile.clear();
 
 		return SUCCESS;
 	}
@@ -180,6 +170,9 @@ public class GVExcelUploadAction extends ActionSupport {
 			while (rs.next()) {
 				// Khi hàng đó không null
 				if (!rs.wasNull()) {
+					if (this.dataOfFile.containsKey(rs.getString("MSSV"))) {
+					sv_hp sv_trung = this.dataOfFile.get(rs.getString("MSSV"));
+					
 					sv_hp sv = new sv_hp();
 					sv.setStt(stt++);
 					sv.setId_sv(rs.getInt("ID_SV"));
@@ -187,17 +180,19 @@ public class GVExcelUploadAction extends ActionSupport {
 					sv.setMssv(rs.getString("MSSV"));
 					sv.setHo_ten(rs.getString("HO_TEN"));
 					sv.setDiem_chu(rs.getString("DIEM_CHU"));
-					sv.setDiem_10(rs.getFloat("DIEM_10"));
+					sv.setDiem_10(sv_trung.getDiem_10());
 					sv.setDiem_4(rs.getFloat("DIEM_4"));
 					sv.setCai_thien(rs.getString("CAI_THIEN"));
 
 					this.dsSVHP.add(sv);
+					}
 				}
 			}
 			// Đóng kết nối
 			pstmt.close();
 			rs.close();
 			this.conn.Close();
+			this.dataOfFile.clear();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -1,0 +1,46 @@
+package actions;
+
+import java.util.Map;
+
+import com.opensymphony.xwork2.ActionContext;
+import com.opensymphony.xwork2.ActionSupport;
+
+import connection.Connect;
+import models.sv_qldvn;
+
+public class QLDVNXLFindSVAction extends ActionSupport {
+
+	private static final long serialVersionUID = 1L;
+	private Map<String, Object> session = null;
+	private QLDVNAction qlnAction = null;
+	private Connect conn;
+	private String mssv;
+	private sv_qldvn kq_sv;
+
+	public QLDVNXLFindSVAction() {
+	}
+	
+	public String execute(){
+		this.qlnAction = new QLDVNAction();
+		this.session = ActionContext.getContext().getSession();
+		if(!this.qlnAction.Prefix_Check("",this.session))
+			return ERROR;
+		return SUCCESS;
+	}
+	
+	public sv_qldvn getKq_sv() {
+		return kq_sv;
+	}
+	
+	public String getMssv() {
+		return mssv;
+	}
+	
+	public void setKq_sv(sv_qldvn kq_sv) {
+		this.kq_sv = kq_sv;
+	}
+	
+	public void setMssv(String mssv) {
+		this.mssv = mssv;
+	}
+}
