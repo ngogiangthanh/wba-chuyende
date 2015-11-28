@@ -84,10 +84,13 @@
 						<div class="panel-body">
 							<div role="form">
 								<div class="form-group">
-					                <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
+					                <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
                                         <input type="search" id="id_mssv" name="mssv" value="" class="form-control" placeholder="Nhập MSSV "/>
 					                </div>
-					                <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
+					                <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
+                                        <input type="search" id="id_ma_hp" name="ma_hp" value="" class="form-control" placeholder="Nhập mã học phần "/>
+					                </div>
+					                <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
 								        <button type="button" class="btn btn-success" id="btn_tim">Tìm</button>
 										<button type="button" onclick="location.href='qldvn-index.html'" class="btn btn-default"/>Quay lại</button>&nbsp;
 										<button type="button" id="btn_clear_content" class="btn btn-warning" style="display:none"/>Xóa kết quả</button>&nbsp;
@@ -103,18 +106,18 @@
 													<th class="text-center info">Họ tên</th>
 													<th class="text-center info">Lớp</th>
 													<th class="text-center info">Tên lớp</th>
+													<th class="text-center info">Môn học</th>
 													<th class="text-center info">Thao tác</th>
 												</tr>
 											</thead>
 											<tbody>
-												<input type="hidden" value="" name="id_sv_find" />
 												<tr>
 													<td class="mssv"></td>
 													<td class="ho_ten"></td>
 													<td class="lop"></td>
 													<td class="ten_lop"></td>
-													<td><a href='#' onclick=""><i
-															class="glyphicon glyphicon-plus"></i>&nbsp;Nhập điểm</a></td>
+													<td class="mon_hoc"></td>
+													<td><a href='#' data-toggle="modal" data-target="#nhapDiemModal" ><i class="glyphicon glyphicon-plus"></i>&nbsp;Nhập điểm</a></td>
 												</tr>
 											</tbody>
 										</table>
@@ -130,7 +133,65 @@
 			<!--/row-->
 		</div>
 		</div>
-		<!--/.container-->
+
+	<!-- Bắt đầu nội dung modal nhập điểm -->
+	<div class="modal fade" id="nhapDiemModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">Khung nhập điểm</h4>
+				</div>
+				<div class="modal-body form-horizontal" role="form">
+					<input name="id_hp" type="hidden" value="" /> 
+					<input name="id_sv" type="hidden" value="" /> 
+					<input name="cai_thien" type="hidden" value="" />
+					<div class="form-group">
+						<label for="title"
+							class="col-sm-3 col-xs-3 col-md-3 col-lg-3 control-label">
+							<span class="glyphicon glyphicon-user text-info"></span>&nbsp;MSSV:
+						</label>
+						<div class="col-sm-9 col-xs-9 col-md-9 col-lg-9">
+							<input type="text" value="" id="mssv" name="mssv"
+								class="form-control" readonly="readonly" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="title"
+							class="col-sm-3 col-xs-3 col-md-3 col-lg-3 control-label">
+							<span class="glyphicon glyphicon-user text-info"></span>&nbsp;Họ
+							tên:
+						</label>
+						<div class="col-sm-9 col-xs-9 col-md-9 col-lg-9">
+							<input type="text" value="" id="ho_ten" name="ho_ten"
+								class="form-control" readonly="readonly" />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="title"
+							class="col-sm-3 col-xs-3 col-md-3 col-lg-3 control-label">
+							<span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;Điểm:
+						</label>
+						<div class="col-sm-9 col-xs-9 col-md-9 col-lg-9">
+						
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-success" id="btn_luu">Lưu</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Kết thúc nội dung modal nhập điểm -->
+
+	<!--/.container-->
 		<script type="text/javascript" src="public/js/jquery-1.10.0.min.js"></script>
 		<!-- Include all compiled plugins (below), or include individual files as needed -->
 		<script type="text/javascript" src="public/js/bootstrap.min.js"></script>
@@ -166,14 +227,21 @@
 						//Bắt đầu xử lý tìm sinh viên
 						$("#btn_tim").click(function(){
 							var mssv = $.trim($("#id_mssv").val());
+							var ma_hp = $.trim($("#id_ma_hp").val());
 							//--kiem tra rang buoc
 							if(mssv.length > 8 || mssv.length <= 0){
 								toastr["error"]("Mã số sinh viên không hợp lệ!");
 								$("#id_mssv").focus();
 								return false;
 							}
+							else if(ma_hp.length > 8 || ma_hp.length <= 0){
+								toastr["error"]("Mã ã học phần không hợp lệ!");
+								$("#id_ma_hp").focus();
+								return false;
+							}
 							var formData = new FormData();
 							formData.append('mssv', mssv);
+							formData.append('ma_hp', ma_hp);
 							$.ajax({
 					                url: "qldvn-xulytimsv.html",
 					                type: "POST",
@@ -189,12 +257,14 @@
 										$('#sv_nhap_diem > tbody > tr > td.ho_ten').text(data.kq_sv["ho_ten"]);
 										$('#sv_nhap_diem > tbody > tr > td.lop').text(data.kq_sv["lop"]);
 										$('#sv_nhap_diem > tbody > tr > td.ten_lop').text(data.kq_sv["ten_lop"]);
+										$('#sv_nhap_diem > tbody > tr > td.mon_hoc').text(data.kq_sv["ten_mh"]);
 						  				$("#id_content_kq").show("slow");
 						  				$("#btn_clear_content").show("slow");
 										$("#id_mssv").val('');
+										$("#id_ma_hp").val('');
 					            	}
 					            	else{
-										toastr["warning"]("Không tìm thấy sinh viên có mã số này!");
+										toastr["warning"]("Không tìm thấy sinh viên có mã số và học học phần này!");
 										$("#id_mssv").focus();
 					            	}
 					            });

@@ -84,7 +84,9 @@
 							<i class="glyphicon glyphicon-th-list"></i>&nbsp;Xem các lớp học phần giảng dạy
 						</div>
 						<div class="panel-body">
+						<#if nhapDiem>
 						<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#upFileModal"/>Tệp điểm excel</a>
+						</#if>
 						<a href="gv-lophp.html" class="btn btn-default"/>Quay lại</a>&nbsp;
                         <div class="clearfix">&nbsp;</div>
 						<#if dsSVHP?? >
@@ -170,9 +172,7 @@
 						    </div>
 						  </div>
 						</div>
-						</#if>
 						<!-- Kết thúc nội dung modal nhập điểm -->
-						
 						<!-- Bắt đầu nội dung modal úp file -->
 						<div class="modal fade" id="upFileModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 					  <div class="modal-dialog" role="document">
@@ -217,6 +217,7 @@
 						  </div>
 						</div>
 						<!-- Kết thúc nội dung modal úp file-->
+						</#if>
 				</div>
 				<!-- END CONTENT -->
 			</div>
