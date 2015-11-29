@@ -49,7 +49,8 @@ public class QLDVNTKAction extends ActionSupport {
 			return ERROR;
 
 		this.kt_tg_thong_ke(this.session);
-		
+
+		System.out.println("Tk buoc thoi hoc "+this.isThongKeBuocThoiHoc());
 		return SUCCESS;
 	}
 	
@@ -114,6 +115,7 @@ public class QLDVNTKAction extends ActionSupport {
 			this.setThongKeHB(false);
 			this.setThongKeKhenThuong(false);
 			this.setThongKeNoHP(false);
+			return;
 		}
 
 		if (Integer.parseInt(current_hk) != kh.getHk()) {
@@ -122,6 +124,7 @@ public class QLDVNTKAction extends ActionSupport {
 			this.setThongKeHB(false);
 			this.setThongKeKhenThuong(false);
 			this.setThongKeNoHP(false);
+			return;
 		}
 		// Nếu là học kỳ hiện tại
 		// Lấy ngày hiện tại
@@ -142,6 +145,7 @@ public class QLDVNTKAction extends ActionSupport {
 				this.setThongKeHB(false);
 				this.setThongKeKhenThuong(false);
 				this.setThongKeNoHP(false);
+				return;
 			}
 			// So khớp ngày hiện tại khác khoảng bắt đầu và kết thúc.
 			if (!(current_Day.compareTo(kh.getNgay_bd()) > 0 
@@ -153,6 +157,7 @@ public class QLDVNTKAction extends ActionSupport {
 				this.setThongKeHB(false);
 				this.setThongKeKhenThuong(false);
 				this.setThongKeNoHP(false);
+				return;
 			}
 
 		} catch (Exception e) {
@@ -163,6 +168,7 @@ public class QLDVNTKAction extends ActionSupport {
 			this.setThongKeHB(false);
 			this.setThongKeKhenThuong(false);
 			this.setThongKeNoHP(false);
+			return;
 		}
 		// Phù hợp
 		if(Integer.parseInt(current_hk) == 1 || Integer.parseInt(current_hk) == 2){
@@ -177,6 +183,7 @@ public class QLDVNTKAction extends ActionSupport {
 		if(Integer.parseInt(current_hk) == 3){
 			this.setThongKeNoHP(true);
 		}
+		return;
 	}
 	
 	public Date removeTime(Date date) {    

@@ -82,6 +82,7 @@
 							<i class="glyphicon glyphicon-th-list"></i>&nbsp;Nhập điểm M, I cho sinh viên
 						</div>
 						<div class="panel-body">
+						<#if nhapDiemNo>
 							<div role="form">
 								<div class="form-group">
 					                <div class="col-sm-4 col-xs-4 col-md-4 col-lg-4">
@@ -125,6 +126,13 @@
 							</div>
 							</div>
 						</div>
+						<#else>
+							<button type="button" onclick="location.href='qldvn-index.html'" class="btn btn-default"/>Quay lại</button>&nbsp;
+	                        	<div class="clearfix">&nbsp;</div>
+							<div class="alert alert-warning text-center" role="alert">
+							Chưa đến thời gian nhập điểm nợ.
+							</div>
+						</#if>
 						</div>
 					<!-- END CONTENT -->
 				</div>
@@ -134,6 +142,7 @@
 		</div>
 		</div>
 
+	<#if nhapDiemNo>
 	<!-- Bắt đầu nội dung modal nhập điểm -->
 	<div class="modal fade" id="nhapDiemModal" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel">
@@ -147,38 +156,59 @@
 					<h4 class="modal-title" id="myModalLabel">Khung nhập điểm</h4>
 				</div>
 				<div class="modal-body form-horizontal" role="form">
-					<input name="id_hp" type="hidden" value="" /> 
-					<input name="id_sv" type="hidden" value="" /> 
-					<input name="cai_thien" type="hidden" value="" />
+					<input name="id_hp" id="id_hp" type="hidden" value="" /> 
+					<input name="mssv_modal" id="mssv_modal"  type="hidden" value="" /> 
 					<div class="form-group">
 						<label for="title"
 							class="col-sm-3 col-xs-3 col-md-3 col-lg-3 control-label">
-							<span class="glyphicon glyphicon-user text-info"></span>&nbsp;MSSV:
+							<span class="glyphicon glyphicon-calendar"></span>&nbsp;Học kỳ:
 						</label>
 						<div class="col-sm-9 col-xs-9 col-md-9 col-lg-9">
-							<input type="text" value="" id="mssv" name="mssv"
+							<input type="text" value="${current_hk}" id="hk" name="hk"
 								class="form-control" readonly="readonly" />
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="title"
 							class="col-sm-3 col-xs-3 col-md-3 col-lg-3 control-label">
-							<span class="glyphicon glyphicon-user text-info"></span>&nbsp;Họ
-							tên:
+							<span class="glyphicon glyphicon-calendar"></span>&nbsp;Niên khóa:
 						</label>
 						<div class="col-sm-9 col-xs-9 col-md-9 col-lg-9">
-							<input type="text" value="" id="ho_ten" name="ho_ten"
+							<input type="text" value="${current_nk}" id="nk" name="nk"
 								class="form-control" readonly="readonly" />
 						</div>
 					</div>
-
+					<div class="form-group">
+						<label for="title"
+							class="col-sm-3 col-xs-3 col-md-3 col-lg-3 control-label">
+							<span class="glyphicon glyphicon-barcode"></span>&nbsp;Mã học phần:
+						</label>
+						<div class="col-sm-9 col-xs-9 col-md-9 col-lg-9">
+							<input type="text" value="" id="ma_hp_modal" name="ma_hp_modal"
+								class="form-control" readonly="readonly" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="title"
+							class="col-sm-3 col-xs-3 col-md-3 col-lg-3 control-label">
+							<span class="glyphicon glyphicon-user text-info"></span>&nbsp;Tên môn học:
+						</label>
+						<div class="col-sm-9 col-xs-9 col-md-9 col-lg-9">
+							<input type="text" value="" id="ten_mh_modal" name="ten_mh_modal"
+								class="form-control" readonly="readonly" />
+						</div>
+					</div>
 					<div class="form-group">
 						<label for="title"
 							class="col-sm-3 col-xs-3 col-md-3 col-lg-3 control-label">
 							<span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;Điểm:
 						</label>
 						<div class="col-sm-9 col-xs-9 col-md-9 col-lg-9">
-						
+							<select name="diem_select" id="diem_select" class="form-control">
+								<option value="">-Chọn-</option>
+								<option value="M">Điểm M</option>
+								<option value="I">Điểm I</option>
+							</select>
 						</div>
 					</div>
 				</div>
@@ -190,6 +220,7 @@
 		</div>
 	</div>
 	<!-- Kết thúc nội dung modal nhập điểm -->
+	</#if>
 
 	<!--/.container-->
 		<script type="text/javascript" src="public/js/jquery-1.10.0.min.js"></script>
@@ -224,8 +255,11 @@
 											'glyphicon-plus-sign').toggleClass(
 											'glyphicon-minus-sign');
 								});
+
+						<#if nhapDiemNo>
 						//Bắt đầu xử lý tìm sinh viên
 						$("#btn_tim").click(function(){
+			  				$('#diem_select option[value=]').attr('selected','selected');
 							var mssv = $.trim($("#id_mssv").val());
 							var ma_hp = $.trim($("#id_ma_hp").val());
 							//--kiem tra rang buoc
@@ -235,7 +269,7 @@
 								return false;
 							}
 							else if(ma_hp.length > 8 || ma_hp.length <= 0){
-								toastr["error"]("Mã ã học phần không hợp lệ!");
+								toastr["error"]("Mã học phần không hợp lệ!");
 								$("#id_ma_hp").focus();
 								return false;
 							}
@@ -260,6 +294,10 @@
 										$('#sv_nhap_diem > tbody > tr > td.mon_hoc').text(data.kq_sv["ten_mh"]);
 						  				$("#id_content_kq").show("slow");
 						  				$("#btn_clear_content").show("slow");
+										$("#id_hp").val(data.kq_sv["id_hp"]);
+										$("#mssv_modal").val(data.kq_sv["mssv"]);
+										$("#ma_hp_modal").val(ma_hp);
+										$("#ten_mh_modal").val(data.kq_sv["ten_mh"]);
 										$("#id_mssv").val('');
 										$("#id_ma_hp").val('');
 					            	}
@@ -274,7 +312,42 @@
 						$("#btn_clear_content").click(function(){
 							$("#id_content_kq").hide("slow");
 			  				$("#btn_clear_content").hide("slow");
+			  				$('#diem_select option[value=]').attr('selected','selected');
 						});
+						//Bắt đầu xử lý nhập điểm
+						$("#btn_luu").click(function(){
+							var diem_chu = $("#diem_select option:selected" ).val();
+							//--kiem tra rang buoc
+							if(diem_chu == ""){
+								toastr["error"]("Vui lòng chọn điểm!");
+								$("#diem_select").focus();
+								return false;
+							}
+							//Gọi ham ajax jquery
+							var formData = new FormData();
+							formData.append('id_hp', $("#id_hp").val());
+							formData.append('mssv', $("#mssv_modal").val());
+							formData.append('diem_chu', diem_chu);
+							$.ajax({
+				                url: "qldvn-xulynhapdiemno.html",
+				                type: "POST",
+				                dataType: "json",
+				                processData: false,
+				                contentType: false,
+				                cache: false,
+				                data: formData
+				            }).done(function(data) {
+				            	if (data.actionErrors.length > 0) {
+						  			toastr["error"](data.actionErrors);
+						    	    }
+						    	  if(data.actionMessages.length > 0){
+							  		toastr["info"](data.actionMessages);
+						    	  }
+				            });
+							
+						});
+						//Kết thúc xử lý nhập điểm
+						</#if>
 					});
 		<#if (actionErrors?? & actionErrors?size>0)>
 			toastr["error"]("${actionErrors}");

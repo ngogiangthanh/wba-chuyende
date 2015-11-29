@@ -303,6 +303,28 @@
 			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
 			</result>
 		</action>
+		<action name="qldvn-xulynhapdiemno" class="actions.QLDVNXLNhapDiemNoSVAction">
+			<result type="json" name="success">
+				<param name="ignoreHierarchy">false</param>
+				<param name="excludeNullProperties">true</param>
+				<param name="noCache">true</param>
+				<param name="includeProperties">
+					actionErrors.*,
+					actionMessages.*
+				</param>
+			</result>
+			<result type="json" name="input">
+				<param name="ignoreHierarchy">false</param>
+				<param name="excludeNullProperties">true</param>
+				<param name="noCache">true</param>
+				<param name="includeProperties">
+					actionErrors.*,
+					actionMessages.*
+				</param>
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+		</action>
 		
 		<action name="pdt-index" method="getIndex" class="actions.PDTAction">
 			<result type="freemarker" name="index">/WEB-INF/freemarker/pdt/index.jsp
