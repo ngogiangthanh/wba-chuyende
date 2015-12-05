@@ -79,6 +79,8 @@
 							<i class="glyphicon glyphicon-th-list"></i>&nbsp;Xem kết quả học tập
 						</div>
 						<div class="panel-body">
+						<a href="index.html" class="btn btn-default"/>Quay lại</a>&nbsp;
+	                    <div class="clearfix">&nbsp;</div>
 						<div class="alert alert-success text-center" role="alert">
 							<form action="view-mark.html" method="post">
 								Năm học:&nbsp;

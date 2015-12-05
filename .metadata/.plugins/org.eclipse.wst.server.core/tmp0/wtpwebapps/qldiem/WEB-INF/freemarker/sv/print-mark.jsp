@@ -79,6 +79,8 @@
 							<i class="glyphicon glyphicon-th-list"></i>&nbsp;In kết quả học tập theo học kỳ - năm học
 						</div>
 						<div class="panel-body">
+							<a href="index.html" class="btn btn-default"/>Quay lại</a>&nbsp;
+		                    <div class="clearfix">&nbsp;</div>
 							<div class="alert alert-success text-center" role="alert">
 								Chọn học kỳ - năm học cần in<br/>
 								<form id="target" action="printed-mark.html" method="post" target="_blank">

@@ -85,10 +85,10 @@
 							<#list information.entrySet() as entry>  
 							<#switch entry.key>
 							 <#case "1_MSCB">
-						     	<li class="list-group-item">Mã số sinh viên:&nbsp;${entry.value}</li>
+						     	<li class="list-group-item">Mã số cán bộ:&nbsp;${entry.value}</li>
 							    <#break>
 							  <#case "2_HO_TEN">
-						     	<li class="list-group-item">Họ tên sinh viên:&nbsp;${entry.value}</li>
+						     	<li class="list-group-item">Họ tên cán bộ:&nbsp;${entry.value}</li>
 							    <#break>
 							  <#case "3_GIOI_TINH">
 						     	<li class="list-group-item">Giới tính:&nbsp;

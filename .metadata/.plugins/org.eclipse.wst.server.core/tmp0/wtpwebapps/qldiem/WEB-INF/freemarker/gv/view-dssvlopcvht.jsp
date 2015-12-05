@@ -222,7 +222,7 @@
 							    	if (data.actionErrors.length > 0) {
 								  		toastr["error"](data.actionErrors);
 								    }
-							  				$("#content_tt_ht").empty();
+							  			$("#content_tt_ht").empty();
 							  			$.each(data.dsTTSV, function(key, value) {
 							  				var ul = document.createElement("ul");
 							  				ul.className = "list-group";
