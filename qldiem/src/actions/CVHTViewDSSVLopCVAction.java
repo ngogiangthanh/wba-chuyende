@@ -88,7 +88,7 @@ public class CVHTViewDSSVLopCVAction extends ActionSupport {
 			int test_id_lop = Integer.parseInt(getId_lop());
 			if (test_id_lop <= 0)
 				addActionError("Lớp không hợp lệ!");
-			
+
 			base_64 decode_base_64 = new base_64();
 			decode_base_64.setBase_64_string_encode(getTen_lop());
 			if (getTen_lop().length() <= 0 | !decode_base_64.decode()) {
@@ -107,7 +107,7 @@ public class CVHTViewDSSVLopCVAction extends ActionSupport {
 	public String getId_lop() {
 		return id_lop;
 	}
-	
+
 	public String getTen_lop() {
 		return ten_lop;
 	}
@@ -119,7 +119,7 @@ public class CVHTViewDSSVLopCVAction extends ActionSupport {
 	public void setId_lop(String id_lop) {
 		this.id_lop = id_lop;
 	}
-	
+
 	public void setTen_lop(String ten_lop) {
 		this.ten_lop = ten_lop;
 	}

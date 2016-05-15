@@ -174,12 +174,12 @@ public class CVHTViewCTSVLopCVAction extends ActionSupport {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		this.calculation_tt_ct_sv();
 
 		return SUCCESS;
 	}
-	
+
 	public boolean isOpenHKNK(Map<String, Object> session) {
 		Map<String, ArrayList<Integer>> hknk = (Map<String, ArrayList<Integer>>) session.get("hknk");
 		// Kiểm tra xem học kì người dùng chọn có trong session hknk không? nếu
@@ -192,9 +192,9 @@ public class CVHTViewCTSVLopCVAction extends ActionSupport {
 		}
 		return true;
 	}
-	
-	public void calculation_tt_ct_sv(){
-		for(Map.Entry<hk_nk, List<sv_diem_hp>> entry : this.dsDiemHP.entrySet()){
+
+	public void calculation_tt_ct_sv() {
+		for (Map.Entry<hk_nk, List<sv_diem_hp>> entry : this.dsDiemHP.entrySet()) {
 			hk_nk current_hk_nk = entry.getKey();
 			List<sv_diem_hp> ds_diem = entry.getValue();
 			sv_lop_ct_cv ct_sv = null;
@@ -202,41 +202,44 @@ public class CVHTViewCTSVLopCVAction extends ActionSupport {
 			int tstchk = 0;
 			float tdtbHK = 0;
 			int tstctlhk = 0;
-			
-			for(sv_diem_hp sv_diem : ds_diem ){
+
+			for (sv_diem_hp sv_diem : ds_diem) {
 				ct_sv = new sv_lop_ct_cv();
 				if (sv_diem.getDiemChu() != "W")
-					tstcdk += sv_diem.getSoTC();	
-				if (!sv_diem.getDiemChu().equals("M") & !sv_diem.getDiemChu().equals("W") & !sv_diem.getDiemChu().equals("I") & !sv_diem.getDiemChu().equals("")){
-	        		tdtbHK += sv_diem.getTichDiem();
-	        		tstchk += sv_diem.getSoTC();
-					System.out.println("tinh diem chu "+ sv_diem.getDiemChu());
+					tstcdk += sv_diem.getSoTC();
+				if (!sv_diem.getDiemChu().equals("M") & !sv_diem.getDiemChu().equals("W")
+						& !sv_diem.getDiemChu().equals("I") & !sv_diem.getDiemChu().equals("")) {
+					tdtbHK += sv_diem.getTichDiem();
+					tstchk += sv_diem.getSoTC();
+					System.out.println("tinh diem chu " + sv_diem.getDiemChu());
 				}
-				if (sv_diem.getTichLuy().equals("1")) tstctlhk += sv_diem.getSoTC();
+				if (sv_diem.getTichLuy().equals("1"))
+					tstctlhk += sv_diem.getSoTC();
 			}
-			if (tstchk == 0) tstchk = 1;
-			
+			if (tstchk == 0)
+				tstchk = 1;
+
 			ct_sv.setTstcdk(tstcdk);
-			ct_sv.setDtbhk(tdtbHK/tstchk);
+			ct_sv.setDtbhk(tdtbHK / tstchk);
 			ct_sv.setTstctlhk(tstctlhk);
 			ct_sv.setDtbtl(current_hk_nk.getTbctl());
 			ct_sv.setTstctl(current_hk_nk.getTstctl());
-			this.dsTTSV.put("Học kỳ: "+current_hk_nk.getHk() + " - Niên khóa: " +current_hk_nk.getNk(), ct_sv);
+			this.dsTTSV.put("Học kỳ: " + current_hk_nk.getHk() + " - Niên khóa: " + current_hk_nk.getNk(), ct_sv);
 		}
-		
+
 		this.dsDiemHP.clear();
 	}
-	
+
 	public void validate() {
 		try {
 			int test_id_sv = Integer.parseInt(getId_sv());
 			if (test_id_sv <= 0)
 				addActionError("Sinh viên không hợp lệ!");
-			
+
 			int test_hk = Integer.parseInt(getHk());
 			if (test_hk < 0 || test_hk > 3)
 				addActionError("Học kỳ không hợp lệ!");
-			
+
 			if (getNk().length() > 9 || getNk().length() < 0)
 				addActionError("Niên khóa không hợp lệ!");
 

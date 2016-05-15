@@ -36,15 +36,16 @@ public class LoginAction extends ActionSupport {
 			if (home.isLogin(session)) {
 				String result = home.getIndex();
 				this.setPageDirect(home.getPageDirect());
-				System.out.println("Không phải login lại! "+ result);
+				System.out.println("Không phải login lại! " + result);
 				return result;
 			}
 
 			this.conn = new Connect();
 			hash = new md5(this.getPassword());
 			hash.generator();
-			
-			String procedure = "call authenticating('" + this.getUsername() + "','"+ hash.getMd5_string_result() +"');";
+
+			String procedure = "call authenticating('" + this.getUsername() + "','" + hash.getMd5_string_result()
+					+ "');";
 			ResultSet rs = this.conn.call_procedure(procedure);
 			if (rs.next()) {
 				DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");

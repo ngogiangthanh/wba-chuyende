@@ -22,22 +22,21 @@ public class CVHTViewLopCVAction extends ActionSupport {
 
 	public CVHTViewLopCVAction() {
 	}
-	
-	public String execute(){
+
+	public String execute() {
 		this.gvAction = new GVAction();
 		this.session = ActionContext.getContext().getSession();
 		if (!gvAction.Prefix_Check("Trang chủ xem danh sách các lớp cố vấn", this.session))
 			return ERROR;
-		
+
 		this.conn = new Connect();
 		Map<String, String> infor_user = (Map<String, String>) session.get("information");
 		String procedure = "call get_tt_cvht_lop_cv(?);";
 		CallableStatement pstmt = null;
-		
+
 		try {
 			pstmt = (CallableStatement) this.conn.getConn().prepareCall(procedure);
 			pstmt.setInt(1, Integer.parseInt(infor_user.get("7_ID")));
-			
 
 			// Thực thi procedure
 			pstmt.execute();
@@ -58,11 +57,11 @@ public class CVHTViewLopCVAction extends ActionSupport {
 					hash_base_64.setBase_64_string_input(rs.getString("TEN_LOP"));
 					hash_base_64.encode();
 					lop.setTen_lop_base_64(hash_base_64.getBase_64_string_encode());
-					
+
 					this.dsLopCV.add(lop);
 				}
 			}
-			
+
 			// Đóng kết nối
 			pstmt.close();
 			rs.close();
@@ -73,11 +72,11 @@ public class CVHTViewLopCVAction extends ActionSupport {
 
 		return SUCCESS;
 	}
-	
+
 	public ArrayList<lop_cv> getDsLopCV() {
 		return dsLopCV;
 	}
-	
+
 	public void setDsLopCV(ArrayList<lop_cv> dsLopCV) {
 		this.dsLopCV = dsLopCV;
 	}

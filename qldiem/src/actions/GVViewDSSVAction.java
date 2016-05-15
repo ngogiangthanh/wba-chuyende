@@ -127,7 +127,7 @@ public class GVViewDSSVAction extends ActionSupport {
 			if (getTen_mh() == "" | !decode_base_64.decode()) {
 				addActionError("Tên học phần không chính xác!");
 			}
-			System.out.println("Tên hp base 64 "+ getTen_mh());
+			System.out.println("Tên hp base 64 " + getTen_mh());
 			setTen_mh(decode_base_64.getBase_64_string_decode());
 
 			if (getHk() == "") {
@@ -175,14 +175,13 @@ public class GVViewDSSVAction extends ActionSupport {
 		try {
 			Date current_Day = dateFormat.parse(dateFormat.format(cal.getTime()));
 			System.out.println(current_Day.toString());
-			
-			if ((current_Day.compareTo(kh.getNgay_bd()) == 0 
-					|| current_Day.compareTo(kh.getNgay_kt()) == 0)) {
+
+			if ((current_Day.compareTo(kh.getNgay_bd()) == 0 || current_Day.compareTo(kh.getNgay_kt()) == 0)) {
 				System.out.println("Bằng nhau ");
 				// Bằng nhau
 				return true;
 			}
-			
+
 			// So khớp ngày hiện tại khác khoảng bắt đầu và kết thúc.
 			if (!(current_Day.compareTo(kh.getNgay_bd()) > 0 && current_Day.compareTo(kh.getNgay_kt()) < 0)) {
 				// Không phù hợp
@@ -197,15 +196,15 @@ public class GVViewDSSVAction extends ActionSupport {
 		// Phù hợp
 		return true;
 	}
-	
-	public Date removeTime(Date date) {    
-	    Calendar cal = Calendar.getInstance();  
-	    cal.setTime(date);  
-	    cal.set(Calendar.HOUR_OF_DAY, 0);  
-	    cal.set(Calendar.MINUTE, 0);  
-	    cal.set(Calendar.SECOND, 0);  
-	    cal.set(Calendar.MILLISECOND, 0);  
-	    return cal.getTime(); 
+
+	public Date removeTime(Date date) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.set(Calendar.HOUR_OF_DAY, 0);
+		cal.set(Calendar.MINUTE, 0);
+		cal.set(Calendar.SECOND, 0);
+		cal.set(Calendar.MILLISECOND, 0);
+		return cal.getTime();
 	}
 
 	public void assignKHNhapDiemValues(Map<String, Object> session) {

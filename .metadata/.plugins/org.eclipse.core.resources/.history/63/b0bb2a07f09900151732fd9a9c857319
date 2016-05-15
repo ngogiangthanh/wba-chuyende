@@ -11,12 +11,12 @@ import com.mysql.jdbc.Statement;
 public class Connect {
 	private Connection conn = null;
 	private String hostname = "jdbc:mysql://localhost:3306/";
-	private String database = "qldiem_v3_1_1";
+	private String database = "qldiem_v3_1_1_owe";
 	private String username = "morte";
 	private String password = "morte";
 
 	public Connect() {
-		// Mặc định thì được gọi và tạo kết nối đến mysql
+		//Mặc định thì được gọi và tạo kết nối đến mysql
 		this.Create();
 	}
 
@@ -42,21 +42,21 @@ public class Connect {
 	}
 
 	public ResultSet excuteQuery(String sql) throws SQLException {
-		// Thực thi các câu select
+		//Thực thi các câu select
 		Statement stmt = (Statement) this.conn.createStatement();
 		ResultSet rs = (ResultSet) stmt.executeQuery(sql);
 		return rs;
 	}
 
 	public int executeUpdate(String sql) throws SQLException {
-		// Thực thi các câu insert, delete, update
+		//Thực thi các câu insert, delete, update
 		Statement stmt = (Statement) this.conn.createStatement();
 		int results = stmt.executeUpdate(sql);
 		return results;
 	}
 
 	public ResultSet call_procedure(String name_procedure) throws SQLException {
-		// Thực thi các procedure đơn giản
+		//Thực thi các procedure đơn giản
 		CallableStatement cs = (CallableStatement) this.conn.prepareCall(name_procedure);
 		cs.execute();
 		return (ResultSet) cs.getResultSet();

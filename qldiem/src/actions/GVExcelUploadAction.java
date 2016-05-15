@@ -2,14 +2,9 @@ package actions;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Map.Entry;
-
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -171,20 +166,20 @@ public class GVExcelUploadAction extends ActionSupport {
 				// Khi hàng đó không null
 				if (!rs.wasNull()) {
 					if (this.dataOfFile.containsKey(rs.getString("MSSV"))) {
-					sv_hp sv_trung = this.dataOfFile.get(rs.getString("MSSV"));
-					
-					sv_hp sv = new sv_hp();
-					sv.setStt(stt++);
-					sv.setId_sv(rs.getInt("ID_SV"));
-					sv.setId_hp(Integer.parseInt(getId_hp()));
-					sv.setMssv(rs.getString("MSSV"));
-					sv.setHo_ten(rs.getString("HO_TEN"));
-					sv.setDiem_chu(rs.getString("DIEM_CHU"));
-					sv.setDiem_10(sv_trung.getDiem_10());
-					sv.setDiem_4(rs.getFloat("DIEM_4"));
-					sv.setCai_thien(rs.getString("CAI_THIEN"));
+						sv_hp sv_trung = this.dataOfFile.get(rs.getString("MSSV"));
 
-					this.dsSVHP.add(sv);
+						sv_hp sv = new sv_hp();
+						sv.setStt(stt++);
+						sv.setId_sv(rs.getInt("ID_SV"));
+						sv.setId_hp(Integer.parseInt(getId_hp()));
+						sv.setMssv(rs.getString("MSSV"));
+						sv.setHo_ten(rs.getString("HO_TEN"));
+						sv.setDiem_chu(rs.getString("DIEM_CHU"));
+						sv.setDiem_10(sv_trung.getDiem_10());
+						sv.setDiem_4(rs.getFloat("DIEM_4"));
+						sv.setCai_thien(rs.getString("CAI_THIEN"));
+
+						this.dsSVHP.add(sv);
 					}
 				}
 			}

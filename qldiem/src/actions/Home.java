@@ -10,7 +10,7 @@ import models.role;
 public class Home extends ActionSupport {
 	private static final long serialVersionUID = 1L;
 	private String pageDirect = null;
-	public static String[] names = { "Sinh viên", "Giảng viên", "Quản lý ngành","Phòng đào tạo", "Administrator" };
+	public static String[] names = { "Sinh viên", "Giảng viên", "Quản lý ngành", "Phòng đào tạo", "Administrator" };
 	public static String[] roles = { "sv-index", "gv-index", "qldvn-index", "pdt-index", "admin-index" };
 	public static String[] indexes = { "/WEB-INF/freemarker/sv/index.jsp", "/WEB-INF/freemarker/gv/index.jsp",
 			"/WEB-INF/freemarker/qldvn/index.jsp", "/WEB-INF/freemarker/pdt/index.jsp",
@@ -37,7 +37,7 @@ public class Home extends ActionSupport {
 			session.clear();
 			return "login";
 		}
-		
+
 		System.out.println("Chưa login đưa về trang login!");
 		return "login";
 	}
@@ -67,15 +67,13 @@ public class Home extends ActionSupport {
 			return false;
 		}
 	}
-	
-	public static boolean isRole(Map<String, Object> session, int i){
-		try{
+
+	public static boolean isRole(Map<String, Object> session, int i) {
+		try {
 			Map<String, role> infor_roles = (Map<String, role>) session.get("roles");
-			System.out.println("Nhóm quyền "+ Home.roles[i]);
+			System.out.println("Nhóm quyền " + Home.roles[i]);
 			return infor_roles.containsKey(Home.roles[i]);
-		}
-		catch(Exception ex)
-		{
+		} catch (Exception ex) {
 			System.out.println("Lỗi check nhóm quyền");
 			return false;
 		}

@@ -77,14 +77,15 @@ public class GVNhapDiemAction extends ActionSupport {
 		addActionMessage("Cập nhật điểm hoàn tất!");
 		return SUCCESS;
 	}
-
-	public boolean Prefix_Check(String title, Map<String, Object> session) {
-		if (!Home.isRole(session, 1) && !Home.isRole(session, 2)) {
-			if (!session.isEmpty()) {
+	
+	public boolean Prefix_Check(String title, Map<String, Object> session)
+	{
+		if(!Home.isRole(session,1) && !Home.isRole(session,2)){
+			if(!session.isEmpty()){
 				session.clear();
 				addActionError("Truy xuất sai nhóm quyền!");
 				addActionMessage("Tự động đăng xuất để đăng nhập nhóm quyền phù hợp!");
-			}
+				}
 			return false;
 		}
 		session.put("title", title);
