@@ -1,6 +1,0 @@
-package models;
-
-public class sv_thoi_hoc {
-	private int stt;
-	
-}

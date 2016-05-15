@@ -2,20 +2,20 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="btn_tim" key="selection"/>
+		<item value="luudiem" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="btn_tim"/>
-			<item value="assignKHNhapDiemValues"/>
-			<item value="ke_hoach_nhap_diem"/>
-			<item value="nhapDiem"/>
-			<item value="DIEM_CHU"/>
-			<item value="tstchk"/>
-			<item value="tdtbHK"/>
-			<item value="ExcelUploadAction"/>
+			<item value="luudiem"/>
+			<item value="QLDVNFindSVAction"/>
+			<item value="assignKHNhapDiemNoValues"/>
+			<item value="ma_hp_modal"/>
+			<item value="ma_hp"/>
+			<item value="ten_mh"/>
+			<item value="mssv_modal"/>
+			<item value="mssv"/>
 		</list>
 		<list key="replacehistory">
 			<item value=""/>

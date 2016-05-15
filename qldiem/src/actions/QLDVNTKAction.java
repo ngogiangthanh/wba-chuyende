@@ -140,11 +140,11 @@ public class QLDVNTKAction extends ActionSupport {
 					|| current_Day.compareTo(kh.getNgay_kt()) == 0)) {
 				System.out.println("Bằng nhau ");
 				// Bằng nhau
-				this.setThongKeBuocThoiHoc(false);
-				this.setThongKeCCHV(false);
-				this.setThongKeHB(false);
-				this.setThongKeKhenThuong(false);
-				this.setThongKeNoHP(false);
+				this.setThongKeBuocThoiHoc(true);
+				this.setThongKeCCHV(true);
+				this.setThongKeHB(true);
+				this.setThongKeKhenThuong(true);
+				this.setThongKeNoHP(true);
 				return;
 			}
 			// So khớp ngày hiện tại khác khoảng bắt đầu và kết thúc.

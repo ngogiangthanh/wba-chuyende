@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<constant name="struts.devMode" value="false" />
+	<constant name="struts.action.extension" value="html" />
+	<constant name="struts.custom.i18n.resources" value="ApplicationResources" />
+	<constant name="struts.multipart.saveDir" value="/" />
+	<package name="qldiem" namespace="/" extends="struts-default, json-default">
+		<!-- Add your actions here -->
+		<interceptors>
+			<interceptor-stack name="fileUploadStack">
+				<interceptor-ref name="exception" />
+				<interceptor-ref name="alias" />
+				<interceptor-ref name="servletConfig" />
+				<interceptor-ref name="prepare" />
+				<interceptor-ref name="i18n" />
+				<interceptor-ref name="chain" />
+				<interceptor-ref name="debugging" />
+				<interceptor-ref name="profiling" />
+				<interceptor-ref name="scopedModelDriven" />
+				<interceptor-ref name="modelDriven" />
+				<interceptor-ref name="fileUpload">
+					<param name="maximumSize">102400</param>
+					<param name="allowedTypes">
+						application/vnd.ms-excel,
+						application/msexcel,
+						application/x-msexcel,
+						application/x-ms-excel,
+						application/x-excel,
+						application/x-dos_ms_excel,
+						application/xls,
+						application/x-xls
+					</param>
+					<param name="allowedExtensions">xls,xlsx</param>
+				</interceptor-ref>
+				<interceptor-ref name="checkbox" />
+				<interceptor-ref name="staticParams" />
+				<interceptor-ref name="actionMappingParams" />
+				<interceptor-ref name="params">
+					<param name="excludeParams">dojo\..*,^struts\..*</param>
+				</interceptor-ref>
+				<interceptor-ref name="conversionError" />
+				<interceptor-ref name="validation">
+					<param name="excludeMethods">input,back,cancel,browse</param>
+				</interceptor-ref>
+				<interceptor-ref name="workflow">
+					<param name="excludeMethods">input,back,cancel,browse</param>
+				</interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+
+		<action name="index" method="getIndex" class="actions.Home">
+			<result type="freemarker" name="login">/WEB-INF/freemarker/login.jsp
+			</result>
+			<result type="freemarker" name="welcome">/WEB-INF/freemarker/direct.jsp
+			</result>
+			<result type="freemarker" name="directing_page">${pageDirect}
+			</result>
+		</action>
+		<action name="login" method="login" class="actions.LoginAction">
+			<result type="freemarker" name="welcome">/WEB-INF/freemarker/direct.jsp
+			</result>
+			<result type="freemarker" name="directing_page">${pageDirect}
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+			<result type="freemarker" name="input">/WEB-INF/freemarker/login.jsp
+			</result>
+		</action>
+		<action name="logout" method="logout" class="actions.LogoutAction">
+			<result type="freemarker" name="success">/WEB-INF/freemarker/login.jsp
+			</result>
+		</action>
+		<action name="sv-index" method="getIndex" class="actions.SVAction">
+			<result type="freemarker" name="index">/WEB-INF/freemarker/sv/index.jsp
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+		</action>
+		<action name="view-profile" method="getViewProfile" class="actions.SVAction">
+			<result type="freemarker" name="view-profile">/WEB-INF/freemarker/sv/view-profile.jsp
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+		</action>
+		<action name="view-mark" method="getViewMark" class="actions.SVAction">
+			<result type="freemarker" name="view-mark">/WEB-INF/freemarker/sv/view-mark.jsp
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+		</action>
+		<action name="print-mark" method="getPrintMark" class="actions.SVAction">
+			<result type="freemarker" name="print-mark">/WEB-INF/freemarker/sv/print-mark.jsp
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+		</action>
+		<action name="printed-mark" method="getPrintedMark" class="actions.SVAction">
+			<result type="freemarker" name="printed-mark">/WEB-INF/freemarker/sv/printed-mark.jsp
+			</result>
+			<result type="freemarker" name="print-mark">/WEB-INF/freemarker/sv/print-mark.jsp
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+		</action>
+		
+		<action name="view-profile-cb" method="getViewProfile" class="actions.CBAction">
+			<result type="freemarker" name="view-profile-cb">/WEB-INF/freemarker/view-profile.jsp
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+		</action>
+		<action name="gv-index" method="getIndex" class="actions.GVAction">
+			<result type="freemarker" name="index">/WEB-INF/freemarker/gv/index.jsp
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+		</action>
+		<action name="gv-lophp" method="getViewLopHP" class="actions.GVAction">
+			<result type="freemarker" name="view-lophp">/WEB-INF/freemarker/gv/view-lophp.jsp
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+		</action>
+		<action name="gv-dssvlophp" method="getViewDSSVLopHP" class="actions.GVViewDSSVAction">
+			<result type="freemarker" name="view-dssvlophp">/WEB-INF/freemarker/gv/view-dssvlophp.jsp
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+			<result type="freemarker" name="null-ds">/WEB-INF/freemarker/gv/index.jsp
+			</result>
+			<result type="freemarker" name="input">/WEB-INF/freemarker/gv/index.jsp
+			</result>
+		</action>
+		<action name="gv-luudiem" method="postProcessSave" class="actions.GVNhapDiemAction">
+			<result type="json" name="success">
+				<param name="ignoreHierarchy">false</param>
+				<param name="excludeNullProperties">true</param>
+				<param name="noCache">true</param>
+				<param name="includeProperties">
+					diem_4.*,
+					diem_10.*,
+					diem_chu.*,
+					actionErrors.*,
+					actionMessages.*
+				</param>
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+		</action>
+		<action name="gv-excelUpload" class="actions.GVExcelUploadAction">
+			<interceptor-ref name="fileUploadStack" />
+			<result type="json" name="success">
+				<param name="ignoreHierarchy">false</param>
+				<param name="excludeNullProperties">true</param>
+				<param name="noCache">true</param>
+				<param name="includeProperties">
+					dsSVHP.*,
+					actionErrors.*,
+					actionMessages.*
+				</param>
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+		</action>
+		<action name="gv-excelInsert" method="execute" class="actions.GVNhapDiemExcelAction">
+			<result type="json" name="success">
+				<param name="ignoreHierarchy">false</param>
+				<param name="excludeNullProperties">true</param>
+				<param name="noCache">true</param>
+				<param name="includeProperties">
+					dsSVHP.*,
+					actionErrors.*,
+					actionMessages.*
+				</param>
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+		</action>
+		<action name="gv-lopcv" class="actions.CVHTViewLopCVAction">
+			<result type="freemarker" name="success">/WEB-INF/freemarker/gv/view-lopcvht.jsp
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+		</action>
+		<action name="cvht-dssvlopcv" class="actions.CVHTViewDSSVLopCVAction">
+			<result type="freemarker" name="success">/WEB-INF/freemarker/gv/view-dssvlopcvht.jsp
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+			<result type="redirectAction" name="input">
+				<param name="actionName">gv-lopcv.html</param>
+			</result>
+		</action>
+		<action name="cvht-xemctsv" class="actions.CVHTViewCTSVLopCVAction">
+			<result type="json" name="success">
+				<param name="ignoreHierarchy">false</param>
+				<param name="excludeNullProperties">true</param>
+				<param name="noCache">true</param>
+				<param name="includeProperties">
+					dsTTSV.*,
+					actionErrors.*
+				</param>
+			</result>
+			<result type="json" name="fail">
+				<param name="ignoreHierarchy">false</param>
+				<param name="excludeNullProperties">true</param>
+				<param name="noCache">true</param>
+				<param name="includeProperties">
+					dsTTSV.*,
+					actionErrors.*
+				</param>
+			</result>
+			<result type="json" name="input">
+				<param name="ignoreHierarchy">false</param>
+				<param name="excludeNullProperties">true</param>
+				<param name="noCache">true</param>
+				<param name="includeProperties">
+					dsTTSV.*,
+					actionErrors.*
+				</param>
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+		</action>
+		
+		<action name="qldvn-index" method="getIndex" class="actions.QLDVNAction">
+			<result type="freemarker" name="index">/WEB-INF/freemarker/qldvn/index.jsp
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+		</action>
+		<action name="qldvn-thongke" class="actions.QLDVNTKAction">
+			<result type="freemarker" name="success">/WEB-INF/freemarker/qldvn/view-thongke.jsp
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+		</action>
+		<action name="qldvn-nhapdiem" class="actions.QLDVNFindSVAction">
+			<result type="freemarker" name="success">/WEB-INF/freemarker/qldvn/view-nhapdiem.jsp
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+		</action>
+		<action name="qldvn-ktdiemno" class="actions.QLDVNKTNoAction">
+			<result type="freemarker" name="success">/WEB-INF/freemarker/qldvn/view-ktdiemno.jsp
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+		</action>
+		<action name="qldvn-nohp" class="actions.QLDVNTKNoAction">
+			<result type="freemarker" name="success">/WEB-INF/freemarker/qldvn/view-tknohp.jsp
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+		</action>
+		<action name="qldvn-cchv" class="actions.QLDVNTKCCHVAction">
+			<result type="freemarker" name="success">/WEB-INF/freemarker/qldvn/view-cchv.jsp
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+		</action>
+		<action name="qldvn-thoihoc" class="actions.QLDVNTKBuocTHAction">
+			<result type="freemarker" name="success">/WEB-INF/freemarker/qldvn/view-thoihoc.jsp
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+		</action>
+		<action name="qldvn-hocbong" class="actions.QLDVNTKHocBongAction">
+			<result type="freemarker" name="success">/WEB-INF/freemarker/qldvn/view-hocbong.jsp
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+		</action>
+		<action name="qldvn-khenthuong" class="actions.QLDVNTKKhenThuongAction">
+			<result type="freemarker" name="success">/WEB-INF/freemarker/qldvn/view-khenthuong.jsp
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+		</action>
+		<action name="qldvn-xulytimsv" class="actions.QLDVNXLFindSVAction">
+			<result type="json" name="success">
+				<param name="ignoreHierarchy">false</param>
+				<param name="excludeNullProperties">true</param>
+				<param name="noCache">true</param>
+				<param name="includeProperties">
+					kq_sv.*,
+					actionErrors.*
+				</param>
+			</result>
+			<result type="json" name="input">
+				<param name="ignoreHierarchy">false</param>
+				<param name="excludeNullProperties">true</param>
+				<param name="noCache">true</param>
+				<param name="includeProperties">
+					kq_sv.*,
+					actionErrors.*
+				</param>
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+		</action>
+		<action name="qldvn-xulynhapdiemno" class="actions.QLDVNXLNhapDiemNoSVAction">
+			<result type="json" name="success">
+				<param name="ignoreHierarchy">false</param>
+				<param name="excludeNullProperties">true</param>
+				<param name="noCache">true</param>
+				<param name="includeProperties">
+					actionErrors.*,
+					actionMessages.*
+				</param>
+			</result>
+			<result type="json" name="input">
+				<param name="ignoreHierarchy">false</param>
+				<param name="excludeNullProperties">true</param>
+				<param name="noCache">true</param>
+				<param name="includeProperties">
+					actionErrors.*,
+					actionMessages.*
+				</param>
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+		</action>
+		<action name="qldvn-ttdiemnotre" class="actions.">
+			<result type="freemarker" name="success">/WEB-INF/freemarker/qldvn/view-ttdiemnotre.jsp
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+		</action>
+		
+		
+		<action name="pdt-index" method="getIndex" class="actions.PDTAction">
+			<result type="freemarker" name="index">/WEB-INF/freemarker/pdt/index.jsp
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+		</action>
+		<action name="pdt-viewin" class="actions.PDTViewFindInAction">
+			<result type="freemarker" name="index">/WEB-INF/freemarker/pdt/view-findsv.jsp
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+		</action>
+		<action name="pdt-xulytimsv" class="actions.PDTXLFindInAction">
+			<result type="json" name="success">
+				<param name="ignoreHierarchy">false</param>
+				<param name="excludeNullProperties">true</param>
+				<param name="noCache">true</param>
+				<param name="includeProperties">
+					kq_sv.*,
+					actionErrors.*
+				</param>
+			</result>
+			<result type="json" name="input">
+				<param name="ignoreHierarchy">false</param>
+				<param name="excludeNullProperties">true</param>
+				<param name="noCache">true</param>
+				<param name="includeProperties">
+					kq_sv.*,
+					actionErrors.*
+				</param>
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+		</action>
+		<action name="pdt-printed-mark" class="actions.PDTPrintedMarkAction">
+			<result type="freemarker" name="printed-mark">/WEB-INF/freemarker/pdt/printed-mark.jsp
+			</result>
+			<result type="freemarker" name="print-mark">/WEB-INF/freemarker/pdt/view-findsv.jsp
+			</result>
+			<result type="freemarker" name="input">/WEB-INF/freemarker/pdt/view-findsv.jsp
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+		</action>
+		<action name="admin-index" method="getIndex" class="actions.AdminAction">
+			<result type="freemarker" name="index">/WEB-INF/freemarker/admin/index.jsp
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+		</action>
+		<action name="admin-thangdiem" method="wattingPage" class="actions.AdminAction">
+			<result type="freemarker" name="index">/WEB-INF/freemarker/admin/watting-page.jsp
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+		</action>
+	</package>
+</struts>

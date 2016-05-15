@@ -1,7 +1,0 @@
-package models;
-
-import java.util.Objects;
-
-public class tk_theo_lop{
-	
-}

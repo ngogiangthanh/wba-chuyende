@@ -28,15 +28,14 @@ public class QLDVNTKNoAction extends ActionSupport {
 	public String execute() {
 		this.qlnAction = new QLDVNAction();
 		this.session = ActionContext.getContext().getSession();
+		if (!this.qlnAction.Prefix_Check("Thống kê danh sách sinh viên nợ học phần", this.session))
+			return ERROR;
 		// Kiểm tra xem nếu session hknk đã có thì khỏi tạo lại và ngược lại
 		this.qlntkAction = new QLDVNTKAction();
 		if (!session.containsKey("hknk")) {
 			System.out.println("Gán hknk lần đầu");
 			this.qlntkAction.assignHKNKValues(this.session);
 		}
-
-		if (!this.qlnAction.Prefix_Check("Thống kê danh sách sinh viên nợ học phần", this.session))
-			return ERROR;
 		this.assignDSSVNoHp(this.session);
 		if(this.dsSVNoHp.size() > 0)
 			this.assignTSSVNo(this.session);

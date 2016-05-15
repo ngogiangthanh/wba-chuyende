@@ -61,7 +61,7 @@
 		</div>
 		<!-- /.container-fluid -->
 	</nav>
-	<style type="text/css">
+<style type="text/css">
 .dropdown-menu>li>a:hover {
 	color: #000;
 	font-weight: normal;

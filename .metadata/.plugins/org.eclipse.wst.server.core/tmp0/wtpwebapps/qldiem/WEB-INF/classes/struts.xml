@@ -325,6 +325,24 @@
 			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
 			</result>
 		</action>
+		<action name="qldvn-ttdiemnotre" class="actions.QLDVNTTDiemNoTreAction">
+			<result type="freemarker" name="success">/WEB-INF/freemarker/qldvn/view-ttdiemnotre.jsp
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+		</action>
+		<action name="qldvn-bsdiemno" class="actions.QLDVNBSDiemNoAction">
+			<result type="freemarker" name="success">/WEB-INF/freemarker/qldvn/view-bsdiemno.jsp
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+		</action>
+		<action name="qldvn-xldiemnotre" class="actions.QLDVNXLDiemNoTreAction">
+			<result type="freemarker" name="success">/WEB-INF/freemarker/qldvn/view-ttdiemnotre.jsp
+			</result>
+			<result type="freemarker" name="error">/WEB-INF/freemarker/login.jsp
+			</result>
+		</action>
 		
 		<action name="pdt-index" method="getIndex" class="actions.PDTAction">
 			<result type="freemarker" name="index">/WEB-INF/freemarker/pdt/index.jsp

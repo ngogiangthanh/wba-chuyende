@@ -84,6 +84,46 @@
 						<div class="panel-body">
 							<a href="qldvn-index.html" class="btn btn-default"/>Quay lại</a>&nbsp;
 	                        <div class="clearfix">&nbsp;</div>
+							<div class="table-responsive">
+								<table class="table table-bordered text-center">
+									<thead>
+										<tr>
+											<td colspan="3" class="well">Năm
+												học:&nbsp;${current_nk}&nbsp;-&nbsp;Học
+												kỳ:&nbsp;${current_hk}</td>
+										</tr>
+										<tr>
+											<th class="text-center info">STT</th>
+											<th class="text-center info">Mô tả chức năng</th>
+											<th class="text-center info">Thao tác</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>1</td>
+											<td>Thanh toán bổ sung trễ điểm I</td>
+											<td>
+												<#if kiemTraDiem>
+													<a href="qldvn-ttdiemnotre.html" ><i class="glyphicon glyphicon-plus"></i></a>
+												<#else>
+													<i class="glyphicon glyphicon-time"></i>
+												</#if>
+											</td>
+										</tr>
+										<tr>
+											<td>2</td>
+											<td>Nhập bổ sung điểm I</td>
+											<td>
+												<#if kiemTraDiem>
+													<a href="qldvn-bsdiemno.html" ><i class="glyphicon glyphicon-plus"></i></a>
+												<#else>
+													<i class="glyphicon glyphicon-time"></i>
+												</#if>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
 						</div>
 						</div>
 					<!-- END CONTENT -->

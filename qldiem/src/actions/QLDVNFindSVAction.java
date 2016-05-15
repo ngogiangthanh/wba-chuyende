@@ -24,12 +24,12 @@ public class QLDVNFindSVAction extends ActionSupport {
 
 	public QLDVNFindSVAction() {
 	}
-	
-	public String execute(){
+
+	public String execute() {
 		this.qlnAction = new QLDVNAction();
 		this.session = ActionContext.getContext().getSession();
-		if(!this.qlnAction.Prefix_Check("Tìm sinh viên cần nhập điểm",this.session))
-			return ERROR;		
+		if (!this.qlnAction.Prefix_Check("Tìm sinh viên cần nhập điểm", this.session))
+			return ERROR;
 		// Kiểm tra xem nếu session hknk đã có thì khỏi tạo lại và ngược lại
 		this.qlntkAction = new QLDVNTKAction();
 		if (!session.containsKey("hknk")) {
@@ -42,10 +42,10 @@ public class QLDVNFindSVAction extends ActionSupport {
 			this.assignKHNhapDiemNoValues(this.session);
 		}
 		this.kt_tg_nhap_diem_no(this.session);
-		
+
 		return SUCCESS;
 	}
-	
+
 	public void assignKHNhapDiemNoValues(Map<String, Object> session) {
 		this.conn = new Connect();
 		String procedure = "call get_tt_kh_nhap_diem_no();";
@@ -69,7 +69,7 @@ public class QLDVNFindSVAction extends ActionSupport {
 		// Thêm vào session
 		session.put("ke_hoach_nhap_diem_no", khtk);
 	}
-	
+
 	public void kt_tg_nhap_diem_no(Map<String, Object> session) {
 		ke_hoach kh = (ke_hoach) session.get("ke_hoach_nhap_diem_no");
 		String current_hk = session.get("current_hk").toString().trim();
@@ -91,16 +91,14 @@ public class QLDVNFindSVAction extends ActionSupport {
 		Calendar cal = Calendar.getInstance();
 		try {
 			Date current_Day = removeTime(dateFormat.parse(dateFormat.format(cal.getTime())));
-			
-			if ((current_Day.compareTo(kh.getNgay_bd()) == 0 
-					|| current_Day.compareTo(kh.getNgay_kt()) == 0)) {
+
+			if ((current_Day.compareTo(kh.getNgay_bd()) == 0 || current_Day.compareTo(kh.getNgay_kt()) == 0)) {
 				// Bằng nhau
-				this.setNhapDiemNo(false);
+				this.setNhapDiemNo(true);
 				return;
 			}
 			// So khớp ngày hiện tại khác khoảng bắt đầu và kết thúc.
-			if (!(current_Day.compareTo(kh.getNgay_bd()) > 0 
-					&& current_Day.compareTo(kh.getNgay_kt()) < 0)) {
+			if (!(current_Day.compareTo(kh.getNgay_bd()) > 0 && current_Day.compareTo(kh.getNgay_kt()) < 0)) {
 				System.out.println("Khong phu hop ");
 				this.setNhapDiemNo(false);
 				return;
@@ -117,24 +115,23 @@ public class QLDVNFindSVAction extends ActionSupport {
 		this.setNhapDiemNo(true);
 		return;
 	}
-	
-	public Date removeTime(Date date) {    
-	    Calendar cal = Calendar.getInstance();  
-	    cal.setTime(date);  
-	    cal.set(Calendar.HOUR_OF_DAY, 0);  
-	    cal.set(Calendar.MINUTE, 0);  
-	    cal.set(Calendar.SECOND, 0);  
-	    cal.set(Calendar.MILLISECOND, 0);  
-	    return cal.getTime(); 
+
+	public Date removeTime(Date date) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		cal.set(Calendar.HOUR_OF_DAY, 0);
+		cal.set(Calendar.MINUTE, 0);
+		cal.set(Calendar.SECOND, 0);
+		cal.set(Calendar.MILLISECOND, 0);
+		return cal.getTime();
 	}
-	
-	
+
 	public boolean isNhapDiemNo() {
 		return nhapDiemNo;
 	}
-	
+
 	public void setNhapDiemNo(boolean nhapDiemNo) {
 		this.nhapDiemNo = nhapDiemNo;
 	}
-	
+
 }

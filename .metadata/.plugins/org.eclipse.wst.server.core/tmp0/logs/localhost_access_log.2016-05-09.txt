@@ -1,0 +1,12 @@
+0:0:0:0:0:0:0:1 - - [09/May/2016:15:08:30 +0700] "GET /qldiem/public/img/logo_dhct.ico HTTP/1.1" 304 -
+0:0:0:0:0:0:0:1 - - [09/May/2016:15:08:30 +0700] "GET /qldiem/logout.html HTTP/1.1" 200 4730
+0:0:0:0:0:0:0:1 - - [09/May/2016:15:08:30 +0700] "GET /qldiem/public/css/bootstrap.min.css HTTP/1.1" 304 -
+0:0:0:0:0:0:0:1 - - [09/May/2016:15:08:30 +0700] "GET /qldiem/public/css/admin.css HTTP/1.1" 304 -
+0:0:0:0:0:0:0:1 - - [09/May/2016:15:08:30 +0700] "GET /qldiem/public/css/toastr.css HTTP/1.1" 304 -
+0:0:0:0:0:0:0:1 - - [09/May/2016:15:08:30 +0700] "GET /qldiem/public/js/bootstrap.min.js HTTP/1.1" 304 -
+0:0:0:0:0:0:0:1 - - [09/May/2016:15:08:30 +0700] "GET /qldiem/public/js/jquery-1.10.0.min.js HTTP/1.1" 304 -
+0:0:0:0:0:0:0:1 - - [09/May/2016:15:08:30 +0700] "GET /qldiem/public/js/toastr.js HTTP/1.1" 304 -
+0:0:0:0:0:0:0:1 - - [09/May/2016:15:08:30 +0700] "GET /qldiem/public/fonts/glyphicons-halflings-regular.woff HTTP/1.1" 304 -
+0:0:0:0:0:0:0:1 - - [09/May/2016:15:08:35 +0700] "POST /qldiem/login.html HTTP/1.1" 200 5248
+0:0:0:0:0:0:0:1 - - [09/May/2016:15:08:37 +0700] "GET /qldiem/qldvn-index.html HTTP/1.1" 200 5204
+0:0:0:0:0:0:0:1 - - [09/May/2016:15:08:38 +0700] "GET /qldiem/qldvn-ktdiemno.html HTTP/1.1" 200 6427

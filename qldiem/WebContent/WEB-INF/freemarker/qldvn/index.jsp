@@ -84,7 +84,7 @@
                                 <i class="glyphicon glyphicon-pencil"></i>&nbsp;Nhập điểm (M, I) cho sinh viên
                             </a>
                             <a href="qldvn-ktdiemno.html" class="col-sm-6 col-xs-6 col-md-6 col-lg-6">
-                                <i class="glyphicon glyphicon-list-alt"></i>&nbsp;Kiểm tra sinh viên nợ điểm I
+                                <i class="glyphicon glyphicon-list-alt"></i>&nbsp;Thanh toán và bổ sung điểm nợ (I)
                             </a>
                         </div>
 					<!-- END CONTENT -->

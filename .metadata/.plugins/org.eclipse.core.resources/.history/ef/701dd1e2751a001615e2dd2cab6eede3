@@ -1,0 +1,36 @@
+package actions;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Map;
+
+import com.mysql.jdbc.ResultSet;
+import com.opensymphony.xwork2.ActionContext;
+import com.opensymphony.xwork2.ActionSupport;
+
+import connection.Connect;
+import models.ke_hoach;
+
+public class QLDVNTTDiemNoTreAction extends ActionSupport {
+
+	private static final long serialVersionUID = 1L;
+	private Connect conn;
+	private Map<String, Object> session = null;
+	private QLDVNAction qlnAction = null;
+
+	public QLDVNTTDiemNoTreAction() {
+	}
+	
+	public String execute(){
+		this.qlnAction = new QLDVNAction();
+		this.session = ActionContext.getContext().getSession();
+		if(!this.qlnAction.Prefix_Check("Kiểm tra sinh viên nợ điểm I",this.session))
+			return ERROR;
+
+
+		
+		return SUCCESS;
+	}
+}
